@@ -3,6 +3,7 @@
 namespace ProjectHello\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use \Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * ProjectHello\CoreBundle\Entity\Invitation
@@ -35,9 +36,30 @@ class Invitation
      */
     private $dateSent;
 
+    /**
+     * @var Card $card
+     *
+     * @ORM\ManyToOne(targetEntity="Card")
+     * @ORM\JoinColumn(name="card_id", referencedColumnName="id", nullable=false)
+     */
+    private $card;
+
+    /**
+     * @var ArrayCollection $recipients
+     *
+     * @ORM\ManyToMany(targetEntity="MessageAuthor")
+     * @ORM\JoinTable(
+     *      name="invitees", 
+     *      joinColumns={@ORM\JoinColumn(name="invitation_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="invitee_id", referencedColumnName="id")}
+     * )
+     */
+    private $invitees;
+
     public function __construct()
     {
         $this->dateSent = new \DateTime('now');
+        $this->invitees = new ArrayCollection();
     }
 
     /**
@@ -88,5 +110,45 @@ class Invitation
     public function getDateSent()
     {
         return $this->dateSent;
+    }
+
+    /**
+     * Set card
+     *
+     * @param Card $card
+     */
+    public function setCard(Card $card)
+    {
+        $this->card = $card;
+    }
+
+    /**
+     * Get card
+     *
+     * @return Card
+     */
+    public function getCard()
+    {
+        return $this->card;
+    }
+
+    /**
+     * Get invitees
+     *
+     * @return ArrayCollection
+     */
+    public function getInvitees()
+    {
+        return $this->invitees;
+    }
+
+    /**
+     * Add invitee
+     *
+     * @param MessageAuthor $invitee
+     */
+    public function addInvitee(MessageAuthor $invitee)
+    {
+        $this->invitees[] = $invitee;
     }
 }

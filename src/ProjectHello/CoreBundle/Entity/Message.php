@@ -35,6 +35,22 @@ class Message
      */
     private $dateCreated;
 
+    /**
+     * @var Card $card
+     *
+     * @ORM\ManyToOne(targetEntity="Card")
+     * @ORM\JoinColumn(name="card_id", referencedColumnName="id", nullable=false)
+     */
+    private $card;
+
+    /**
+     * @var MessageAuthor $author
+     *
+     * @ORM\ManyToOne(targetEntity="MessageAuthor")
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
+     */
+    private $author;
+
     public function __construct()
     {
         $this->dateCreated = new \DateTime('now');
@@ -88,5 +104,45 @@ class Message
     public function getDateCreated()
     {
         return $this->dateCreated;
+    }
+
+    /**
+     * Set card
+     *
+     * @param Card $card
+     */
+    public function setCard(Card $card)
+    {
+        $this->card = $card;
+    }
+
+    /**
+     * Get card
+     *
+     * @return Card
+     */
+    public function getCard()
+    {
+        return $this->card;
+    }
+
+    /**
+     * Set author
+     *
+     * param MessageAuthor $author
+     */
+    public function setAuthor(MessageAuthor $author)
+    {
+        $this->author = $author;
+    }
+
+    /**
+     * Get author
+     *
+     * @return MessageAuthor
+     */
+    public function getAuthor()
+    {
+        return $this->author;
     }
 }

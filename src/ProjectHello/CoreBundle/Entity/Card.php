@@ -3,6 +3,7 @@
 namespace ProjectHello\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use \Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * ProjectHello\CoreBundle\Entity\Card
@@ -42,9 +43,30 @@ class Card
      */
     private $deadline;
 
+    /**
+     * @var AccountOwner $proponent
+     *
+     * @ORM\ManyToOne(targetEntity="AccountOwner")
+     * @ORM\JoinColumn(name="proponent_id", referencedColumnName="id", nullable=false)
+     */
+    private $proponent;
+
+    /**
+     * @var ArrayCollection $recipients
+     *
+     * @ORM\ManyToMany(targetEntity="User")
+     * @ORM\JoinTable(
+     *      name="card_recipients", 
+     *      joinColumns={@ORM\JoinColumn(name="card_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="recipient_id", referencedColumnName="id")}
+     * )
+     */
+    private $recipients;
+
     public function __construct()
     {
         $this->dateCreated = new \DateTime('now');
+        $this->recipients = new ArrayCollection();
     }
 
     /**
@@ -115,5 +137,45 @@ class Card
     public function getDeadline()
     {
         return $this->deadline;
+    }
+
+    /**
+     * Set proponent
+     *
+     * @param AccountOwner $proponent
+     */
+    public function setProponent(AccountOwner $proponent)
+    {
+        $this->proponent = $proponent;
+    }
+
+    /**
+     * Get proponent
+     *
+     * @return AccountOwner
+     */
+    public function getProponent()
+    {
+        return $this->proponent;
+    }
+
+    /**
+     * Get recipients
+     *
+     * @return ArrayCollection
+     */
+    public function getRecipients()
+    {
+        return $this->recipients;
+    }
+
+    /**
+     * Add recipient
+     *
+     * @param User $recipient
+     */
+    public function addRecipient(User $recipient)
+    {
+        $this->recipients[] = $recipient;
     }
 }

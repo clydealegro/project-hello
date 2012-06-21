@@ -9,6 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="ProjectHello\CoreBundle\Entity\UserRepository")
+ *
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="smallint")
+ * @ORM\DiscriminatorMap({1 = "AccountOwner", 2 = "MessageAuthor"})
  */
 class User
 {
@@ -41,25 +45,6 @@ class User
      * @ORM\Column(name="email_address", type="string", length=100)
      */
     private $emailAddress;
-
-    /**
-     * @var datetime $dateRegistered
-     *
-     * @ORM\Column(name="date_registered", type="datetime")
-     */
-    private $dateRegistered;
-
-    /**
-     * @var string $password
-     *
-     * @ORM\Column(name="password", type="string", length=500)
-     */
-    //private $password;
-
-    public function __construct()
-    {
-        $this->dateRegistered = new \DateTime('now');
-    }
 
     /**
      * Get id
@@ -130,44 +115,4 @@ class User
     {
         return $this->emailAddress;
     }
-
-    /**
-     * Set dateRegistered
-     *
-     * @param datetime $dateRegistered
-     */
-    public function setDateRegistered($dateRegistered)
-    {
-        $this->dateRegistered = $dateRegistered;
-    }
-
-    /**
-     * Get dateRegistered
-     *
-     * @return datetime 
-     */
-    public function getDateRegistered()
-    {
-        return $this->dateRegistered;
-    }
-
-    /**
-     * Set password
-     *
-     * @param string $password
-     */
-    /*public function setPassword($password)
-    {
-        $this->password = $password;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string 
-     */
-    /*public function getPassword()
-    {
-        return $this->password;
-    }*/
 }
