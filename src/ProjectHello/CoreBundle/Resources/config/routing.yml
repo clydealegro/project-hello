@@ -1,3 +1,0 @@
-ProjectHelloCoreBundle_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: ProjectHelloCoreBundle:Default:index }
