@@ -31,7 +31,7 @@ class Card
     /**
      * @var datetime $dateCreated
      *
-     * @ORM\Column(name="dateCreated", type="datetime")
+     * @ORM\Column(name="date_created", type="datetime")
      */
     private $dateCreated;
 
@@ -42,12 +42,10 @@ class Card
      */
     private $deadline;
 
-    /**
-     * @var string $invitationMessage
-     *
-     * @ORM\Column(name="invitation_message", type="string", length=3000)
-     */
-    private $invitationMessage;
+    public function __construct()
+    {
+        $this->dateCreated = new \DateTime('now');
+    }
 
     /**
      * Get id
@@ -117,25 +115,5 @@ class Card
     public function getDeadline()
     {
         return $this->deadline;
-    }
-
-    /**
-     * Set invitationMessage
-     *
-     * @param string $message
-     */
-    public function setInvitationMessage($message)
-    {
-        $this->invitationMessage = $message;
-    }
-
-    /**
-     * Get invitationMessage
-     *
-     * @return string 
-     */
-    public function getInvitationMessage()
-    {
-        return $this->invitationMessage;
     }
 }

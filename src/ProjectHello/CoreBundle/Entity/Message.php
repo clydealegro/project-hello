@@ -31,10 +31,14 @@ class Message
     /**
      * @var datetime $dateCreated
      *
-     * @ORM\Column(name="dateCreated", type="datetime")
+     * @ORM\Column(name="date_created", type="datetime")
      */
     private $dateCreated;
 
+    public function __construct()
+    {
+        $this->dateCreated = new \DateTime('now');
+    }
 
     /**
      * Get id

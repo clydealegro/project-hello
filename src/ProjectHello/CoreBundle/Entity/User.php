@@ -24,23 +24,30 @@ class User
     /**
      * @var string $firstName
      *
-     * @ORM\Column(name="firstName", type="string", length=50)
+     * @ORM\Column(name="first_name", type="string", length=50)
      */
     private $firstName;
 
     /**
      * @var string $lastName
      *
-     * @ORM\Column(name="lastName", type="string", length=50)
+     * @ORM\Column(name="last_name", type="string", length=50)
      */
     private $lastName;
 
     /**
      * @var string $emailAddress
      *
-     * @ORM\Column(name="emailAddress", type="string", length=100)
+     * @ORM\Column(name="email_address", type="string", length=100)
      */
     private $emailAddress;
+
+    /**
+     * @var datetime $dateRegistered
+     *
+     * @ORM\Column(name="date_registered", type="datetime")
+     */
+    private $dateRegistered;
 
     /**
      * @var string $password
@@ -49,6 +56,10 @@ class User
      */
     //private $password;
 
+    public function __construct()
+    {
+        $this->dateRegistered = new \DateTime('now');
+    }
 
     /**
      * Get id
@@ -118,6 +129,26 @@ class User
     public function getEmailAddress()
     {
         return $this->emailAddress;
+    }
+
+    /**
+     * Set dateRegistered
+     *
+     * @param datetime $dateRegistered
+     */
+    public function setDateRegistered($dateRegistered)
+    {
+        $this->dateRegistered = $dateRegistered;
+    }
+
+    /**
+     * Get dateRegistered
+     *
+     * @return datetime 
+     */
+    public function getDateRegistered()
+    {
+        return $this->dateRegistered;
     }
 
     /**

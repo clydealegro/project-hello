@@ -22,11 +22,23 @@ class Invitation
     private $id;
 
     /**
-     * @var string $message
+     * @var string $instruction
      *
-     * @ORM\Column(name="message", type="string", length=5000)
+     * @ORM\Column(name="instruction", type="string", length=5000)
      */
-    private $message;
+    private $instruction;
+
+    /**
+     * @var datetime $dateSent
+     *
+     * @ORM\Column(name="date_sent", type="datetime")
+     */
+    private $dateSent;
+
+    public function __construct()
+    {
+        $this->dateSent = new \DateTime('now');
+    }
 
     /**
      * Get id
@@ -39,22 +51,42 @@ class Invitation
     }
 
     /**
-     * Set message
+     * Set instruction
      *
-     * @param string $message
+     * @param string $instruction
      */
-    public function setMessage($message)
+    public function setInstruction($instruction)
     {
-        $this->message = $message;
+        $this->instruction = $instruction;
     }
 
     /**
-     * Get message
+     * Get instruction
      *
      * @return string 
      */
-    public function getMessage()
+    public function getInstruction()
     {
-        return $this->message;
+        return $this->instruction;
+    }
+
+    /**
+     * Set dateSent
+     *
+     * @param datetime $dateSent
+     */
+    public function setDateSent($dateSent)
+    {
+        $this->dateSent = $dateSent;
+    }
+
+    /**
+     * Get dateSent
+     *
+     * @return datetime 
+     */
+    public function getDateSent()
+    {
+        return $this->dateSent;
     }
 }
