@@ -67,6 +67,7 @@ class Card
     {
         $this->dateCreated = new \DateTime('now');
         $this->recipients = new ArrayCollection();
+        $this->type = 1; // temporary
     }
 
     /**
