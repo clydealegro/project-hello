@@ -27,7 +27,7 @@
             <form action="" class="form-horizontal">
                 <h1>Create a card</h1>
                 <fieldset>
-                    <legend>To whom will I send this message</legend>
+                    <legend>I will create this card for</legend>
                     <div class="control-group">
                         <label class="control-label" for="recipient-name">Recipient Name</label>
                         <div class="controls">
@@ -51,7 +51,7 @@
                     </div>
                 </fieldset>
                 <fieldset>
-                    <legend>Invite other people to add messages</legend>
+                    <legend>I will invite others to add messages to the card</legend>
                     <div class="collaborator">
                         <div class="control-group">
                             <label class="control-label" for="collaborator-name">Collaborator Name</label>
@@ -92,13 +92,25 @@
                         <div class="controls">
                             <textarea id="collaborator-instruction" class="input-xlarge"></textarea>
                         </div>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button class="btn btn-primary" type="submit">Create and Submit</button>
-                    </div>
+                    </div>                                                                     
                     
                 </fieldset>
+                
+                <fieldset>
+                    <legend>This card must be sent on this date</legend>
+                    <div class="control-group">
+                        <label class="control-label" for="sending-date">Sending Date</label>
+                        <div class="controls">
+                            <input id="sending-date" type="text" class="span2" value="06-22-2012" />
+                        </div>
+                    </div>
+                </fieldset>
+                
+                
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="submit">Create and Submit</button>
+                </div>
+                
             </form>
             
         </div>
@@ -109,6 +121,15 @@
     <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
 
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    
+    <script type="text/javascript">
+        $(function(){
+            $('#sending-date').datepicker({
+				format: 'mm-dd-yyyy'
+			});
+        });
+    </script>
 
     <script type="text/javascript" src="http://use.typekit.com/uvu7dak.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>

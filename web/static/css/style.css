@@ -11,3 +11,7 @@ form fieldset {
     padding-bottom: 15px;
     margin-bottom: 15px;
 }
+
+.main {
+    padding-bottom: 200px;
+}
