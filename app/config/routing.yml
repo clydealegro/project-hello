@@ -1,3 +1,7 @@
+ProjectHelloCoreBundle:
+    resource: "@ProjectHelloCoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ProjectHelloMainBundle:
     resource: "@ProjectHelloMainBundle/Resources/config/routing.yml"
     prefix:   /
