@@ -1,5 +1,7 @@
 <?php
 
+//date_default_timezone_set('Asia/Manila');
+
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
