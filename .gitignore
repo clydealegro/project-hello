@@ -1,5 +1,6 @@
 /app/cache/*
 /app/logs/*.log
+/src/ProjectHello/CoreBundle/Resources/doc/doc.mwb.bak
 /vendor/*
 /web/bundles/*
 project-hello.esproj/

@@ -1,0 +1,7 @@
+parameters:
+#    project_hello_core.example.class: ProjectHello\CoreBundle\Example
+
+services:
+#    project_hello_core.example:
+#        class: %project_hello_core.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
