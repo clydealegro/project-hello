@@ -77,7 +77,7 @@
             {% endfor %}
 
             <div class="form-actions">
-                <button class="btn">Add a collaborator</button>
+                <button class="btn" id="add-collaborator-btn">Add a collaborator</button>
             </div>
 
             <div class="control-group">
@@ -119,9 +119,20 @@
     {% endjavascripts %}
 
     <script type="text/javascript">
-        $(function(){
+    	$(function(){
             $('#sending-date').datepicker({
                 format: 'mm-dd-yyyy'
+            });
+            $('#add-collaborator-btn').click(function(e){
+            	e.preventDefault();
+            	
+            	var $newCollaborator = $('.collaborator:last').clone();
+		    	$newCollaborator.find('#collaborator-name').attr('value', '');
+		    	$newCollaborator.find('#collaborator-email').attr('value', '');
+            	console.log($newCollaborator);
+            	$('.collaborator:last').after($newCollaborator);
+		        
+		        return false;
             });
         });
     </script>

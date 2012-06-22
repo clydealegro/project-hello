@@ -20,11 +20,11 @@ class DefaultController extends Controller
         $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
-
-            if ($form->isValid()) {
-                try {
-                    $entityManager = $this->getDoctrine()->getEntityManager();
+	        /*$form->bindRequest($request);
+	
+	        if ($form->isValid()) {
+	            try {
+		            $entityManager = $this->getDoctrine()->getEntityManager();
                     //insert card into database
                     $entityManager->persist($card);
                     $entityManager->flush();
@@ -46,19 +46,22 @@ class DefaultController extends Controller
                     }
 
                     $this->get('session')->setFlash('card-notice', 'Your card has been sent to your collaborators. Thank you!');
-                }
-                catch(\Exception $e) {
-                    $this->get('session')->setFlash('card-notice', 'An error occurred!');
-                }
 
-                $this->get('session')->setFlash('card-notice', 'Please fill all required fields!');
-                return $this->redirect($this->generateUrl('card_create'));
-            }
-        }
-
-        return $this->render('ProjectHelloMainBundle:Card:create_card.html.twig', array(
+	            }
+	            catch(\Exception $e) {
+		            $this->get('session')->setFlash('card-notice', 'An error occurred!');
+	            }
+	            
+	            $this->get('session')->setFlash('card-notice', 'Please fill all required fields!');
+	            return $this->redirect($this->generateUrl('card_create'));
+	        }*/
+	        return $this->redirect($this->generateUrl('add_message'));
+	    }
+	    return $this->render('ProjectHelloMainBundle:Default:create_card.html.twig');
+	    
+        /*return $this->render('ProjectHelloMainBundle:Card:create_card.html.twig', array(
             'form' => $form->createView()
-        ));
+        ));*/
     }
 
     public function addMessageAction()
