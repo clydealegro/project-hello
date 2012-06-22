@@ -44,23 +44,38 @@ form fieldset {
     padding-bottom: 200px;
 }
 
+#slides {
+    width: 500px;
+    margin: 0 auto;
+}
+
 #slides .prev, #slides .next {
     position: absolute;
     display: block;
     width: 21px;
     height: 32px;
     text-indent: -9999px;
-    padding: 10px 15px 10px 10px;
+    padding: 20px 30px 20px 20px;
 }
 
 #slides .prev {
     background: #444 url('../img/button_prev.png') no-repeat center center;
     left: 0;
     top: 50%;
+    border-radius: 0 5px 5px 0;
 }
 
 #slides .next {
     background: #444 url('../img/button_next.png') no-repeat center center;
     right: 0;
     top: 50%;
+    border-radius: 5px 0 0 5px;
+}
+
+.slides_control div {
+    width: 500px;
+    min-height: 400px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 10px;
 }
