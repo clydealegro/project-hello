@@ -1,3 +1,7 @@
+body {
+    background: #f5f5f5 url('../img/background.jpg') no-repeat fixed center top;
+}
+
 h1 {
     margin-bottom: 20px;
 }
