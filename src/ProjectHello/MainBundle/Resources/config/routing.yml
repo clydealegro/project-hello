@@ -1,3 +1,11 @@
-ProjectHelloMainBundle_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: ProjectHelloMainBundle:Default:index }
+create_card:
+    pattern: /
+    defaults: { _controller: ProjectHelloMainBundle:Default:createCard }
+
+add_message:
+    pattern: /add-message
+    defaults: { _controller: ProjectHelloMainBundle:Default:addMessage }
+
+view_card:
+    pattern: /view-card
+    defaults: { _controller: ProjectHelloMainBundle:Default:viewCard }

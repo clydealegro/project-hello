@@ -1,0 +1,126 @@
+{% extends 'ProjectHelloMainBundle::layout_main.html.twig' %}
+
+{% block content %}
+    <form action="" class="form-horizontal">
+        <h1>Create a card</h1>
+
+        <fieldset>
+            <legend>My name is</legend>
+            <div class="control-group">
+                <label class="control-label" for="creator-name">Creator Name</label>
+                <div class="controls">
+                    <input id="creator-name" type="text" class="focused input-xlarge" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="creator-email">Creator Email</label>
+                <div class="controls">
+                    <input id="creator-email" type="text" class="focused input-xlarge" />
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>I will create this card for</legend>
+            <div class="control-group">
+                <label class="control-label" for="recipient-name">Recipient Name</label>
+                <div class="controls">
+                    <input id="recipient-name" type="text" class="focused input-xlarge" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="recipient-email">Recipient Email</label>
+                <div class="controls">
+                    <input id="recipient-email" type="text" class="focused input-xlarge" />
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>What is my message</legend>
+            <div class="control-group">
+                <label class="control-label" for="creator-message">Creator Message</label>
+                <div class="controls">
+                    <textarea id="creator-message" class="input-xlarge"></textarea>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>I will invite others to add messages to the card</legend>
+            <div class="collaborator">
+                <div class="control-group">
+                    <label class="control-label" for="collaborator-name">Collaborator Name</label>
+                    <div class="controls">
+                        <input id="collaborator-name" type="text" class="focused input-xlarge" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="collaborator-name">Collaborator Email</label>
+                    <div class="controls">
+                        <input id="collaborator-email" type="text" class="focused input-xlarge" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="collaborator">
+                <div class="control-group">
+                    <label class="control-label" for="collaborator-name">Collaborator Name</label>
+                    <div class="controls">
+                        <input id="collaborator-name" type="text" class="focused input-xlarge" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="collaborator-name">Collaborator Email</label>
+                    <div class="controls">
+                        <input id="collaborator-email" type="text" class="focused input-xlarge" />
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-actions">
+                <button class="btn">Add a collaborator</button>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="collaborator-instruction">Instructions</label>
+                <div class="controls">
+                    <textarea id="collaborator-instruction" class="input-xlarge"></textarea>
+                </div>
+            </div>
+
+        </fieldset>
+
+        <fieldset>
+            <legend>This card must be sent on this date</legend>
+            <div class="control-group">
+                <label class="control-label" for="sending-date">Sending Date</label>
+                <div class="controls">
+                    <input id="sending-date" type="text" class="span2" value="06-22-2012" />
+                </div>
+            </div>
+        </fieldset>
+
+
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Create and Submit</button>
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts
+        '@ProjectHelloMainBundle/Resources/public/js/bootstrap-datepicker.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript">
+        $(function(){
+            $('#sending-date').datepicker({
+                format: 'mm-dd-yyyy'
+            });
+        });
+    </script>
+{% endblock %}
