@@ -2,3 +2,5 @@
 /app/logs/*.log
 /vendor/*
 /web/bundles/*
+project-hello.esproj/
+.gitignore
