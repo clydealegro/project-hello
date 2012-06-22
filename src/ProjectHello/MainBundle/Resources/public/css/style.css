@@ -1,0 +1,17 @@
+h1 {
+    margin-bottom: 20px;
+}
+
+form fieldset {
+    margin-bottom: 30px;
+}
+
+.collaborator {
+    border-bottom: 1px dotted #e6e6e6;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.main {
+    padding-bottom: 200px;
+}
