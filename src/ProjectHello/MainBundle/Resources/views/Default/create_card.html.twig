@@ -7,6 +7,12 @@
 
     {% set textarea_classname = 'input-xlarge' %}
     {% set text_classname = 'focused ' ~ textarea_classname %}
+    
+    {% if app.session.hasFlash('card-notice') %}
+	    <div class="flash-notice">
+	        {{ app.session.flash('card-notice') }}
+	    </div>
+	{% endif %}
 
     <form action="{{ create_card_action }}" class="form-horizontal" method="post">
         <h1>Create a card</h1>
