@@ -1,3 +1,31 @@
+body.view-card {
+    background: url('../img/background.jpg') no-repeat fixed center top;
+}
+
+.view-card .top-header h1 {
+    font-size: 90px;
+    font-family: "freight-sans-pro",sans-serif;
+    text-align: center;
+    color: #fff;   
+    margin-bottom: 35px; 
+}
+
+.top-header p {
+    font-family: "brevia",sans-serif;
+    text-align: center;
+    font-size: 32px;
+    color: #fff;
+    line-height: 32px;
+    padding: 15px 0;
+    border-bottom: 1px solid #fff;
+    border-top: 1px solid #fff;    
+}
+
+.intro {
+    margin: 50px auto 0;
+    width: 500px;
+}
+
 h1 {
     margin-bottom: 20px;
 }
@@ -14,4 +42,61 @@ form fieldset {
 
 .main {
     padding-bottom: 200px;
+}
+
+#slides {
+    width: 580px;
+    min-height: 800px;
+    margin: 0 auto;
+}
+
+#slides blockquote {
+    font-family: "myriad-pro",sans-serif;
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: 300 !important;
+    font-style: italic;
+}
+
+#slides .slides_control {
+    min-height: 800px;
+}
+
+#slides h2 {
+    font-family: "myriad-pro",sans-serif;
+    font-size: 21px;
+    text-align: right;
+}
+
+#slides .prev, #slides .next {
+    position: absolute;
+    display: block;
+    width: 21px;
+    height: 32px;
+    text-indent: -9999px;
+    padding: 20px 30px 20px 20px;
+}
+
+#slides .prev {
+    background: #444 url('../img/button_prev.png') no-repeat center center;
+    left: 0;
+    top: 50%;
+    border-radius: 0 5px 5px 0;
+}
+
+#slides .next {
+    background: #444 url('../img/button_next.png') no-repeat center center;
+    right: 0;
+    top: 50%;
+    border-radius: 5px 0 0 5px;
+}
+
+.slides_control div {
+    width: 500px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.2);
+    margin: 10px 0 0 10px;
 }
