@@ -45,8 +45,27 @@ form fieldset {
 }
 
 #slides {
-    width: 500px;
+    width: 560px;
+    min-height: 800px;
     margin: 0 auto;
+}
+
+#slides blockquote {
+    font-family: "myriad-pro",sans-serif;
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: 300 !important;
+    font-style: italic;
+}
+
+#slides .slides_control {
+    min-height: 800px;
+}
+
+#slides h2 {
+    font-family: "myriad-pro",sans-serif;
+    font-size: 21px;
+    text-align: right;
 }
 
 #slides .prev, #slides .next {
@@ -74,8 +93,8 @@ form fieldset {
 
 .slides_control div {
     width: 500px;
-    min-height: 400px;
     margin: 0 auto;
     background-color: #fff;
     border-radius: 10px;
+    padding: 30px;
 }
