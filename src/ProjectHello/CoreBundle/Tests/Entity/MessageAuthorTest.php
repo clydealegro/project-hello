@@ -17,13 +17,9 @@ class MessageAuthorTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertNull($this->author->getId());
 
-        $firstName = 'Dummy';
-        $this->author->setFirstName($firstName);
-        $this->assertEquals($firstName, $this->author->getFirstName());
-
-        $lastName = 'User';
-        $this->author->setLastName($lastName);
-        $this->assertEquals($lastName, $this->author->getLastName());
+        $name = 'Dummy User';
+        $this->author->setName($name);
+        $this->assertEquals($name, $this->author->getName());
 
         $emailAddress = 'dummy@user.com';
         $this->author->setEmailAddress($emailAddress);

@@ -17,13 +17,9 @@ class AccountOwnerTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertNull($this->owner->getId());
 
-        $firstName = 'Dummy';
-        $this->owner->setFirstName($firstName);
-        $this->assertEquals($firstName, $this->owner->getFirstName());
-
-        $lastName = 'User';
-        $this->owner->setLastName($lastName);
-        $this->assertEquals($lastName, $this->owner->getLastName());
+        $name = 'Dummy User';
+        $this->owner->setName($name);
+        $this->assertEquals($name, $this->owner->getName());
 
         $emailAddress = 'dummy@user.com';
         $this->owner->setEmailAddress($emailAddress);
