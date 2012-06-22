@@ -17,13 +17,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertNull($this->user->getId());
 
-        $firstName = 'Dummy';
-        $this->user->setFirstName($firstName);
-        $this->assertEquals($firstName, $this->user->getFirstName());
-
-        $lastName = 'User';
-        $this->user->setLastName($lastName);
-        $this->assertEquals($lastName, $this->user->getLastName());
+        $name = 'Dummy User';
+        $this->user->setName($name);
+        $this->assertEquals($name, $this->user->getName());
 
         $emailAddress = 'dummy@user.com';
         $this->user->setEmailAddress($emailAddress);

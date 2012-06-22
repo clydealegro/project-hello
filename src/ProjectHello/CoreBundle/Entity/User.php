@@ -26,18 +26,11 @@ class User
     private $id;
 
     /**
-     * @var string $firstName
+     * @var string $name
      *
-     * @ORM\Column(name="first_name", type="string", length=50)
+     * @ORM\Column(name="name", type="string", length=200)
      */
-    private $firstName;
-
-    /**
-     * @var string $lastName
-     *
-     * @ORM\Column(name="last_name", type="string", length=50)
-     */
-    private $lastName;
+    private $name;
 
     /**
      * @var string $emailAddress
@@ -49,7 +42,7 @@ class User
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -57,43 +50,23 @@ class User
     }
 
     /**
-     * Set firstName
+     * Set name
      *
-     * @param string $firstName
+     * @param string $name
      */
-    public function setFirstName($firstName)
+    public function setName($name)
     {
-        $this->firstName = $firstName;
+        $this->name = $name;
     }
 
     /**
-     * Get firstName
+     * Get name
      *
-     * @return string 
+     * @return string
      */
-    public function getFirstName()
+    public function getName()
     {
-        return $this->firstName;
-    }
-
-    /**
-     * Set lastName
-     *
-     * @param string $lastName
-     */
-    public function setLastName($lastName)
-    {
-        $this->lastName = $lastName;
-    }
-
-    /**
-     * Get lastName
-     *
-     * @return string 
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
+        return $this->name;
     }
 
     /**
@@ -109,7 +82,7 @@ class User
     /**
      * Get emailAddress
      *
-     * @return string 
+     * @return string
      */
     public function getEmailAddress()
     {
