@@ -118,7 +118,8 @@ class DefaultController extends Controller
         );
 
         return $this->render('ProjectHelloMainBundle:Card:view_card.html.twig', array(
-            'messages' => $messages
+            'messages'      => $messages,
+            'recipientName' => 'Mon Abilar'
         ));
     }
 }
