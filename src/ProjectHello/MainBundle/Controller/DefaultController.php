@@ -60,7 +60,7 @@ class DefaultController extends Controller
             ),
             array(
                 'author'    => 'Ronald Ryan L. Vy',
-                'content'   => "hi mon!<br /><br />Goodluck and best wishes!!!keep on rocking MONster!!!"
+                'content'   => "hi mon!<br /><br /> &nbsp; &nbsp; &nbsp; Goodluck and best wishes!!!keep on rocking MONster!!!"
             ),
             array(
                 'author'    => 'Augustianne Laurenne L. Barreta',
@@ -69,6 +69,36 @@ class DefaultController extends Controller
             array(
                 'author'    => 'Joy Amor Moreno',
                 'content'   => "Thanks for the short-lived friendship,mon. Actually i'm secretly glad that you're going, this time i'll be the ONLY Green Room Queen. LOL.  Kidding aside, you're such a wonderful person. I wish you all the happiness and love in this world particularly in CEBU, you deserve it. Bon Voyage!"
+            ),
+            array(
+                'author'    => 'Jean',
+                'content'   => "\"Balik hit Sports Fest. Waray na daw kami hini MVP. We will miss you. :) \""
+            ),
+            array(
+                'author'    => 'Desiree Lynn C. Blanco',
+                'content'   => "Kuya Mon, <br /><br /> &nbsp; &nbsp; &nbsp; GO FOR GOLD... FOLLOW YOUR HEART... hahaha. Blit Kuya, I know na bisan ka kumain, you'll always boom and prosper. You are so blessed with a good heart. Honestly, I feel bad and sad na you'll be leaving GAP. You're such a genuine person. Thank you for the friendship. You'll always be in my prayers. Take care and God bless you always."
+            ),
+            array(
+                'author'    => 'Naldz',
+                'content'   => "Salamat Mon!"
+            ),
+            array(
+                'author'    => 'Eric Burabod',
+                'content'   => "Hey, Mon <br /> <br />Ahm they said your going to Cebu, and i would like to say good luck and have a great time in cebu its really a nice place...
+                even thought expensive it lifestyle hehehe basta maupay it work no worries ingat and GOD bless!!!...Have a nice trip! <br /><br /> --^^---^^---^---^--^--^^---"
+            ),
+
+            array(
+                'author'    => 'Vanessa',
+                'content'   => "Mon - my former crush haha! take care and God bless you always"
+            ),
+            array(
+                'author'    => 'Chris',
+                'content'   => "Mon, You are one of the nicest people I know. I wish you all the success not only in your career but also in your personal life. God bless in all of your endeavors."
+            ),
+            array(
+                'author'    => 'Mercy',
+                'content'   => "Monster, <br /><br /> Thanks ha tanan, <br /> Sorry ha tanan... <br /> Pag-opay nala, <br /> Kon kumain kman."
             )
         );
 
