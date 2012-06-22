@@ -1,0 +1,238 @@
+{% extends 'ProjectHelloMainBundle:Default:create_card.html.twig' %}
+
+{% set create_card_action = path('create_card') %}
+
+{% block creator_name_field %}
+    {{ form_widget(form.proponent.firstName, { attr: { 'class': text_classname } }) }}
+{% endblock %}
+
+{% block creator_email_field %}
+    {{ form_widget(form.proponent.emailAddress, { attr: { 'class': text_classname } }) }}
+{% endblock %}
+
+{% block recipient_name_field %}
+	{% for recipient in form.recipients %}
+        <li>{{ form_row(recipient.firstName, { attr: { 'class': text_classname } }) }}</li>
+    {% endfor %}
+{% endblock %}
+
+{% block recipient_email_field %}
+    {% for recipient in form.recipients %}
+        <li>{{ form_row(recipient.emailAddress, { attr: { 'class': text_classname } }) }}</li>
+    {% endfor %}
+{% endblock %}
+
+{% block creator_message_field %}
+	{% for message in form.messages %}
+		{{ form_widget(message.content, { attr: { 'class': textarea_classname } }) }}
+	{% endfor %}
+{% endblock %}                    
+
+{% block collaborator_name_field %}
+    <input id="collaborator-name" type="text" class="{{ text_classname }}" />
+{% endblock %}
+
+{% block collaborator_email_field %}
+    <input id="collaborator-email" type="text" class="{{ text_classname }}" />
+{% endblock %}
+
+{% block instruction_field %}
+    <textarea id="collaborator-instruction" class="{{ textarea_classname }}"></textarea>
+{% endblock %}
+
+{% block sending_date_field %}
+    <input id="sending-date" type="text" class="span2" value="06-22-2012" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts
+        '@ProjectHelloMainBundle/Resources/public/js/bootstrap-datepicker.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript">
+        
+        // Get the div that holds the collection of tags
+        var collectionHolder = $('.collaborator').parent();
+        var $newCollaborator = $('.collaborator')[0];
+        $newCollaborator.find('input [name="collaborator-name"]').attr('value', '');
+        $newCollaborator.find('input [name="collaborator-email"]').attr('value', '');
+        
+        function addCollaboratorForm(collectionHolder, $newLink) {
+		    // Get the data-prototype we explained earlier
+		    var prototype = collectionHolder.attr('data-prototype');
+		
+		    // Replace '$$name$$' in the prototype's HTML to
+		    // instead be a number based on the current collection's length.
+		    var newForm = prototype.replace(/\$\$name\$\$/g, collectionHolder.children().length);
+		    
+		    var $newForm = $('<div></div>').append(newForm);
+		    $newLink.before($newForm);
+		}
+        
+        $(function(){
+            $('#sending-date').datepicker({
+                format: 'mm-dd-yyyy'
+            });
+            
+		    $('.form-actions ~ .collaborator').on('click', function(e) {
+		        // prevent the link from creating a "#" on the URL
+		        e.preventDefault();
+		
+		        // add a new collaborator form 
+		        addCollaboratorForm(collectionHolder, $newCollaborator);
+		    });
+		});
+    </script>
+{% endblock %}
+{#
+
+{% block content %}
+    <form 
+    	action="{{ path('create_card') }}" 
+    	class="form-horizontal"
+    	method="post"
+    	{{ form_enctype(form) }}
+    >
+        <h1>Create a card</h1>
+
+        <fieldset>
+            <legend>My name is</legend>
+            <div class="control-group">
+                <label class="control-label" for="creator-name">Creator Name</label>
+                <div class="controls">
+                    {{ form_widget(form.proponent.firstName, { attr: { 'id': 'creator-name', 'class': 'focused input-xlarge' } }) }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="creator-email">Creator Email</label>
+                <div class="controls">
+                    {{ form_widget(form.proponent.emailAddress, { attr: { 'id': 'creator-email', 'class': 'focused input-xlarge' } }) }}
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>I will create this card for</legend>
+            <div class="control-group">
+                <label class="control-label" for="recipient-name">Recipient Name</label>
+                <div class="controls">
+                    <input id="recipient-name" type="text" class="focused input-xlarge" />
+                    {{ form_widget(form.proponent.emailAddress, { attr: { 'id': 'creator-email', 'class': 'focused input-xlarge' } }) }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="recipient-email">Recipient Email</label>
+                <div class="controls">
+                    <input id="recipient-email" type="text" class="focused input-xlarge" />
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>What is my message</legend>
+            <div class="control-group">
+                <label class="control-label" for="creator-message">Creator Message</label>
+                <div class="controls">
+                    <textarea id="creator-message" class="input-xlarge"></textarea>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>I will invite others to add messages to the card</legend>
+            <div class="collaborator">
+                <div class="control-group">
+                    <label class="control-label" for="collaborator-name">Collaborator Name</label>
+                    <div class="controls">
+                        <input id="collaborator-name" type="text" class="focused input-xlarge" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="collaborator-name">Collaborator Email</label>
+                    <div class="controls">
+                        <input id="collaborator-email" type="text" class="focused input-xlarge" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="collaborator">
+                <div class="control-group">
+                    <label class="control-label" for="collaborator-name">Collaborator Name</label>
+                    <div class="controls">
+                        <input id="collaborator-name" type="text" class="focused input-xlarge" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="collaborator-name">Collaborator Email</label>
+                    <div class="controls">
+                        <input id="collaborator-email" type="text" class="focused input-xlarge" />
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-actions">
+                <button class="btn">Add a collaborator</button>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="collaborator-instruction">Instructions</label>
+                <div class="controls">
+                    <textarea id="collaborator-instruction" class="input-xlarge"></textarea>
+                </div>
+            </div>
+
+        </fieldset>
+
+        <fieldset>
+            <legend>This card must be sent on this date</legend>
+            <div class="control-group">
+                <label class="control-label" for="sending-date">Sending Date</label>
+                <div class="controls">
+                    <input id="sending-date" type="text" class="span2" value="06-22-2012" />
+                </div>
+            </div>
+        </fieldset>
+
+
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Create and Submit</button>
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts
+        '@ProjectHelloMainBundle/Resources/public/js/bootstrap-datepicker.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript">
+    	
+        // Get the div that holds the collection of tags
+        var collectionHolder = $('.collaborator').parent();
+        
+        $(function(){
+            $('#sending-date').datepicker({
+                format: 'mm-dd-yyyy'
+            });
+            
+		    // add the "add a tag" anchor and li to the tags ul
+		    collectionHolder.append($newLinkLi);
+		
+		    $('.form-actions ~ .collaborator').on('click', function(e) {
+		        // prevent the link from creating a "#" on the URL
+		        e.preventDefault();
+		
+		        // add a new tag form (see next code block)
+		        addTagForm(collectionHolder, $newLinkLi);
+		    });
+		});
+    </script>
+{% endblock %}
+#}
