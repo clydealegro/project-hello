@@ -16,46 +16,46 @@ class DefaultController extends Controller
     {
         $card = new Card();
         $form = $this->createForm(new CardType(), $card);
-        
+
         $request = $this->getRequest();
-        
+
         if ($request->getMethod() == 'POST') {
-	        $form->bindRequest($request);
-	
-	        if ($form->isValid()) {
-	            try {
-		            $entityManager = $this->getDoctrine()->getEntityManager();
+            $form->bindRequest($request);
+
+            if ($form->isValid()) {
+                try {
+                    $entityManager = $this->getDoctrine()->getEntityManager();
                     //insert card into database
                     $entityManager->persist($card);
                     $entityManager->flush();
-                    
+
                     // send email to collaborators
                     foreach ($card->getRecipients() as $recipient) {
-                    	$tokenService = new TokenGeneratorService();
-                    	$link = $tokenService->getEncryptedToken(array(
-                    		'email' => $recipient->getEmailAddress(),
-                    		'card' => $card->getId()
-                    	));
-                    	
-	                	$message = \Swift_Message::newInstance()
-	                    	->setSubject('You are a Collaborator on Project Hello')
-	                    	->setFrom('test@test.com')
-	                    	->setTo('mercy.honor@goabroad.com')
-	                    	->setBody($this->renderView('ProjectHelloMainBundle:Mail:collaborator.html.twig', array('name' => $recipient->getFirstName(), 'link' => $link)));
-	                    $this->get('mailer')->send($message);    
+                        $tokenService = new TokenGeneratorService();
+                        $link = $tokenService->getEncryptedToken(array(
+                            'email' => $recipient->getEmailAddress(),
+                            'card' => $card->getId()
+                        ));
+
+                        $message = \Swift_Message::newInstance()
+                            ->setSubject('You are a Collaborator on Project Hello')
+                            ->setFrom('test@test.com')
+                            ->setTo('mercy.honor@goabroad.com')
+                            ->setBody($this->renderView('ProjectHelloMainBundle:Mail:collaborator.html.twig', array('name' => $recipient->getFirstName(), 'link' => $link)));
+                        $this->get('mailer')->send($message);
                     }
-                    
+
                     $this->get('session')->setFlash('card-notice', 'Your card has been sent to your collaborators. Thank you!');
-	            }
-	            catch(\Exception $e) {
-		            $this->get('session')->setFlash('card-notice', 'An error occurred!');
-	            }
-	            
-	            $this->get('session')->setFlash('card-notice', 'Please fill all required fields!');
-	            return $this->redirect($this->generateUrl('card_create'));
-	        }
-	    }
-	    
+                }
+                catch(\Exception $e) {
+                    $this->get('session')->setFlash('card-notice', 'An error occurred!');
+                }
+
+                $this->get('session')->setFlash('card-notice', 'Please fill all required fields!');
+                return $this->redirect($this->generateUrl('card_create'));
+            }
+        }
+
         return $this->render('ProjectHelloMainBundle:Card:create_card.html.twig', array(
             'form' => $form->createView()
         ));
@@ -63,7 +63,7 @@ class DefaultController extends Controller
 
     public function addMessageAction()
     {
-        return $this->render('ProjectHelloMainBundle:Default:add_message.html.twig');
+        return $this->render('ProjectHelloMainBundle:Card:add_message.html.twig');
     }
 
     public function viewCardAction()
