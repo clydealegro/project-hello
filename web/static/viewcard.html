@@ -15,14 +15,20 @@
     
     <script src="js/libs/modernizr-2.5.3.min.js"></script>
 </head>
-<body>
+<body class="view-card">
     <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
     <header class="top-header">
-       
+        <div class="intro">
+            <h1>Mon Abilar</h1>       
+            <p>
+                your friends sent you <br />
+                some greetings & messages        
+            </p>
+        </div>        
     </header>
     
     <div class="main" role="main" style="margin-top:50px;">    
-        <div class="container">
+        <div class="container">                
             
             <div id="slides">
                 <div class="slides_container">
@@ -58,14 +64,19 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/slides.min.jquery.js"></script>
     
+    <script type="text/javascript" src="http://use.typekit.com/grn3pnr.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
     <script type="text/javascript">
         $(function(){
-            $("#slides").slides();
+            $("#slides").slides({
+                generateNextPrev: true
+            });
         });
     </script>
 
-    <script type="text/javascript" src="http://use.typekit.com/uvu7dak.js"></script>
-    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+
 
     <script>
         var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
