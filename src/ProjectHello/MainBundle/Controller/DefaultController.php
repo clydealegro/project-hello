@@ -114,6 +114,14 @@ class DefaultController extends Controller
             array(
                 'author'    => 'Mercy',
                 'content'   => "Monster, <br /><br /> Thanks ha tanan, <br /> Sorry ha tanan... <br /> Pag-opay nala, <br /> Kon kumain kman."
+            ),
+            array(
+                'author'    => 'Neri',
+                'content'   => "Kuya Mon, <br /><br /> &nbsp; &nbsp; &nbsp; Thank you ha tanan nga memories, laughter and kung anu-ano pa.. We'll miss you.. God bless!"
+            ),
+            array(
+                'author'    => 'Clyde',
+                'content'   => "Boi goodluck sa imohang new endeavors and love life. Don't forget to keep in touch. We will miss you."
             )
         );
 
