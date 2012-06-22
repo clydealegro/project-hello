@@ -1,26 +1,20 @@
 {% extends 'ProjectHelloMainBundle::layout_main.html.twig' %}
 
+{% block body %}<body class="view-card">{% endblock %}
+
 {% block content %}
     <div id="slides">
         <div class="slides_container">
-            <div>
-                <h2>Neri Celeste</h2>
-                <blockquote>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book
-                </blockquote>
-            </div>
-            <div>
-                <h2>Clyde Alegro</h2>
-                <blockquote>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book
-                </blockquote>
-            </div>
-            <div>
-                <h2>Mercy Honor</h2>
-                <blockquote>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book
-                </blockquote>
-            </div>
+            {% block messages %}
+                {% set authors = [ 'Neri Celeste', 'Clyde Alegro', 'Mercy Honor' ] %}
+
+                {% for author in authors %}
+                    {% include 'ProjectHelloMainBundle:Fragments:message.html.twig' with {
+                        'author'  : author,
+                        'message' : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+                    } %}
+                {% endfor %}
+            {% endblock %}
         </div>
     </div>
 {% endblock %}

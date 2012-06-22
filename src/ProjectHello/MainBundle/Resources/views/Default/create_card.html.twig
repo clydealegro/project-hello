@@ -1,7 +1,14 @@
 {% extends 'ProjectHelloMainBundle::layout_main.html.twig' %}
 
 {% block content %}
-    <form action="" class="form-horizontal">
+    {% if create_card_action is not defined %}
+        {% set create_card_action = '' %}
+    {% endif %}
+
+    {% set textarea_classname = 'input-xlarge' %}
+    {% set text_classname = 'focused ' ~ textarea_classname %}
+
+    <form action="{{ create_card_action }}" class="form-horizontal">
         <h1>Create a card</h1>
 
         <fieldset>
@@ -9,13 +16,17 @@
             <div class="control-group">
                 <label class="control-label" for="creator-name">Creator Name</label>
                 <div class="controls">
-                    <input id="creator-name" type="text" class="focused input-xlarge" />
+                    {% block creator_name_field %}
+                        <input id="creator-name" type="text" class="{{ text_classname }}" />
+                    {% endblock %}
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label" for="creator-email">Creator Email</label>
                 <div class="controls">
-                    <input id="creator-email" type="text" class="focused input-xlarge" />
+                    {% block creator_email_field %}
+                        <input id="creator-email" type="text" class="{{ text_classname }}" />
+                    {% endblock %}
                 </div>
             </div>
         </fieldset>
@@ -25,13 +36,17 @@
             <div class="control-group">
                 <label class="control-label" for="recipient-name">Recipient Name</label>
                 <div class="controls">
-                    <input id="recipient-name" type="text" class="focused input-xlarge" />
+                    {% block recipient_name_field %}
+                        <input id="recipient-name" type="text" class="{{ text_classname }}" />
+                    {% endblock %}
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label" for="recipient-email">Recipient Email</label>
                 <div class="controls">
-                    <input id="recipient-email" type="text" class="focused input-xlarge" />
+                    {% block recipient_email_field %}
+                        <input id="recipient-email" type="text" class="{{ text_classname }}" />
+                    {% endblock %}
                 </div>
             </div>
         </fieldset>
@@ -40,42 +55,20 @@
             <div class="control-group">
                 <label class="control-label" for="creator-message">Creator Message</label>
                 <div class="controls">
-                    <textarea id="creator-message" class="input-xlarge"></textarea>
+                    {% block creator_message_field %}
+                        <textarea id="creator-message" class="{{ textarea_classname }}"></textarea>
+                    {% endblock %}
                 </div>
             </div>
         </fieldset>
         <fieldset>
             <legend>I will invite others to add messages to the card</legend>
-            <div class="collaborator">
-                <div class="control-group">
-                    <label class="control-label" for="collaborator-name">Collaborator Name</label>
-                    <div class="controls">
-                        <input id="collaborator-name" type="text" class="focused input-xlarge" />
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="collaborator-name">Collaborator Email</label>
-                    <div class="controls">
-                        <input id="collaborator-email" type="text" class="focused input-xlarge" />
-                    </div>
-                </div>
-            </div>
 
-            <div class="collaborator">
-                <div class="control-group">
-                    <label class="control-label" for="collaborator-name">Collaborator Name</label>
-                    <div class="controls">
-                        <input id="collaborator-name" type="text" class="focused input-xlarge" />
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="collaborator-name">Collaborator Email</label>
-                    <div class="controls">
-                        <input id="collaborator-email" type="text" class="focused input-xlarge" />
-                    </div>
-                </div>
-            </div>
-
+            {% for i in 1..2 %}
+                {% include 'ProjectHelloMainBundle:Fragments:collaborator_field.html.twig' with {
+                    text_classname : text_classname
+                } %}
+            {% endfor %}
 
             <div class="form-actions">
                 <button class="btn">Add a collaborator</button>
@@ -84,7 +77,9 @@
             <div class="control-group">
                 <label class="control-label" for="collaborator-instruction">Instructions</label>
                 <div class="controls">
-                    <textarea id="collaborator-instruction" class="input-xlarge"></textarea>
+                    {% block instruction_field %}
+                        <textarea id="collaborator-instruction" class="{{ textarea_classname }}"></textarea>
+                    {% endblock %}
                 </div>
             </div>
 
@@ -95,11 +90,12 @@
             <div class="control-group">
                 <label class="control-label" for="sending-date">Sending Date</label>
                 <div class="controls">
-                    <input id="sending-date" type="text" class="span2" value="06-22-2012" />
+                    {% block sending_date_field %}
+                        <input id="sending-date" type="text" class="span2" value="06-22-2012" />
+                    {% endblock %}
                 </div>
             </div>
         </fieldset>
-
 
         <div class="form-actions">
             <button class="btn btn-primary" type="submit">Create and Submit</button>

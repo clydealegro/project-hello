@@ -1,14 +1,30 @@
 {% extends 'ProjectHelloMainBundle::layout_main.html.twig' %}
 
 {% block content %}
-    <form action="" class="form-horizontal">
-        <h1>Hi Neri Celeste,</h1>
+    {% if add_message_action is not defined %}
+        {% set add_message_action = '' %}
+    {% endif %}
+
+    {% if collaborator_name is not defined %}
+        {% set collaborator_name = 'Neri Celeste' %}
+    {% endif %}
+
+    {% if recipient_name is not defined %}
+        {% set recipient_name = 'Mon Abilar' %}
+    {% endif %}
+
+    <form action="{{ add_message_action }}" class="form-horizontal" method="post">
+        <h1>Hi {{ collaborator_name }},</h1>
         <fieldset>
-            <legend>What is your message for Mon Abilar</legend>
+            <legend>What is your message for {{ recipient_name }}</legend>
             <div class="control-group">
                 <label class="control-label" for="collaborator-message">Message</label>
                 <div class="controls">
-                    <textarea id="collaborator-message" class="input-xxlarge"></textarea>
+                    {% block message_field %}
+                        {% set textarea_classname = 'input-xxlarge' %}
+
+                        <textarea id="collaborator-message" class="{{ textarea_classname }}"></textarea>
+                    {% endblock %}
                 </div>
             </div>
         </fieldset>
