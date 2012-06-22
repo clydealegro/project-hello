@@ -1,6 +1,20 @@
 {% extends 'ProjectHelloMainBundle::layout_main.html.twig' %}
 
+{% if recipient_name is not defined %}
+    {% set recipient_name = 'Mon Abilar' %}
+{% endif %}
+
 {% block body %}<body class="view-card">{% endblock %}
+
+{% block intro %}
+    <div class="intro">
+        <h1>{{ recipient_name }}</h1>
+        <p>
+            your friends sent you <br />
+            some greetings & messages
+        </p>
+    </div>
+{% endblock %}
 
 {% block content %}
     <div id="slides">
@@ -30,7 +44,10 @@
 
     <script type="text/javascript">
         $(function(){
-            $("#slides").slides();
+            $("#slides").slides({
+                generateNextPrev: true,
+                generatePagination: false
+            });
         });
     </script>
 {% endblock %}

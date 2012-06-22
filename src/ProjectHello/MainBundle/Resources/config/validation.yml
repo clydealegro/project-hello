@@ -1,0 +1,14 @@
+ProjectHello\CoreBundle\Entity\Message:
+    properties:
+        content:
+            - NotBlank: ~
+        dateCreated:
+            - NotBlank: ~
+            - Type: \DateTime
+
+ProjectHello\CoreBundle\Entity\User:
+    properties:
+        firstName:
+            - NotBlank: ~
+        emailAddress:
+            - NotBlank: ~

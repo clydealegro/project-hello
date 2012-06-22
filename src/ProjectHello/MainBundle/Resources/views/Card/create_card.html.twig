@@ -11,9 +11,12 @@
 {% endblock %}
 
 {% block recipient_name_field %}
+	{{ form_widget(form.recipients) }}
+	{#
 	{% for recipient in form.recipients %}
         <li>{{ form_row(recipient.firstName, { attr: { 'class': text_classname } }) }}</li>
     {% endfor %}
+    #}
 {% endblock %}
 
 {% block recipient_email_field %}
