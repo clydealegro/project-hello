@@ -4,4 +4,6 @@
 /vendor/*
 /web/bundles/*
 project-hello.esproj/
-.gitignore
+.DS_Store
+/web/js/*
+/web/css/*

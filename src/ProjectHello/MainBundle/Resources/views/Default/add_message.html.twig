@@ -1,0 +1,20 @@
+{% extends 'ProjectHelloMainBundle::layout_main.html.twig' %}
+
+{% block content %}
+    <form action="" class="form-horizontal">
+        <h1>Hi Neri Celeste,</h1>
+        <fieldset>
+            <legend>What is your message for Mon Abilar</legend>
+            <div class="control-group">
+                <label class="control-label" for="collaborator-message">Message</label>
+                <div class="controls">
+                    <textarea id="collaborator-message" class="input-xxlarge"></textarea>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Submit Message</button>
+        </div>
+    </form>
+{% endblock %}

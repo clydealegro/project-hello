@@ -1,0 +1,57 @@
+{% extends 'ProjectHelloMainBundle::layout.html.twig' %}
+
+{% block before_content %}
+    {{ parent() }}
+
+    <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+    <header class="top-header">
+
+    </header>
+
+    <div class="main" role="main" style="margin-top:50px;">
+        <div class="container">
+{% endblock %}
+
+{% block after_content %}
+        </div>
+    </div>
+
+    <footer></footer>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets
+        '@ProjectHelloMainBundle/Resources/public/css/bootstrap.css'
+        '@ProjectHelloMainBundle/Resources/public/css/style.css'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts
+        '@ProjectHelloMainBundle/Resources/public/js/libs/modernizr-2.5.3.min.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/bundles/projecthellomain/js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+
+    {% javascripts
+        '@ProjectHelloMainBundle/Resources/public/js/bootstrap.min.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script>
+        var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+{% endblock %}
