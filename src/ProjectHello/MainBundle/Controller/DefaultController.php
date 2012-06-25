@@ -105,7 +105,6 @@ class DefaultController extends Controller
                 'content'   => "Hey, Mon <br /> <br />Ahm they said your going to Cebu, and i would like to say good luck and have a great time in cebu its really a nice place...
                 even thought expensive it lifestyle hehehe basta maupay it work no worries ingat and GOD bless!!!...Have a nice trip! <br /><br /> --^^---^^---^---^--^--^^---"
             ),
-
             array(
                 'author'    => 'Vanessa',
                 'content'   => "Mon - my former crush haha! take care and God bless you always"
@@ -125,6 +124,10 @@ class DefaultController extends Controller
             array(
                 'author'    => 'Clyde',
                 'content'   => "Boi goodluck sa imohang new endeavors and love life. Don't forget to keep in touch. We will miss you."
+            ),
+            array(
+                'author'    => 'Noel',
+                'content'   => 'Hi Mon, good luck, sure naman ak na maging successful ka ngadto kay maupay tim work ethics ngan technical skills pero ayaw pagduro duro, burubisita la ngadi kay ma one game kita, hahahaha....'
             )
         );
 
