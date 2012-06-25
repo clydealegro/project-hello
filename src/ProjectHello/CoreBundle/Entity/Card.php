@@ -44,12 +44,12 @@ class Card
     private $deadline;
 
     /**
-     * @var AccountOwner $proponent
+     * @var CardCreator $creator
      *
-     * @ORM\ManyToOne(targetEntity="AccountOwner")
-     * @ORM\JoinColumn(name="proponent_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="CardCreator")
+     * @ORM\JoinColumn(name="creator_id", referencedColumnName="id", nullable=false)
      */
-    private $proponent;
+    private $creator;
 
     /**
      * @var ArrayCollection $recipients
@@ -141,23 +141,23 @@ class Card
     }
 
     /**
-     * Set proponent
+     * Set creator
      *
-     * @param AccountOwner $proponent
+     * @param CardCreator $creator
      */
-    public function setProponent(AccountOwner $proponent)
+    public function setCreator(CardCreator $creator)
     {
-        $this->proponent = $proponent;
+        $this->creator = $creator;
     }
 
     /**
-     * Get proponent
+     * Get creator
      *
-     * @return AccountOwner
+     * @return CardCreator
      */
-    public function getProponent()
+    public function getCreator()
     {
-        return $this->proponent;
+        return $this->creator;
     }
 
     /**

@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="smallint")
- * @ORM\DiscriminatorMap({1 = "AccountOwner", 2 = "MessageAuthor"})
+ * @ORM\DiscriminatorMap({1 = "CardCreator", 2 = "MessageAuthor"})
  */
 class User
 {

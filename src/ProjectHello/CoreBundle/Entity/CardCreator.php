@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ProjectHello\CoreBundle\Entity\AccountOwner
  *
- * @ORM\Table(name="account_owners")
- * @ORM\Entity(repositoryClass="ProjectHello\CoreBundle\Entity\AccountOwnerRepository")
+ * @ORM\Table(name="card_creators")
+ * @ORM\Entity(repositoryClass="ProjectHello\CoreBundle\Entity\CardCreatorRepository")
  */
-class AccountOwner extends User
+class CardCreator extends User
 {
     /**
      * @var string $password

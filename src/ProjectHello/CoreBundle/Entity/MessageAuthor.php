@@ -13,34 +13,34 @@ use Doctrine\ORM\Mapping as ORM;
 class MessageAuthor extends User
 {
     /**
-     * @var boolean $isVerified
+     * @var DateTime $isVerified
      *
-     * @ORM\Column(name="is_verified", type="boolean")
+     * @ORM\Column(name="date_verified", type="datetime")
      */
-    private $isVerified;
+    private $dateVerified;
 
     public function __construct()
     {
-        $this->isVerified = false;
+        $this->dateVerified = new \DateTime('now');
     }
 
     /**
-     * Set isVerified
+     * Set dateVerified
      *
-     * @param boolean $isVerified
+     * @param DateTime $dateVerified
      */
-    public function setIsVerified($isVerified)
+    public function setDateVerified($dateVerified)
     {
-        $this->isVerified = $isVerified;
+        $this->dateVerified = $dateVerified;
     }
 
     /**
-     * Get isVerified
+     * Get dateVerified
      *
-     * @return boolean 
+     * @return DateTime
      */
-    public function isVerified()
+    public function getDateVerified()
     {
-        return $this->isVerified;
+        return $this->dateVerified;
     }
 }
