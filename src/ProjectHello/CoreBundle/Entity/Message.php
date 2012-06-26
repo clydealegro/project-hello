@@ -22,39 +22,30 @@ class Message
     private $id;
 
     /**
-     * @var text $content
+     * @var string $message
      *
-     * @ORM\Column(name="content", type="text")
+     * @ORM\Column(name="message", type="string", length=5000)
      */
-    private $content;
+    private $message;
 
     /**
-     * @var datetime $dateCreated
+     * @var string $authorName
      *
-     * @ORM\Column(name="date_created", type="datetime")
+     * @ORM\Column(name="author_name", type="string", length=255)
      */
-    private $dateCreated;
+    private $authorName;
 
     /**
-     * @var Card $card
-     *
      * @ORM\ManyToOne(targetEntity="Card")
      * @ORM\JoinColumn(name="card_id", referencedColumnName="id", nullable=false)
      */
     private $card;
 
     /**
-     * @var MessageAuthor $author
-     *
-     * @ORM\ManyToOne(targetEntity="MessageAuthor")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
      */
     private $author;
-
-    public function __construct()
-    {
-        $this->dateCreated = new \DateTime('now');
-    }
 
     /**
      * Get id
@@ -67,43 +58,43 @@ class Message
     }
 
     /**
-     * Set content
+     * Set message
      *
-     * @param text $content
+     * @param string $message
      */
-    public function setContent($content)
+    public function setMessage($message)
     {
-        $this->content = $content;
+        $this->message = $message;
     }
 
     /**
-     * Get content
+     * Get message
      *
-     * @return text 
+     * @return string 
      */
-    public function getContent()
+    public function getMessage()
     {
-        return $this->content;
+        return $this->message;
     }
 
     /**
-     * Set dateCreated
+     * Set authorName
      *
-     * @param datetime $dateCreated
+     * @param string $authorName
      */
-    public function setDateCreated($dateCreated)
+    public function setAuthorName($authorName)
     {
-        $this->dateCreated = $dateCreated;
+        $this->authorName = $authorName;
     }
 
     /**
-     * Get dateCreated
+     * Get authorName
      *
-     * @return datetime 
+     * @return string 
      */
-    public function getDateCreated()
+    public function getAuthorName()
     {
-        return $this->dateCreated;
+        return $this->authorName;
     }
 
     /**
@@ -129,9 +120,9 @@ class Message
     /**
      * Set author
      *
-     * param MessageAuthor $author
+     * @param User $author
      */
-    public function setAuthor(MessageAuthor $author)
+    public function setAuthor(User $author)
     {
         $this->author = $author;
     }
@@ -139,7 +130,7 @@ class Message
     /**
      * Get author
      *
-     * @return MessageAuthor
+     * @return User
      */
     public function getAuthor()
     {

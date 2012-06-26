@@ -3,7 +3,6 @@
 namespace ProjectHello\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use \Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * ProjectHello\CoreBundle\Entity\Card
@@ -23,11 +22,11 @@ class Card
     private $id;
 
     /**
-     * @var smallint $type
+     * @var date $sendingDate
      *
-     * @ORM\Column(name="type", type="smallint")
+     * @ORM\Column(name="sending_date", type="date")
      */
-    private $type;
+    private $sendingDate;
 
     /**
      * @var datetime $dateCreated
@@ -37,37 +36,14 @@ class Card
     private $dateCreated;
 
     /**
-     * @var date $deadline
-     *
-     * @ORM\Column(name="deadline", type="date")
-     */
-    private $deadline;
-
-    /**
-     * @var CardCreator $creator
-     *
-     * @ORM\ManyToOne(targetEntity="CardCreator")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="creator_id", referencedColumnName="id", nullable=false)
      */
     private $creator;
 
-    /**
-     * @var ArrayCollection $recipients
-     *
-     * @ORM\ManyToMany(targetEntity="User")
-     * @ORM\JoinTable(
-     *      name="card_recipients", 
-     *      joinColumns={@ORM\JoinColumn(name="card_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="recipient_id", referencedColumnName="id")}
-     * )
-     */
-    private $recipients;
-
     public function __construct()
     {
         $this->dateCreated = new \DateTime('now');
-        $this->recipients = new ArrayCollection();
-        $this->type = 1; // temporary
     }
 
     /**
@@ -81,23 +57,23 @@ class Card
     }
 
     /**
-     * Set type
+     * Set sendingDate
      *
-     * @param smallint $type
+     * @param date $sendingDate
      */
-    public function setType($type)
+    public function setSendingDate($sendingDate)
     {
-        $this->type = $type;
+        $this->sendingDate = $sendingDate;
     }
 
     /**
-     * Get type
+     * Get sendingDate
      *
-     * @return smallint 
+     * @return date 
      */
-    public function getType()
+    public function getSendingDate()
     {
-        return $this->type;
+        return $this->sendingDate;
     }
 
     /**
@@ -121,31 +97,11 @@ class Card
     }
 
     /**
-     * Set deadline
-     *
-     * @param date $deadline
-     */
-    public function setDeadline($deadline)
-    {
-        $this->deadline = $deadline;
-    }
-
-    /**
-     * Get deadline
-     *
-     * @return date 
-     */
-    public function getDeadline()
-    {
-        return $this->deadline;
-    }
-
-    /**
      * Set creator
      *
-     * @param CardCreator $creator
+     * @param User $creator
      */
-    public function setCreator(CardCreator $creator)
+    public function setCreator(User $creator)
     {
         $this->creator = $creator;
     }
@@ -153,30 +109,10 @@ class Card
     /**
      * Get creator
      *
-     * @return CardCreator
+     * @return User
      */
     public function getCreator()
     {
         return $this->creator;
-    }
-
-    /**
-     * Get recipients
-     *
-     * @return ArrayCollection
-     */
-    public function getRecipients()
-    {
-        return $this->recipients;
-    }
-
-    /**
-     * Add recipient
-     *
-     * @param User $recipient
-     */
-    public function addRecipient(User $recipient)
-    {
-        $this->recipients[] = $recipient;
     }
 }
