@@ -3,28 +3,24 @@
 namespace ProjectHello\CoreBundle\Services;
 
 use ProjectHello\CoreBundle\Entity\User;
-use ProjectHello\CoreBundle\Entity\CardCreator;
-use ProjectHello\CoreBundle\Entity\MessageAuthor;
+use ProjectHello\CoreBundle\Entity\CardRepository;
 
 class CardService
 {
-	public function retrieveCardsCreatedByCreator(CardCreator $creator)
-	{
+	private $repo;
 
+	public function __construct(CardRepository $repo)
+	{
+		$this->repo = $repo;
 	}
 
-	public function retrieveCardsReceivedByRecipient(User $recipient)
+	public function retrieveCardsCreatedByUser(User $user)
 	{
-
+		return $this->repo->createQueryBuilderWhenSearchingForCardsCreatedByUser($user->getId())->getQuery()->getResult();
 	}
 
-	public function retrieveCardsWithMessagesWrittenByAuthor(MessageAuthor $author)
+	public function retrieveCardsReceivedByUser(User $user)
 	{
-
-	}
-
-	public function retrieveCardsOfType($type)
-	{
-		
+		return $this->repo->createQueryBuilderWhenSearchingForCardsReceivedByUser($user->getId())->getQuery()->getResult();
 	}
 }

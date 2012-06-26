@@ -3,22 +3,19 @@
 namespace ProjectHello\CoreBundle\Services;
 
 use ProjectHello\CoreBundle\Entity\Card;
-use ProjectHello\CoreBundle\Entity\MessageAuthor;
+use ProjectHello\CoreBundle\Entity\MessageRepository;
 
 class MessageService
 {
-    public function __construct()
-    {
+	private $repo;
 
-    }
+	public function __construct(MessageRepository $repo)
+	{
+		$this->repo = $repo;
+	}
 
     public function retrieveMessagesFoundInCard(Card $card)
     {
-
-    }
-
-    public function retrieveMessagesWrittenByAuthor(MessageAuthor $author)
-    {
-
+    	return $this->repo->createQueryBuilderWhenSearchingForMessagesOfCard($card->getId())->getQuery()->getResult();
     }
 }
