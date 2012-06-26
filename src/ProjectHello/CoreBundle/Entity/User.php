@@ -38,14 +38,9 @@ class User
     /**
      * @var datetime $dateRegistered
      *
-     * @ORM\Column(name="date_registered", type="datetime")
+     * @ORM\Column(name="date_registered", type="datetime", nullable=true)
      */
     private $dateRegistered;
-
-    public function __construct()
-    {
-        $this->dateRegistered = new \DateTime('now');
-    }
 
     /**
      * Get id

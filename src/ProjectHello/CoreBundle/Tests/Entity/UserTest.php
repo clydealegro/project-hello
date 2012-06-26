@@ -25,9 +25,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->user->setPassword($password);
         $this->assertEquals($password, $this->user->getPassword());
 
-        $today = new \DateTime('now');
-        $this->assertEquals($today, $this->user->getDateRegistered());
-
         $dateRegistered = new \DateTime('+1 month');
         $this->user->setDateRegistered($dateRegistered);
         $this->assertSame($dateRegistered, $this->card->getDateRegistered());
