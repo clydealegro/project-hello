@@ -12,4 +12,30 @@ use Doctrine\ORM\EntityRepository;
  */
 class CardRepository extends EntityRepository
 {
+	public function createQueryBuilderWhenSearchingForCardsCreatedByUser($userId)
+	{
+		$queryBuilder = $this->getEntityManager()->createQueryBuilder();
+
+		$queryBuilder
+			->select('card')
+			->from('ProjectHello\CoreBundle\Entity\Card', 'card')
+			->where('card.creator = :creator')
+			->setParameter('creator', $userId);
+
+		return $queryBuilder;
+	}
+
+	public function createQueryBuilderWhenSearchingForCardsReceivedByUser($userId)
+	{
+		$queryBuilder = $this->getEntityManager()->createQueryBuilder();
+
+		$queryBuilder
+			->select('card')
+			->from('ProjectHello\CoreBundle\Entity\CardRecipient', 'cardRecipient')
+			->innerJoin('cardRecipient.card', 'card')
+			->where('cardRecipient.recipient = :recipient')
+			->setParameter('recipient', $userId);
+
+		return $queryBuilder;
+	}
 }
