@@ -511,8 +511,8 @@ h6 {
 }
 
 .page-header {
-  padding-bottom: 17px;
-  margin: 18px 0;
+
+  margin: 18px 0 25px;
   border-bottom: 1px solid #eeeeee;
 }
 
@@ -736,7 +736,7 @@ legend {
   display: block;
   width: 100%;
   padding: 0;
-  margin-bottom: 27px;
+  margin-bottom: 15px;
   font-size: 19.5px;
   line-height: 36px;
   color: #333333;
@@ -1464,7 +1464,7 @@ select:focus:required:invalid:focus {
   margin-bottom: 9px;
 }
 
-legend + .control-group {
+legend + .control-group, legend + div .control-group {
   margin-top: 18px;
   -webkit-margin-top-collapse: separate;
 }
@@ -1474,8 +1474,8 @@ legend + .control-group {
   *zoom: 1;
 }
 
-.form-horizontal .control-group:last-child {
-    margin: 0;
+.form-horizontal div .control-group:last-child {
+    margin-bottom: 0;
 }
 
 .form-horizontal .control-group:before,
