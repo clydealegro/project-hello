@@ -9,10 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="ProjectHello\CoreBundle\Entity\UserRepository")
- *
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="discr", type="smallint")
- * @ORM\DiscriminatorMap({1 = "AccountOwner", 2 = "MessageAuthor"})
  */
 class User
 {
@@ -26,13 +22,6 @@ class User
     private $id;
 
     /**
-     * @var string $name
-     *
-     * @ORM\Column(name="name", type="string", length=200)
-     */
-    private $name;
-
-    /**
      * @var string $emailAddress
      *
      * @ORM\Column(name="email_address", type="string", length=100)
@@ -40,33 +29,27 @@ class User
     private $emailAddress;
 
     /**
+     * @var string $password
+     *
+     * @ORM\Column(name="password", type="string", length=1000, nullable=true)
+     */
+    private $password;
+
+    /**
+     * @var datetime $dateRegistered
+     *
+     * @ORM\Column(name="date_registered", type="datetime", nullable=true)
+     */
+    private $dateRegistered;
+
+    /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**
@@ -82,10 +65,50 @@ class User
     /**
      * Get emailAddress
      *
-     * @return string
+     * @return string 
      */
     public function getEmailAddress()
     {
         return $this->emailAddress;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set dateRegistered
+     *
+     * @param datetime $dateRegistered
+     */
+    public function setDateRegistered($dateRegistered)
+    {
+        $this->dateRegistered = $dateRegistered;
+    }
+
+    /**
+     * Get dateRegistered
+     *
+     * @return datetime 
+     */
+    public function getDateRegistered()
+    {
+        return $this->dateRegistered;
     }
 }

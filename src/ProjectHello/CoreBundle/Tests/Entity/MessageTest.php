@@ -18,23 +18,20 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->message->getId());
 
         $content = 'content';
-        $this->message->setContent($content);
-        $this->assertEquals($content, $this->message->getContent());
-
-        $today = new \DateTime('now');
-        $this->assertEquals($today, $this->message->getDateCreated());
-
-        $dateCreated = new \DateTime('-1 day');
-        $this->message->setDateCreated($dateCreated);
-        $this->assertSame($dateCreated, $this->message->getDateCreated());
+        $this->message->setMessage($content);
+        $this->assertEquals($content, $this->message->getMessage());
 
         $card = $this->getMock('ProjectHello\CoreBundle\Entity\Card');
         $this->message->setCard($card);
         $this->assertSame($card, $this->message->getCard());
 
-        $author = $this->getMock('ProjectHello\CoreBundle\Entity\MessageAuthor');
+        $author = $this->getMock('ProjectHello\CoreBundle\Entity\User');
         $this->message->setAuthor($author);
         $this->assertSame($author, $this->message->getAuthor());
+
+        $authorName = 'Dummy Author';
+        $this->message->setAuthorName($authorName);
+        $this->assertEquals($authorName, $this->message->getAuthorName());
     }
 
     protected function tearDown()

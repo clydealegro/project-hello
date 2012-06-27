@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class MessageRepository extends EntityRepository
 {
+	public function createQueryBuilderWhenSearchingForMessagesOfCard($cardId)
+	{
+		$queryBuilder = $this->getEntityManager()->createQueryBuilder();
+
+		$queryBuilder
+			->select('message')
+			->from('ProjectHello\CoreBundle\Entity\Message', 'message')
+			->where('message.card = :card')
+			->setParameter('card', $cardId);
+
+		return $queryBuilder;
+	}
 }

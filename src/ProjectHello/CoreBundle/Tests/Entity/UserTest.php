@@ -17,13 +17,17 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertNull($this->user->getId());
 
-        $name = 'Dummy User';
-        $this->user->setName($name);
-        $this->assertEquals($name, $this->user->getName());
-
         $emailAddress = 'dummy@user.com';
         $this->user->setEmailAddress($emailAddress);
         $this->assertEquals($emailAddress, $this->user->getEmailAddress());
+
+        $password = 'password';
+        $this->user->setPassword($password);
+        $this->assertEquals($password, $this->user->getPassword());
+
+        $dateRegistered = new \DateTime('+1 month');
+        $this->user->setDateRegistered($dateRegistered);
+        $this->assertSame($dateRegistered, $this->card->getDateRegistered());
     }
 
     protected function tearDown()
