@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ProjectHello\CoreBundle\Entity\Card;
 use ProjectHello\CoreBundle\Entity\User;
 use ProjectHello\CoreBundle\Form\Type\CardType;
+use ProjectHello\CoreBundle\Form\Type\UserType;
 use Symfony\Component\HttpFoundation\Request;
 use ProjectHello\CoreBundle\Services\CardService;
 
@@ -139,6 +140,11 @@ class DefaultController extends Controller
 
     public function registerAccountAction()
     {
-        return $this->render('ProjectHelloMainBundle:Card:register_account.html.twig');
+        $user = new User();
+        $form = $this->createForm(new UserType(), $user);
+
+        return $this->render('ProjectHelloMainBundle:Card:register_account.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
 }

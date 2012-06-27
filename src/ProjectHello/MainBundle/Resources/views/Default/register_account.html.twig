@@ -1,28 +1,40 @@
 {% extends 'ProjectHelloMainBundle::layout_main.html.twig' %}
 
+{% if register_account_action is not defined %}
+    {% set register_account_action = '' %}
+{% endif %}
+
+{% set class_name = 'focused input-xlarge' %}
+
 {% block content %}
     <div class="page-header">
         <h1>Register Now</h1>
     </div>
     
-    <form action="" class="form-horizontal">                                
+    <form action="{{ register_account_action }}" class="form-horizontal" method="POST">                                
         <fieldset>                   
             <div class="control-group">
                 <label class="control-label" for="email">Email</label>
                 <div class="controls">
-                    <input id="email" type="text" class="focused input-xlarge" />
+                    {% block register_email_field %}
+                        <input id="email" type="text" class="{{ class_name}} " />
+                    {% endblock %}
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label" for="password">Password</label>
                 <div class="controls">
-                    <input id="password" type="text" class="focused input-xlarge" />
+                    {% block register_password_field %}
+                        <input id="password" type="text" class="{{ class_name}}" />
+                    {% endblock %}
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label" for="confirm-password">Confirm Password</label>
                 <div class="controls">
-                    <input id="confirm-password" type="text" class="focused input-xlarge" />
+                    {% block register_confirm_password_field %}
+                        <input id="confirm-password" type="text" class="{{ class_name}}" />
+                    {% endblock %}
                 </div>
             </div>
 
