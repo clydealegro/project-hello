@@ -136,4 +136,9 @@ class DefaultController extends Controller
             'recipientName' => 'Mon Abilar'
         ));
     }
+
+    public function registerAccountAction()
+    {
+        return $this->render('ProjectHelloMainBundle:Card:register_account.html.twig');
+    }
 }

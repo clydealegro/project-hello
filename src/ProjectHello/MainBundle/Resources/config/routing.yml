@@ -9,3 +9,7 @@ add_message:
 view_card:
     pattern: /view-card
     defaults: { _controller: ProjectHelloMainBundle:Default:viewCard }
+
+register_account:
+    pattern: /register
+    defaults: { _controller: ProjectHelloMainBundle:Default:registerAccount }

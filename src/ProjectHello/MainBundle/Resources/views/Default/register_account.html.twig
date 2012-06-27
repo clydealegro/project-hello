@@ -1,0 +1,35 @@
+{% extends 'ProjectHelloMainBundle::layout_main.html.twig' %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>Register Now</h1>
+    </div>
+    
+    <form action="" class="form-horizontal">                                
+        <fieldset>                   
+            <div class="control-group">
+                <label class="control-label" for="email">Email</label>
+                <div class="controls">
+                    <input id="email" type="text" class="focused input-xlarge" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="password">Password</label>
+                <div class="controls">
+                    <input id="password" type="text" class="focused input-xlarge" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="confirm-password">Confirm Password</label>
+                <div class="controls">
+                    <input id="confirm-password" type="text" class="focused input-xlarge" />
+                </div>
+            </div>
+
+        </fieldset>
+                        
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </form>
+{% endblock %}
