@@ -5,6 +5,12 @@ framework:
     test: ~
     session:
         storage_id: session.storage.filesystem
+        
+doctrine:
+    dbal:
+        driver: pdo_sqlite
+        path: :memory:
+        memory: true
 
 web_profiler:
     toolbar: false
