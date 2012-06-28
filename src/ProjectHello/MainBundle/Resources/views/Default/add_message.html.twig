@@ -1,3 +1,5 @@
+{% import "ProjectHelloMainBundle:Fragments:form_macros.html.twig" as forms %}
+
 {% extends 'ProjectHelloMainBundle::layout_main.html.twig' %}
 
 {% block content %}
@@ -17,16 +19,9 @@
         <h1>Hi {{ collaborator_name }},</h1>
         <fieldset>
             <legend>What is your message for {{ recipient_name }}</legend>
-            <div class="control-group">
-                <label class="control-label" for="collaborator-message">Message</label>
-                <div class="controls">
-                    {% block message_field %}
-                        {% set textarea_classname = 'input-xxlarge' %}
-
-                        <textarea id="collaborator-message" class="{{ textarea_classname }}"></textarea>
-                    {% endblock %}
-                </div>
-            </div>
+            {% block message_field %}
+                {{ forms.extra_large_textarea('collaborator-message', '', 'Message') }}
+            {% endblock %}
         </fieldset>
 
         <div class="form-actions">

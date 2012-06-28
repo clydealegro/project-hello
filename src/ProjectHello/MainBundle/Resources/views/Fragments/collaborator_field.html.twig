@@ -1,18 +1,7 @@
+{% import "ProjectHelloMainBundle:Fragments:form_macros.html.twig" as forms %}
+
 <div class="collaborator">
-    <div class="control-group">
-        <label class="control-label" for="collaborator-name">Collaborator Name</label>
-        <div class="controls">
-            {% block collaborator_name_field %}
-                <input id="collaborator-name" type="text" class="{{ text_classname }}" />
-            {% endblock %}
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label" for="collaborator-name">Collaborator Email</label>
-        <div class="controls">
-            {% block collaborator_email_field %}
-                <input id="collaborator-email" type="text" class="{{ text_classname }}" />
-            {% endblock %}
-        </div>
-    </div>
+    {{ forms.input_text('collaborator-name', '', 'Collaborator Name') }}
+
+    {{ forms.input_text('collaborator-email', '', 'Collaborator Email') }}
 </div>

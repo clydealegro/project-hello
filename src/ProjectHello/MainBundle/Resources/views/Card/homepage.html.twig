@@ -1,0 +1,26 @@
+{% import "ProjectHelloMainBundle:Fragments:form_macros.html.twig" as forms %}
+
+{% extends 'ProjectHelloMainBundle:Default:homepage.html.twig' %}
+
+{% set register_account_action = '' %}
+{% set login_account_action = '' %}
+
+{% block register_email_field %}
+    {{ forms.email('user_emailAddress', 'user[emailAddress', 'Email') }}
+{% endblock %}
+
+{% block register_password_field %}
+    {{ forms.password('user_password', 'user[password]', 'Password') }}
+{% endblock %}
+
+{% block register_confirm_password_field %}
+    {{ forms.password('user_confirmPassword', 'user[confirmPassword]', 'Confirm Password') }}
+{% endblock %}
+
+{% block login_email_field %}
+    {{ forms.email('email', '_username', 'Email') }}
+{% endblock %}
+
+{% block login_password_field %}
+    {{ forms.password('password', '_password', 'Password') }}
+{% endblock %}
