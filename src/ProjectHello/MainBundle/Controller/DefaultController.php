@@ -15,7 +15,7 @@ class DefaultController extends Controller
 {
     public function homepageAction() 
     {
-        return $this->render('ProjectHelloMainBundle:Default:homepage.html.twig');
+        return $this->render('ProjectHelloMainBundle:Card:homepage.html.twig');
     }
     
     public function dashboardAction() 
@@ -146,16 +146,6 @@ class DefaultController extends Controller
         return $this->render('ProjectHelloMainBundle:Card:view_card.html.twig', array(
             'messages'      => $messages,
             'recipientName' => 'Mon Abilar'
-        ));
-    }
-
-    public function registerAccountAction()
-    {
-        $user = new User();
-        $form = $this->createForm(new UserType(), $user);
-
-        return $this->render('ProjectHelloMainBundle:Card:register_account.html.twig', array(
-            'form' => $form->createView()
         ));
     }
 }
