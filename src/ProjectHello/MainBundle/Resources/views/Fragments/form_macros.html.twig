@@ -1,0 +1,29 @@
+{% macro input_text(id, name, label, type) %}
+	<div class="control-group">
+        <label class="control-label" for="{{ id|default('') }}">{{ label }}</label>
+        <div class="controls">
+            <input id="{{ id|default('') }}" name="{{ name|default('') }}" type="{{ type|default('text') }}" class="focused input-xlarge" />
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro password(id, name, label) %}
+	{{ _self.input_text(id, name, label, 'password') }}
+{% endmacro %}
+
+{% macro email(id, name, label) %}
+	{{ _self.input_text(id, name, label, 'email') }}
+{% endmacro %}
+
+{% macro textarea(id, name, label, class) %}
+	<div class="control-group">
+        <label class="control-label" for="{{ id|default('')}}">{{ label }}</label>
+        <div class="controls">
+            <textarea id="{{ id|default('') }}" name="{{ name|default('') }}" class="{{ class|default('input-xlarge') }}"></textarea>
+        </div>
+    </div>
+{% endmacro%}
+
+{% macro extra_large_textarea(id, name, label) %}
+	{{ _self.textarea(id, name, label, 'input-xxlarge') }}
+{% endmacro %}
