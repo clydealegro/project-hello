@@ -12,10 +12,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class CardRepository extends AllEntityRepository
 {
-    public function createQueryBuilderWhenSearchingForCardsCreatedByUser($userId, $dqlParams)
+    public function createQueryBuilderWhenSearchingForCardsCreatedByUser($userId, $dqlParams = array())
     {
-        var_dump($dqlParams); exit;
-
         $queryBuilder = $this->createGenericQueryBuilder($dqlParams);
 
         $queryBuilder

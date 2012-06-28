@@ -4,15 +4,16 @@ namespace ProjectHello\CoreBundle\Tests\Services;
 
 use ProjectHello\CoreBundle\Entity\User;
 use ProjectHello\CoreBundle\Entity\Card;
-//use ProjectHello\CoreBundle\Entity\Message;
+use ProjectHello\CoreBundle\Entity\CardRecipient;
 use ProjectHello\CoreBundle\Services\CardService;
 use ProjectHello\CoreBundle\Tests\BaseFunctionalTestCase;
 
 class CardServiceTest extends BaseFunctionalTestCase
 {
-    //private $card;
     private $user;
+    private $cardA;
     private $service;
+    private $recipient;
     private $entityManager;
 
     protected function setUp()
@@ -30,24 +31,40 @@ class CardServiceTest extends BaseFunctionalTestCase
         $this->user->setDateRegistered(new \DateTime('now'));
         $this->entityManager->persist($this->user);
 
-        $cardA = new Card();
-        $cardA->setSendingDate(new \DateTime('+6 month'));
-        $cardA->setCreator($this->user);
-        $this->entityManager->persist($cardA);
+        $this->cardA = new Card();
+        $this->cardA->setSendingDate(new \DateTime('+6 month'));
+        $this->cardA->setCreator($this->user);
+        $this->entityManager->persist($this->cardA);
 
         $cardB = new Card();
         $cardB->setSendingDate(new \DateTime('+12 month'));
         $cardB->setCreator($this->user);
         $this->entityManager->persist($cardB);
 
+        $this->recipient = new User();
+        $this->recipient->setEmailAddress('recipient@email.com');
+        $this->entityManager->persist($this->recipient);
+
+        $cardRecipient = new CardRecipient();
+        $cardRecipient->setRecipient($this->recipient);
+        $cardRecipient->setRecipientName('Dummy Recipient');
+        $cardRecipient->setCard($this->cardA);
+        $this->entityManager->persist($cardRecipient);
+
+        $cardRecipient = new CardRecipient();
+        $cardRecipient->setRecipient($this->recipient);
+        $cardRecipient->setRecipientName('Dummy Recipient');
+        $cardRecipient->setCard($cardB);
+        $this->entityManager->persist($cardRecipient);
+
         $this->entityManager->flush();
     }
 
-    /*public function testRetrieveCardsCreatedByUser()
+    public function testRetrieveCardsCreatedByUser()
     {
         $cards = $this->service->retrieveCardsCreatedByUser($this->user);
         $this->assertEquals(2, count($cards));
-    }*/
+    }
 
     public function testRetrieveCardsCreatedByUserSortedByDescendingSendingDate()
     {
@@ -56,26 +73,55 @@ class CardServiceTest extends BaseFunctionalTestCase
             'order'  => 'DESC'
         ));
 
-        $this->assertGreaterThanOrEqual($cards[0]->getSendingDate(), $cards[1]->getSendingDate());
+        $this->assertGreaterThanOrEqual($cards[1]->getSendingDate(), $cards[0]->getSendingDate());
     }
 
-    /*public function testRetrieveMessagesFoundInCardLimitedByAnOffsetAndLimitAndSortedByDescendingAuthorName()
+    public function testRetrieveCardsCreatedByUserLimitedByAnOffsetAndSortedByDescendingSendingDate()
     {
-        $messages = $this->service->retrieveMessagesFoundInCard($this->card, array(
-            'offset' => 1,
-            'limit'  => 1,
-            'sortBy' => 'message.authorName',
+        $cards = $this->service->retrieveCardsCreatedByUser($this->user, array(
+            'sortBy' => 'card.sendingDate',
+            'order'  => 'DESC',
+            'offset' => 1
+        ));
+
+        $this->assertEquals(1, count($cards));
+        $this->assertSame($this->cardA, $cards[0]);
+    }
+
+    public function testRetrieveCardsReceivedByUser()
+    {
+        $cards = $this->service->retrieveCardsReceivedByUser($this->recipient);
+        $this->assertEquals(2, count($cards));
+    }
+
+    public function testRetrieveCardsReceivedByUserSortedByDescendingSendingDate()
+    {
+        $cards = $this->service->retrieveCardsReceivedByUser($this->recipient, array(
+            'sortBy' => 'card.sendingDate',
             'order'  => 'DESC'
         ));
 
-        $this->assertEquals(1, count($messages));
-        $this->assertEquals('dummy user A', $messages[0]->getAuthorName());
-    }*/
+        $this->assertGreaterThanOrEqual($cards[1]->getSendingDate(), $cards[0]->getSendingDate());
+    }
+
+    public function testRetrieveCardsReceivedByUserSortedByDescendingSendingDateAndLimitedByAnOffset()
+    {
+        $cards = $this->service->retrieveCardsReceivedByUser($this->recipient, array(
+            'sortBy' => 'card.sendingDate',
+            'order'  => 'DESC',
+            'offset' => 1
+        ));
+
+        $this->assertEquals(1, count($cards));
+        $this->assertSame($this->cardA, $cards[0]);
+    }
 
     protected function tearDown()
     {
         $this->user = null;
+        $this->cardA = null;
         $this->service = null;
+        $this->recipient = null;
 
         parent::tearDown();
     }
