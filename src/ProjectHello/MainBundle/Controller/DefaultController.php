@@ -18,6 +18,12 @@ class DefaultController extends Controller
         return $this->render('ProjectHelloMainBundle:Default:homepage.html.twig');
     }
     
+    public function dashboardAction() 
+    {
+        return $this->render('ProjectHelloMainBundle:Default:dashboard.html.twig');
+    }
+
+
     public function createCardAction()
     {
         $card = new Card();
