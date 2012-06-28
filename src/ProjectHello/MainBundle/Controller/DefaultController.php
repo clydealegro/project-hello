@@ -13,6 +13,11 @@ use ProjectHello\CoreBundle\Services\CardService;
 
 class DefaultController extends Controller
 {
+    public function homepageAction() 
+    {
+        return $this->render('ProjectHelloMainBundle:Default:homepage.html.twig');
+    }
+    
     public function createCardAction()
     {
         $card = new Card();

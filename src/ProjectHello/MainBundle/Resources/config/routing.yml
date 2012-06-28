@@ -1,5 +1,9 @@
-create_card:
+homepage:
     pattern: /
+    defaults: { _controller: ProjectHelloMainBundle:Default:homepage }
+
+create_card:
+    pattern: /create-card
     defaults: { _controller: ProjectHelloMainBundle:Default:createCard }
 
 add_message:

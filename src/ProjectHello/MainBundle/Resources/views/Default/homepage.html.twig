@@ -1,0 +1,112 @@
+{% extends 'ProjectHelloMainBundle::layout_main.html.twig' %}
+
+{% block content %}
+
+    <h1>Project-Hello</h1>
+    <p>Create a card add your message and send it to someone.</p>
+    
+    <div class="actions">
+        <a id="registrationBtn" href="#" data-reveal-id="registrationModal">Register Now!</a>
+        <a id="loginBtn" data-reveal-id="loginModal" href="#">Log-in</a>
+    </div>
+    
+    <div id="registrationModal" class="reveal-modal">
+        <h1>Register Now</h1>                    
+        <p>
+            <form action="" class="form-horizontal">                                
+                <fieldset>                   
+                    <div class="control-group">
+                        <label class="control-label" for="email">Email</label>
+                        <div class="controls">
+                            <input id="email" type="text" class="focused input-xlarge" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="password">Password</label>
+                        <div class="controls">
+                            <input id="password" type="text" class="focused input-xlarge" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="confirm-password">Confirm Password</label>
+                        <div class="controls">
+                            <input id="confirm-password" type="text" class="focused input-xlarge" />
+                        </div>
+                    </div>
+    
+                </fieldset>
+                                
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </div>            
+            </form>                                    
+        </p>
+       <a class="close-reveal-modal">&#215;</a>         
+    </div>
+    
+    <div id="loginModal" class="reveal-modal">
+        <h1>Login</h1>
+        <p>
+            <form action="" class="form-horizontal">                                
+                <fieldset>                   
+                    <div class="control-group">
+                        <label class="control-label" for="email">Email</label>
+                        <div class="controls">
+                            <input id="email" type="text" class="focused input-xlarge" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="password">Password</label>
+                        <div class="controls">
+                            <input id="password" type="text" class="focused input-xlarge" />
+                        </div>
+                    </div>    
+                </fieldset>
+                                
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="submit">Login</button>
+                </div>            
+            </form>    
+        </p>
+        <a class="close-reveal-modal">&#215;</a>
+    </div>
+       
+        
+{% endblock %}
+
+{% block stylesheets %}  
+    {{ parent() }}
+    
+    {% stylesheets
+        '@ProjectHelloMainBundle/Resources/public/css/reveal.css'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    
+{% endblock %}
+
+{% block javascripts %} 
+    {{ parent() }}
+    
+    {% javascripts
+        '@ProjectHelloMainBundle/Resources/public/js/libs/jquery.reveal.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    
+    <script type="text/javascript">
+    $(document).ready(function() {
+         $('#registrationBtn').click(function(e) {
+              e.preventDefault();
+    	      $('#registrationModal').reveal();
+         });
+         
+         $('#loginBtn').click(function(e) {
+              e.preventDefault();
+              $('#loginModal').reveal();
+         });
+    });
+    
+    
+{% endblock %}
+
