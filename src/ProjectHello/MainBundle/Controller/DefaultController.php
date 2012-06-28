@@ -13,12 +13,29 @@ use ProjectHello\CoreBundle\Services\CardService;
 
 class DefaultController extends Controller
 {
+    public function mailDemoAction()
+    {
+        echo "wee";
+        
+        $message = \Swift_Message::newInstance();
+        $message->setSubject("test");
+        $message->setFrom("johnsmith@example.com");
+        $message->setTo("czar.pino@goabroad.com");
+        $message->setBody("The quick brown fox jumps over the lazy dog.");
+        
+        $this->get('mailer')->send($message);
+        
+        return 0;
+    }
+    
     public function createCardAction()
     {
-        $card = new Card();
-        $form = $this->createForm(new CardType(), $card);
-
-        $request = $this->getRequest();
+        return $this->forward('ProjectHelloMainBundle:Default:mailDemo');
+        
+//        $card = new Card();
+//        $form = $this->createForm(new CardType(), $card);
+//
+//        $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST') {
 	        /*$form->bindRequest($request);
