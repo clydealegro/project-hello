@@ -13,12 +13,12 @@ use ProjectHello\CoreBundle\Services\CardService;
 
 class DefaultController extends Controller
 {
-    public function homepageAction() 
+    public function homepageAction()
     {
         return $this->render('ProjectHelloMainBundle:Card:homepage.html.twig');
     }
-    
-    public function dashboardAction() 
+
+    public function dashboardAction()
     {
         return $this->render('ProjectHelloMainBundle:Default:dashboard.html.twig');
     }
@@ -32,11 +32,11 @@ class DefaultController extends Controller
         $request = $this->getRequest();
 
         if ($request->getMethod() == 'POST') {
-	        /*$form->bindRequest($request);
-	
-	        if ($form->isValid()) {
-	            try {
-		            $entityManager = $this->getDoctrine()->getEntityManager();
+            /*$form->bindRequest($request);
+
+            if ($form->isValid()) {
+                try {
+                    $entityManager = $this->getDoctrine()->getEntityManager();
                     //insert card into database
                     $entityManager->persist($card);
                     $entityManager->flush();
@@ -59,18 +59,18 @@ class DefaultController extends Controller
 
                     $this->get('session')->setFlash('card-notice', 'Your card has been sent to your collaborators. Thank you!');
 
-	            }
-	            catch(\Exception $e) {
-		            $this->get('session')->setFlash('card-notice', 'An error occurred!');
-	            }
-	            
-	            $this->get('session')->setFlash('card-notice', 'Please fill all required fields!');
-	            return $this->redirect($this->generateUrl('card_create'));
-	        }*/
-	        return $this->redirect($this->generateUrl('add_message'));
-	    }
-	    return $this->render('ProjectHelloMainBundle:Default:create_card.html.twig');
-	    
+                }
+                catch(\Exception $e) {
+                    $this->get('session')->setFlash('card-notice', 'An error occurred!');
+                }
+
+                $this->get('session')->setFlash('card-notice', 'Please fill all required fields!');
+                return $this->redirect($this->generateUrl('card_create'));
+            }*/
+            return $this->redirect($this->generateUrl('add_message'));
+        }
+        return $this->render('ProjectHelloMainBundle:Default:create_card.html.twig');
+
         /*return $this->render('ProjectHelloMainBundle:Card:create_card.html.twig', array(
             'form' => $form->createView()
         ));*/
@@ -147,5 +147,22 @@ class DefaultController extends Controller
             'messages'      => $messages,
             'recipientName' => 'Mon Abilar'
         ));
+    }
+
+    // an pag-verify na ini hit email
+    public function registerUserAction($emailAddress, $password)
+    {
+        /*$request = $this->get('request')->request->get('user');
+
+        $emailAddress = $request['emailAddress'];
+        $password = $request['password'];*/
+
+        $user = $this->get('user_service')->retrieveUserByEmailAddress($emailAddress);
+
+        if ($user) {
+
+        } else {
+
+        }
     }
 }
