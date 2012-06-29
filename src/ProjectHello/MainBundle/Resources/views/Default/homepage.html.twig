@@ -2,10 +2,6 @@
 
 {% extends 'ProjectHelloMainBundle::layout_main.html.twig' %}
 
-{% if register_account_action is not defined %}
-    {% set register_account_action = '' %}
-{% endif %}
-
 {% if login_account_action is not defined %}
     {% set login_account_action = '' %}
 {% endif %}
@@ -22,18 +18,19 @@
         <p>Send it to someone</p>
         <br />
         <p>Enjoy.</p>
-    
+
         <div class="actions">
             <a class="btn btn-xlarge btn-primary" id="registrationBtn" href="#" data-reveal-id="myModal" data-animation="fadeAndPop" data-animationspeed="300" data-closeonbackgroundclick="true" data-dismissmodalclass="close-reveal-modal">Register Now!</a>
             <a class="btn btn-xlarge" id="loginBtn" href="#" data-reveal-id="myModal" data-animation="fadeAndPop" data-animationspeed="300" data-closeonbackgroundclick="true" data-dismissmodalclass="close-reveal-modal">Log-in</a>
         </div>
-    
+
+        {% block hidden_action_links %} {% endblock %}
     </div>
 
     <div id="registrationModal" class="reveal-modal">
         <h1>Register Now</h1>
         <p>
-            <form action="{{ register_account_action }}" class="form-horizontal" method="POST">
+            <form class="form-horizontal" method="POST">
                 <fieldset>
                     {% block register_email_field %}
                         {{ forms.email('email', '', 'Email') }}
@@ -50,7 +47,10 @@
 
                 <div class="form-actions">
                     <button class="btn btn-primary" type="submit">Submit</button>
-                    <em style="display: none">Registering account...</em>
+                    <em style="display: none">
+                        <img src="/bundles/projecthellomain/img/ajax-loader.gif" />
+                        Registering account...
+                    </em>
                 </div>
             </form>
         </p>
@@ -103,33 +103,27 @@
     {% endjavascripts %}
 
     <script type="text/javascript">
-    $(document).ready(function() {
-         $('#registrationBtn').click(function(e) {
-              e.preventDefault();
-              $('#registrationModal').reveal({
-                  animation: 'fadeAndPop',                   //fade, fadeAndPop, none
-                  animationspeed: 300,                       //how fast animtions are
-                  closeonbackgroundclick: true,              //if you click background will modal close?
-                  dismissmodalclass: 'close-reveal-modal'    //the class of a button or element that will close an open modal
-              });
-         });
+        $(document).ready(function() {
+             $('#registrationBtn').click(function(e) {
+                  e.preventDefault();
+                  $('#registrationModal').reveal({
+                      animation: 'fadeAndPop',                   //fade, fadeAndPop, none
+                      animationspeed: 300,                       //how fast animtions are
+                      closeonbackgroundclick: true,              //if you click background will modal close?
+                      dismissmodalclass: 'close-reveal-modal'    //the class of a button or element that will close an open modal
+                  });
+             });
 
-         $('#loginBtn').click(function(e) {
-              e.preventDefault();
-              $('#loginModal').reveal({
-                  animation: 'fadeAndPop',                   //fade, fadeAndPop, none
-                  animationspeed: 300,                       //how fast animtions are
-                  closeonbackgroundclick: true,              //if you click background will modal close?
-                  dismissmodalclass: 'close-reveal-modal'    //the class of a button or element that will close an open modal
-              });
-         });
-    });
-
-
-
+             $('#loginBtn').click(function(e) {
+                  e.preventDefault();
+                  $('#loginModal').reveal({
+                      animation: 'fadeAndPop',                   //fade, fadeAndPop, none
+                      animationspeed: 300,                       //how fast animtions are
+                      closeonbackgroundclick: true,              //if you click background will modal close?
+                      dismissmodalclass: 'close-reveal-modal'    //the class of a button or element that will close an open modal
+                  });
+             });
+        });
     </script>
-
-
-
 {% endblock %}
 

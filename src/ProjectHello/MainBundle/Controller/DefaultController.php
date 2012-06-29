@@ -10,6 +10,7 @@ use ProjectHello\CoreBundle\Form\Type\UserType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use ProjectHello\CoreBundle\Services\CardService;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 
 class DefaultController extends Controller
@@ -90,21 +91,21 @@ class DefaultController extends Controller
     public function viewCardAction()
     {
         $request = $this->getRequest();
-        
+
         $cardRepo = $this->getDoctrine()->getRepository(
                 'ProjectHelloCoreBundle:Card');
         $card = $cardRepo->find($request->get('card_id'));
-        
+
         if (! $card) {
-            
+
             throw $this->createNotFoundException(
                     'Sorry the page does not exist.');
         }
-        
+
         $messageRepo = $this->getDoctrine()->getRepository(
                 'ProjectHelloCoreBundle:Message');
         $messages = $messageRepo->findBy(array ('card' => $card->getId()));
-        
+
         $crRepo = $this->getDoctrine()->getRepository(
                 'ProjectHelloCoreBundle:CardRecipient');
         $cardRecipient = $crRepo->findOneBy(array ('card' => $card->getId()));
@@ -189,7 +190,12 @@ class DefaultController extends Controller
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // login user
+            // log in user
+            $this->get('security.context')->setToken(
+                new UsernamePasswordToken($user, $user->getPassword(), 'main', array('ROLE_MEMBER'))
+            );
+
+            $this->get('session')->set('user', $this->get('security.context')->getToken()->getUser());
 
             return $this->redirect($this->generateUrl('dashboard'));
         } else {
