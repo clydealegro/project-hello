@@ -24,3 +24,6 @@ services:
 
     string_util:
         class: ProjectHello\CoreBundle\Services\StringUtility
+    
+    card_recipient_service:
+        class:  ProjectHello\CoreBundle\Services\CardRecipientService

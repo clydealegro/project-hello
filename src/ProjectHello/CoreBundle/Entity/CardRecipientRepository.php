@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class CardRecipientRepository extends EntityRepository
 {
+	public function createQueryBuilderWhenSearchingForCardRecipientsByCard($cardId, $dqlParams = array())
+    {
+        $queryBuilder = $this->createGenericQueryBuilder($dqlParams);
+
+        $queryBuilder
+            ->select('card_recipient')
+            ->from('ProjectHello\CoreBundle\Entity\CardRecipient', 'card_recipient')
+            ->where('card.id = :card_id')
+            ->setParameter('card_id', $cardId);
+
+        return $queryBuilder;
+    }
 }

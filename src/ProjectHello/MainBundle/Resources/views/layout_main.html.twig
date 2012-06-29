@@ -15,7 +15,7 @@
                         <div class="nav-collapse collapse pull-right">
                             <ul class="nav">
                                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                                    <li>Logged in as {{ app.user.username }} </li>
+                                    <li><span>Logged in as {{ app.user.username }}</span></li>
                                     <li><a href="{{ path('logout') }}">Logout</a></li>
                                 {% endif %}
                             </ul>
