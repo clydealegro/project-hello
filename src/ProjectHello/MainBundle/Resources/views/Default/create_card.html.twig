@@ -25,10 +25,6 @@
             {% block creator_name_field %}
                 {{ forms.input_text('creator-name', '', 'Creator Name') }}
             {% endblock %}
-
-            {% block creator_email_field %}
-                {{ forms.email('creator-email', '', 'Creator Email') }}
-            {% endblock %}
         </fieldset>
 
         <fieldset>
@@ -53,15 +49,19 @@
         <fieldset>
             <legend>I will invite others to add messages to the card</legend>
 
-            {% for i in 1..2 %}
-                {% include 'ProjectHelloMainBundle:Fragments:collaborator_field.html.twig' %}
-            {% endfor %}
+            {% block collaborator_field %}
+	            {% for i in 1..2 %}
+	                {% include 'ProjectHelloMainBundle:Fragments:collaborator_field.html.twig' %}
+	            {% endfor %}
+            {% endblock %}
 
             <div class="form-actions">
                 <button class="btn" id="add-collaborator-btn">Add a collaborator</button>
             </div>
 
-            {{ forms.textarea('collaborator-instruction', '', 'Instructions') }}
+            {% block instruction_field %}
+	            {{ forms.textarea('collaborator-instruction', '', 'Instructions') }}
+            {% endblock %}
 
         </fieldset>
 
