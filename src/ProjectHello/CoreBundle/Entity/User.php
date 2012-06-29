@@ -45,7 +45,7 @@ class User
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -65,7 +65,7 @@ class User
     /**
      * Get emailAddress
      *
-     * @return string 
+     * @return string
      */
     public function getEmailAddress()
     {
@@ -85,7 +85,7 @@ class User
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {
@@ -105,10 +105,15 @@ class User
     /**
      * Get dateRegistered
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDateRegistered()
     {
         return $this->dateRegistered;
+    }
+
+    public function isVerified()
+    {
+        return $this->password && $this->dateRegistered;
     }
 }

@@ -28,6 +28,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $dateRegistered = new \DateTime('+1 month');
         $this->user->setDateRegistered($dateRegistered);
         $this->assertSame($dateRegistered, $this->user->getDateRegistered());
+
+        // test is verified
     }
 
     protected function tearDown()
