@@ -1,22 +1,29 @@
-{% macro input_text(id, name, label, type) %}
-	<div class="control-group">
+{% macro input_text(id, name, label, type, max_length, required) %}
+    <div class="control-group">
         <label class="control-label" for="{{ id|default('') }}">{{ label }}</label>
         <div class="controls">
-            <input id="{{ id|default('') }}" name="{{ name|default('') }}" type="{{ type|default('text') }}" class="focused input-xlarge" />
+            <input
+                id="{{ id|default('') }}"
+                name="{{ name|default('') }}"
+                type="{{ type|default('text') }}"
+                class="focused input-xlarge"
+                {% if required is sameas(true) %} required="required" {% endif %}
+                {% if max_length > 0 %} maxlength="{{ max_length }}" {% endif %}
+            />
         </div>
     </div>
 {% endmacro %}
 
-{% macro password(id, name, label) %}
-	{{ _self.input_text(id, name, label, 'password') }}
+{% macro password(id, name, label, max_length, required) %}
+    {{ _self.input_text(id, name, label, 'password', max_length, required) }}
 {% endmacro %}
 
-{% macro email(id, name, label) %}
-	{{ _self.input_text(id, name, label, 'email') }}
+{% macro email(id, name, label, max_length, required) %}
+    {{ _self.input_text(id, name, label, 'email', max_length, required) }}
 {% endmacro %}
 
 {% macro textarea(id, name, label, class) %}
-	<div class="control-group">
+    <div class="control-group">
         <label class="control-label" for="{{ id|default('')}}">{{ label }}</label>
         <div class="controls">
             <textarea id="{{ id|default('') }}" name="{{ name|default('') }}" class="{{ class|default('input-xlarge') }}"></textarea>
@@ -25,5 +32,5 @@
 {% endmacro%}
 
 {% macro extra_large_textarea(id, name, label) %}
-	{{ _self.textarea(id, name, label, 'input-xxlarge') }}
+    {{ _self.textarea(id, name, label, 'input-xxlarge') }}
 {% endmacro %}
