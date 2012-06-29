@@ -2,11 +2,14 @@
 
 {% extends 'ProjectHelloMainBundle:Default:homepage.html.twig' %}
 
-{% set register_account_action = '' %}
 {% set login_account_action = '' %}
 
+{% block hidden_action_links %}
+    <input type="hidden" id="hdnRegistrationLink" value="{{ registerAction }}" />
+{% endblock %}
+
 {% block register_email_field %}
-    {{ forms.email('user_emailAddress', 'user[emailAddress', 'Email', 100, true) }}
+    {{ forms.email('user_emailAddress', 'user[emailAddress]', 'Email', 100, true) }}
 {% endblock %}
 
 {% block register_password_field %}
@@ -36,11 +39,24 @@
             var password = $('#user_password').val();
             var confirmPassword = $('#user_confirmPassword').val();
 
-            if (email && password && password == confirmPassword) {
+            var filter = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+            var isValidEmail = filter.test(email);
 
+            if (isValidEmail && password && password == confirmPassword) {
+                $.post(
+                    $('#hdnRegistrationLink').val(),
+                    $('div#registrationModal > form').serialize(),
+                    function(json) {
+                        if (undefined != json.error) {
+                            $('#user_emailAddress').parent().append('<span class="errorMsg">' + json.error + '</span>');
+                        }
+                    }
+                );
             } else {
                 if (!email) {
                     $('#user_emailAddress').parent().append('<span class="errorMsg">Email address is required.</span>');
+                } else if (!isValidEmail) {
+                    $('#user_emailAddress').parent().append('<span class="errorMsg">A valid email address is required.</span>');
                 }
 
                 if (!password) {
