@@ -2,6 +2,8 @@
 
 {% set recipient_name = recipientName %}
 
+{% block navbar %}{% endblock %}
+
 {% block messages %}
     {% for message in messages %}
         {% include 'ProjectHelloMainBundle:Fragments:message.html.twig' with {
