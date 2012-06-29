@@ -32,16 +32,40 @@
     margin: 50px auto 0;
 }
 
+.top-header h1 {
+    font-size: 16px;
+    color: #fff;
+    float: left;
+}
+
+.top-header .logout {
+    float: right;
+}
+
+.top-header .intro h1 {
+    margin-top: 20px;
+}
+
+.page-header .welcome h1 {
+    margin-bottom: 8px;
+}
+
+.page-header .welcome p {
+    font-size: 18px;
+}
+
 body.view-card {
     background: url('/bundles/projecthellomain/img/background.jpg') no-repeat fixed center top;
 }
 
 .view-card .top-header h1 {
     font-size: 90px;
-    font-family: "freight-sans-pro",sans-serif;
+    font-family: "soleil",sans-serif;
     text-align: center;
     color: #fff;
-    margin-bottom: 35px;
+    margin-bottom: 10px;
+    float: none;
+    letter-spacing: -2px;    
 }
 
 .top-header p {
@@ -51,8 +75,6 @@ body.view-card {
     color: #fff;
     line-height: 32px;
     padding: 15px 0;
-    border-bottom: 1px solid #fff;
-    border-top: 1px solid #fff;
 }
 
 .intro {
