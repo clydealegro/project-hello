@@ -2,19 +2,22 @@
 
 {% extends 'ProjectHelloMainBundle:Default:homepage.html.twig' %}
 
-{% set register_account_action = '' %}
 {% set login_account_action = '' %}
 
+{% block hidden_action_links %}
+    <input type="hidden" id="hdnRegistrationLink" value="{{ registerAction }}" />
+{% endblock %}
+
 {% block register_email_field %}
-    {{ forms.email('user_emailAddress', 'user[emailAddress', 'Email') }}
+    {{ forms.email('user_emailAddress', 'user[emailAddress]', 'Email', 100, true) }}
 {% endblock %}
 
 {% block register_password_field %}
-    {{ forms.password('user_password', 'user[password]', 'Password') }}
+    {{ forms.password('user_password', 'user[password]', 'Password', 15, true) }}
 {% endblock %}
 
 {% block register_confirm_password_field %}
-    {{ forms.password('user_confirmPassword', 'user[confirmPassword]', 'Confirm Password') }}
+    {{ forms.password('user_confirmPassword', 'user[confirmPassword]', 'Confirm Password', 15, true) }}
 {% endblock %}
 
 {% block login_email_field %}
@@ -23,4 +26,51 @@
 
 {% block login_password_field %}
     {{ forms.password('password', '_password', 'Password') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $('div#registrationModal').find('button.btn-primary').click(function(){
+            $('span.errorMsg').remove();
+
+            var email = $('#user_emailAddress').val();
+            var password = $('#user_password').val();
+            var confirmPassword = $('#user_confirmPassword').val();
+
+            var filter = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+            var isValidEmail = filter.test(email);
+
+            if (isValidEmail && password && password == confirmPassword) {
+                $.post(
+                    $('#hdnRegistrationLink').val(),
+                    $('div#registrationModal > form').serialize(),
+                    function(json) {
+                        if (undefined != json.error) {
+                            $('#user_emailAddress').parent().append('<span class="errorMsg">' + json.error + '</span>');
+                        }
+                    }
+                );
+            } else {
+                if (!email) {
+                    $('#user_emailAddress').parent().append('<span class="errorMsg">Email address is required.</span>');
+                } else if (!isValidEmail) {
+                    $('#user_emailAddress').parent().append('<span class="errorMsg">A valid email address is required.</span>');
+                }
+
+                if (!password) {
+                    $('#user_password').parent().append('<span class="errorMsg">Password is required.</span>');
+                }
+
+                if (!confirmPassword) {
+                    $('#user_confirmPassword').parent().append('<span class="errorMsg">Password must be confirmed.</span>');
+                } else if (password != confirmPassword) {
+                    $('#user_confirmPassword').parent().append('<span class="errorMsg">Both passwords must be equal.</span>');
+                }
+            }
+
+            return false;
+        });
+    </script>
 {% endblock %}

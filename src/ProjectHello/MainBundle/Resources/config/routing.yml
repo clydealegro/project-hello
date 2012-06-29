@@ -18,3 +18,9 @@ add_message:
 view_card:
     pattern: /view-card
     defaults: { _controller: ProjectHelloMainBundle:Default:viewCard }
+
+register:
+    pattern: /register
+    defaults: { _controller: ProjectHelloMainBundle:Default:registerUser }
+    requirements:
+        _method: POST

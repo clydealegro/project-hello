@@ -12,6 +12,7 @@
 
 {% block content %}
 
+
     <div class="homepage-header">
         <h1 class="homepage-header">project-hello</h1>
         <p>Create a card</p>
@@ -27,15 +28,12 @@
         </div>
     
     </div>
-    
-    
-    
-    
+
     <div id="registrationModal" class="reveal-modal">
-        <h1>Register Now</h1>                    
+        <h1>Register Now</h1>
         <p>
-            <form action="{{ register_account_action }}" class="form-horizontal" method="POST">                                
-                <fieldset>  
+            <form action="{{ register_account_action }}" class="form-horizontal" method="POST">
+                <fieldset>
                     {% block register_email_field %}
                         {{ forms.email('email', '', 'Email') }}
                     {% endblock %}
@@ -48,20 +46,20 @@
                         {{ forms.password('confirm-password', '', 'Confirm Password') }}
                     {% endblock %}
                 </fieldset>
-                                
+
                 <div class="form-actions">
                     <button class="btn btn-primary" type="submit">Submit</button>
-                </div>            
-            </form>                                    
+                </div>
+            </form>
         </p>
-       <a class="close-reveal-modal">&#215;</a>         
+       <a class="close-reveal-modal">&#215;</a>
     </div>
-    
+
     <div id="loginModal" class="reveal-modal">
         <h1>Login</h1>
         <p>
-            <form action="{{ login_account_action }}" class="form-horizontal" method="POST">                                
-                <fieldset>                   
+            <form action="{{ login_account_action }}" class="form-horizontal" method="POST">
+                <fieldset>
                     {% block login_email_field %}
                         {{ forms.email('email', '', 'Email') }}
                     {% endblock %}
@@ -70,50 +68,50 @@
                         {{ forms.password('password', '', 'Password') }}
                     {% endblock %}
                 </fieldset>
-                                
+
                 <div class="form-actions">
                     <button class="btn btn-primary" type="submit">Login</button>
-                </div>            
-            </form>    
+                </div>
+            </form>
         </p>
         <a class="close-reveal-modal">&#215;</a>
     </div>
-       
-        
+
+
 {% endblock %}
 
-{% block stylesheets %}  
+{% block stylesheets %}
     {{ parent() }}
-    
+
     {% stylesheets
         '@ProjectHelloMainBundle/Resources/public/css/reveal.css'
     %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
-    
+
 {% endblock %}
 
-{% block javascripts %} 
+{% block javascripts %}
     {{ parent() }}
-    
+
     {% javascripts
         '@ProjectHelloMainBundle/Resources/public/js/libs/jquery.reveal.js'
     %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
-    
+
     <script type="text/javascript">
     $(document).ready(function() {
          $('#registrationBtn').click(function(e) {
               e.preventDefault();
-    	      $('#registrationModal').reveal({
-    	          animation: 'fadeAndPop',                   //fade, fadeAndPop, none
-    	          animationspeed: 300,                       //how fast animtions are
-    	          closeonbackgroundclick: true,              //if you click background will modal close?
-    	          dismissmodalclass: 'close-reveal-modal'    //the class of a button or element that will close an open modal
-    	      });
+              $('#registrationModal').reveal({
+                  animation: 'fadeAndPop',                   //fade, fadeAndPop, none
+                  animationspeed: 300,                       //how fast animtions are
+                  closeonbackgroundclick: true,              //if you click background will modal close?
+                  dismissmodalclass: 'close-reveal-modal'    //the class of a button or element that will close an open modal
+              });
          });
-         
+
          $('#loginBtn').click(function(e) {
               e.preventDefault();
               $('#loginModal').reveal({
@@ -124,12 +122,12 @@
               });
          });
     });
-    
 
-    
+
+
     </script>
 
-    
-    
+
+
 {% endblock %}
 
