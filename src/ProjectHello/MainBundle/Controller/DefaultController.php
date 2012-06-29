@@ -116,23 +116,6 @@ class DefaultController extends Controller
                 ));
     }
 
-    // an pag-verify na ini hit email
-    /*public function registerUserAction($emailAddress, $password)
-    {
-        $request = $this->get('request')->request->get('user');
-
-        $emailAddress = $request['emailAddress'];
-        $password = $request['password'];
-
-        $user = $this->get('user_service')->retrieveUserByEmailAddress($emailAddress);
-
-        if ($user) {
-
-        } else {
-
-        }
-    }*/
-
     public function registerUserAction()
     {
         $error = '';
@@ -143,7 +126,7 @@ class DefaultController extends Controller
 
         $user = $this->get('user_service')->retrieveUserByEmailAddress($emailAddress);
 
-        if ($user->isVerified()) {
+        if ($user && $user->isVerified()) {
             $error = 'Email address has been registered already.';
         } else {
             $token = $this->get('token_service')->getEncryptedToken(array(
@@ -151,14 +134,17 @@ class DefaultController extends Controller
                 'password'      => $password
             ));
 
+            $token = 'http://'.$_SERVER['SERVER_NAME'].$this->generateUrl('verify_account').'?token='.$token;
+
             $message = \Swift_Message::newInstance()
-                ->setSubject('Confirm your FundMyTravel Registration')
+                ->setSubject('Confirm your Registration')
                 ->setFrom('support@fundmytravel.com')
                 ->setTo($emailAddress)
                 ->setBody($this->renderView('ProjectHelloMainBundle:Card:email.html.twig', array(
                     'email_address' => $emailAddress,
                     'token'         => $token
                 )), 'text/html');
+            $this->get('mailer')->send($message);
         }
 
         $response = new Response(json_encode(array(
@@ -167,5 +153,47 @@ class DefaultController extends Controller
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;
+    }
+
+    public function verifyAccountAction()
+    {
+        $decryptedToken = $this->get('token_service')->getDecryptedToken(str_replace(' ', '+', $_GET['token']));
+
+        $parameters = array();
+        foreach (explode('&', $decryptedToken) as $each) {
+            $decryptedItem = explode('=', $each);
+            $parameters[$decryptedItem[0]] = $decryptedItem[1];
+        }
+
+        $user = $this->get('user_service')->retrieveUserByEmailAddress($parameters['emailAddress']);
+
+        if (is_null($user) || !$user->isVerified()) {
+            $salt = md5(time());
+            $password = $this->get('string_util')->encodePassword($parameters['password'], $salt);
+
+            if (!$user) {
+                $user = new User();
+                $user->setEmailAddress($parameters['emailAddress']);
+            }
+
+            $user->setSalt($salt);
+            $user->setPassword($password);
+            $user->setDateRegistered(new \DateTime('now'));
+
+            $role = $this->get('doctrine')->getEntityManager()->getRepository('ProjectHelloCoreBundle:Role')->findOneBy(array(
+                'name' => 'ROLE_MEMBER'
+            ));
+            $user->addRole($role);
+
+            $entityManager = $this->get('doctrine')->getEntityManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            // login user
+
+            return $this->redirect($this->generateUrl('dashboard'));
+        } else {
+            return $this->redirect($this->generateUrl('homepage'));
+        }
     }
 }

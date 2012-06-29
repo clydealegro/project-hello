@@ -42,13 +42,29 @@
             var filter = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
             var isValidEmail = filter.test(email);
 
+            var submitBtn = $('div#registrationModal > form > div.form-actions > button');
+            var loadingImg = $('div#registrationModal > form > div.form-actions > em');
+
             if (isValidEmail && password && password == confirmPassword) {
+                submitBtn.hide();
+                loadingImg.show();
+
                 $.post(
                     $('#hdnRegistrationLink').val(),
                     $('div#registrationModal > form').serialize(),
                     function(json) {
-                        if (undefined != json.error) {
+                        if (json.error) {
                             $('#user_emailAddress').parent().append('<span class="errorMsg">' + json.error + '</span>');
+                        } else {
+                            submitBtn.show();
+                            loadingImg.hide();
+
+                            $('div#registrationModal').find('p, form').remove();
+                            $('div#registrationModal').append('<p>Thank you for registering. Please check your email to verify your account.</p>');
+
+                            $('div#registrationModal').find('a.close-reveal-modal').unbind('click').click(function(){
+                                location.reload();
+                            });
                         }
                     }
                 );
