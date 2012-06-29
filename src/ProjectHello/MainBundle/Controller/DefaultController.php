@@ -84,72 +84,36 @@ class DefaultController extends Controller
         return $this->render('ProjectHelloMainBundle:Card:add_message.html.twig');
     }
 
+    /**
+     * View card.
+     */
     public function viewCardAction()
     {
-        $messages = array(
-            array(
-                'author'    => 'Farly & Czar',
-                'content'   => "\"Hi Mon, Every code has its origin, more importantly programming is a journey thus moving on is part of it.. Goodluck in your new career pursuit.\"<br /><br />Web you around :D"
-            ),
-            array(
-                'author'    => 'Ronald Ryan L. Vy',
-                'content'   => "hi mon!<br /><br /> &nbsp; &nbsp; &nbsp; Goodluck and best wishes!!!keep on rocking MONster!!!"
-            ),
-            array(
-                'author'    => 'Augustianne Laurenne L. Barreta',
-                'content'   => "Hi Mon, <br /><br />You've been an awesome team mate. It has been my pleasure working with you. Keep up the good work and go for the gold! <br /><br /> Here's to your new job and to the love of your life :) Keep in touch ok? <br /><br /> P.S Paukya kmi iyo balay kun makadto kmi Cebu ha?"
-            ),
-            array(
-                'author'    => 'Joy Amor Moreno',
-                'content'   => "Thanks for the short-lived friendship,mon. Actually i'm secretly glad that you're going, this time i'll be the ONLY Green Room Queen. LOL.  Kidding aside, you're such a wonderful person. I wish you all the happiness and love in this world particularly in CEBU, you deserve it. Bon Voyage!"
-            ),
-            array(
-                'author'    => 'Jean',
-                'content'   => "\"Balik hit Sports Fest. Waray na daw kami hini MVP. We will miss you. :) \""
-            ),
-            array(
-                'author'    => 'Desiree Lynn C. Blanco',
-                'content'   => "Kuya Mon, <br /><br /> &nbsp; &nbsp; &nbsp; GO FOR GOLD... FOLLOW YOUR HEART... hahaha. Blit Kuya, I know na bisan ka kumain, you'll always boom and prosper. You are so blessed with a good heart. Honestly, I feel bad and sad na you'll be leaving GAP. You're such a genuine person. Thank you for the friendship. You'll always be in my prayers. Take care and God bless you always."
-            ),
-            array(
-                'author'    => 'Naldz',
-                'content'   => "Salamat Mon!"
-            ),
-            array(
-                'author'    => 'Eric Burabod',
-                'content'   => "Hey, Mon <br /> <br />Ahm they said your going to Cebu, and i would like to say good luck and have a great time in cebu its really a nice place...
-                even thought expensive it lifestyle hehehe basta maupay it work no worries ingat and GOD bless!!!...Have a nice trip! <br /><br /> --^^---^^---^---^--^--^^---"
-            ),
-            array(
-                'author'    => 'Vanessa',
-                'content'   => "Mon - my former crush haha! take care and God bless you always"
-            ),
-            array(
-                'author'    => 'Chris',
-                'content'   => "Mon, You are one of the nicest people I know. I wish you all the success not only in your career but also in your personal life. God bless in all of your endeavors."
-            ),
-            array(
-                'author'    => 'Mercy',
-                'content'   => "Monster, <br /><br /> Thanks ha tanan, <br /> Sorry ha tanan... <br /> Pag-opay nala, <br /> Kon kumain kman."
-            ),
-            array(
-                'author'    => 'Neri',
-                'content'   => "Kuya Mon, <br /><br /> &nbsp; &nbsp; &nbsp; Thank you ha tanan nga memories, laughter and kung anu-ano pa.. We'll miss you.. God bless!"
-            ),
-            array(
-                'author'    => 'Clyde',
-                'content'   => "Boi goodluck sa imohang new endeavors and love life. Don't forget to keep in touch. We will miss you."
-            ),
-            array(
-                'author'    => 'Noel',
-                'content'   => 'Hi Mon, good luck, sure naman ak na maging successful ka ngadto kay maupay tim work ethics ngan technical skills pero ayaw pagduro duro, burubisita la ngadi kay ma one game kita, hahahaha....'
-            )
-        );
+        $request = $this->getRequest();
+        
+        $cardRepo = $this->getDoctrine()->getRepository(
+                'ProjectHelloCoreBundle:Card');
+        $card = $cardRepo->find($request->get('card_id'));
+        
+        if (! $card) {
+            
+            throw $this->createNotFoundException(
+                    'Sorry the page does not exist.');
+        }
+        
+        $messageRepo = $this->getDoctrine()->getRepository(
+                'ProjectHelloCoreBundle:Message');
+        $messages = $messageRepo->findBy(array ('card' => $card->getId()));
+        
+        $crRepo = $this->getDoctrine()->getRepository(
+                'ProjectHelloCoreBundle:CardRecipient');
+        $cardRecipient = $crRepo->findOneBy(array ('card' => $card->getId()));
 
-        return $this->render('ProjectHelloMainBundle:Card:view_card.html.twig', array(
-            'messages'      => $messages,
-            'recipientName' => 'Mon Abilar'
-        ));
+        return $this->render('ProjectHelloMainBundle:Card:view_card.html.twig',
+                array(
+                    'messages'      => $messages,
+                    'recipientName' => $cardRecipient->getRecipientName()
+                ));
     }
 
     // an pag-verify na ini hit email
