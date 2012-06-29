@@ -60,7 +60,7 @@
     <div id="loginModal" class="reveal-modal">
         <h1>Login</h1>
         <p>
-            <form action="{{ login_account_action }}" class="form-horizontal" method="POST">
+            <form id="login-form" action="{{ path('login_check') }}" class="form-horizontal" method="POST">
                 <fieldset>
                     {% block login_email_field %}
                         {{ forms.email('email', '', 'Email') }}
@@ -73,6 +73,10 @@
 
                 <div class="form-actions">
                     <button class="btn btn-primary" type="submit">Login</button>
+                        <em style="display: none">
+                        <img src="/bundles/projecthellomain/img/ajax-loader.gif" />
+                        Logging in...
+                    </em>
                 </div>
             </form>
         </p>
@@ -98,6 +102,7 @@
 
     {% javascripts
         '@ProjectHelloMainBundle/Resources/public/js/libs/jquery.reveal.js'
+        '@ProjectHelloMainBundle/Resources/public/js/Default/homepage.js'
     %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
