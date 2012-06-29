@@ -1,3 +1,7 @@
+.homepage-header {
+    font-family: "soleil",sans-serif;
+}
+
 body.view-card {
     background: url('/bundles/projecthellomain/img/background.jpg') no-repeat fixed center top;
 }
