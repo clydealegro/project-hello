@@ -28,3 +28,9 @@ register:
 verify_account:
     pattern: /verify-account
     defaults: { _controller: ProjectHelloMainBundle:Default:verifyAccount }
+    
+login_check:
+    pattern:  /login_check
+
+logout:
+    pattern:  /logout

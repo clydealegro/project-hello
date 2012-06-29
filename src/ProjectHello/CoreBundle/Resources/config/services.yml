@@ -2,6 +2,11 @@ parameters:
 #    project_hello_core.example.class: ProjectHello\CoreBundle\Example
 
 services:
+
+    authentication_handler:
+        class: ProjectHello\CoreBundle\Handler\AuthenticationHandler
+        arguments: [@router, @security.context]
+    
     card_service:
         class: ProjectHello\CoreBundle\Services\CardService
         arguments: []
