@@ -3,6 +3,8 @@
 namespace ProjectHello\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * ProjectHello\CoreBundle\Entity\User
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="ProjectHello\CoreBundle\Entity\UserRepository")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var integer $id
@@ -41,6 +43,34 @@ class User
      * @ORM\Column(name="date_registered", type="datetime", nullable=true)
      */
     private $dateRegistered;
+
+    /**
+     * @var string $salt
+     *
+     * @ORM\Column(name="salt", type="string", length=255, nullable=true)
+     */
+    private $salt;
+
+    /**
+     * owning side
+     *
+     * @var ArrayCollection $userRoles
+     *
+     * @ORM\ManyToMany(targetEntity="Role")
+     * @ORM\JoinTable(name="user_roles",
+     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
+     * )
+     */
+    private $userRoles;
+
+    /**
+     * Instantiates User object
+     */
+    public function __construct()
+    {
+        $this->userRoles = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -115,5 +145,91 @@ class User
     public function isVerified()
     {
         return $this->password && $this->dateRegistered;
+    }
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+    }
+
+    /**
+     * Get salt
+     *
+     * @return string
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * Return the roles granted to the user.
+     *
+     * @return Role[]
+     */
+    public function getRoles()
+    {
+        return $this->userRoles->toArray();
+    }
+
+    /**
+     * Gets the user roles.
+     *
+     * @return ArrayCollection A Doctrine ArrayCollection
+     */
+    public function getUserRoles()
+    {
+        return $this->userRoles;
+    }
+
+    /**
+     * Add role to user's roles
+     *
+     * @param Role $role
+     */
+    public function addRole(Role $role)
+    {
+        $this->userRoles[] = $role;
+    }
+
+    /**
+     * Return the username used to authenticate the user.
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->emailAddress;
+    }
+
+    /**
+     * Remove sensitive data from the user.
+     *
+     * @return void
+     */
+    public function eraseCredentials()
+    {
+        return;
+    }
+
+    /**
+     * The equality comparison should neither be done by referential equality
+     * nor by comparing identities (i.e. getId() === getId()).
+     *
+     * However, you do not need to compare every attribute, but only those that
+     * are relevant for assessing whether re-authentication is required.
+     *
+     * @param UserInterface $user
+     *
+     * @return Boolean
+     */
+    public function equals(UserInterface $user)
+    {
+        return md5($user->getUsername()) == md5($this->getUsername());
     }
 }

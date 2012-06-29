@@ -7,8 +7,8 @@
 {% block messages %}
     {% for message in messages %}
         {% include 'ProjectHelloMainBundle:Fragments:message.html.twig' with {
-            'author'  : message.author,
-            'message' : message.content
+            'author'  : message.authorName,
+            'message' : message.message
         } %}
     {% endfor %}
 {% endblock %}

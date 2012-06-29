@@ -16,7 +16,7 @@ add_message:
     defaults: { _controller: ProjectHelloMainBundle:Default:addMessage }
 
 view_card:
-    pattern: /view-card
+    pattern: /view-card/{card_id}
     defaults: { _controller: ProjectHelloMainBundle:Default:viewCard }
 
 register:
@@ -24,3 +24,7 @@ register:
     defaults: { _controller: ProjectHelloMainBundle:Default:registerUser }
     requirements:
         _method: POST
+
+verify_account:
+    pattern: /verify-account
+    defaults: { _controller: ProjectHelloMainBundle:Default:verifyAccount }
