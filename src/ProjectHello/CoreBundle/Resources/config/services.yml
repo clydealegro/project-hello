@@ -16,3 +16,6 @@ services:
 
     token_service:
         class: ProjectHello\CoreBundle\Services\TokenGeneratorService
+
+    string_util:
+        class: ProjectHello\CoreBundle\Services\StringUtility
