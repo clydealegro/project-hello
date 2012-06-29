@@ -8,6 +8,7 @@ use ProjectHello\CoreBundle\Entity\User;
 use ProjectHello\CoreBundle\Form\Type\CardType;
 use ProjectHello\CoreBundle\Form\Type\UserType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use ProjectHello\CoreBundle\Services\CardService;
 
 
@@ -15,7 +16,9 @@ class DefaultController extends Controller
 {
     public function homepageAction()
     {
-        return $this->render('ProjectHelloMainBundle:Card:homepage.html.twig');
+        return $this->render('ProjectHelloMainBundle:Card:homepage.html.twig', array(
+            'registerAction' => $this->generateUrl('register')
+        ));
     }
 
     public function dashboardAction()
@@ -150,12 +153,12 @@ class DefaultController extends Controller
     }
 
     // an pag-verify na ini hit email
-    public function registerUserAction($emailAddress, $password)
+    /*public function registerUserAction($emailAddress, $password)
     {
-        /*$request = $this->get('request')->request->get('user');
+        $request = $this->get('request')->request->get('user');
 
         $emailAddress = $request['emailAddress'];
-        $password = $request['password'];*/
+        $password = $request['password'];
 
         $user = $this->get('user_service')->retrieveUserByEmailAddress($emailAddress);
 
@@ -164,5 +167,41 @@ class DefaultController extends Controller
         } else {
 
         }
+    }*/
+
+    public function registerUserAction()
+    {
+        $error = '';
+        $request = $this->get('request')->request->get('user');
+
+        $emailAddress = $request['emailAddress'];
+        $password = $request['password'];
+
+        $user = $this->get('user_service')->retrieveUserByEmailAddress($emailAddress);
+
+        if ($user->isVerified()) {
+            $error = 'Email address has been registered already.';
+        } else {
+            $token = $this->get('token_service')->getEncryptedToken(array(
+                'emailAddress'  => $emailAddress,
+                'password'      => $password
+            ));
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Confirm your FundMyTravel Registration')
+                ->setFrom('support@fundmytravel.com')
+                ->setTo($emailAddress)
+                ->setBody($this->renderView('ProjectHelloMainBundle:Card:email.html.twig', array(
+                    'email_address' => $emailAddress,
+                    'token'         => $token
+                )), 'text/html');
+        }
+
+        $response = new Response(json_encode(array(
+            'error'         => $error
+        )));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
 }
