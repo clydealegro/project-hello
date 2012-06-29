@@ -16,8 +16,8 @@
     <p>Create a card add your message and send it to someone.</p>
     
     <div class="actions">
-        <a id="registrationBtn" href="#" data-reveal-id="registrationModal">Register Now!</a>
-        <a id="loginBtn" data-reveal-id="loginModal" href="#">Log-in</a>
+        <a id="registrationBtn" href="#" data-reveal-id="myModal" data-animation="fadeAndPop" data-animationspeed="300" data-closeonbackgroundclick="true" data-dismissmodalclass="close-reveal-modal">Register Now!</a>
+        <a id="loginBtn" href="#" data-reveal-id="myModal" data-animation="fadeAndPop" data-animationspeed="300" data-closeonbackgroundclick="true" data-dismissmodalclass="close-reveal-modal">Log-in</a>
     </div>
     
     <div id="registrationModal" class="reveal-modal">
@@ -95,14 +95,29 @@
     $(document).ready(function() {
          $('#registrationBtn').click(function(e) {
               e.preventDefault();
-    	      $('#registrationModal').reveal();
+    	      $('#registrationModal').reveal({
+    	          animation: 'fadeAndPop',                   //fade, fadeAndPop, none
+    	          animationspeed: 300,                       //how fast animtions are
+    	          closeonbackgroundclick: true,              //if you click background will modal close?
+    	          dismissmodalclass: 'close-reveal-modal'    //the class of a button or element that will close an open modal
+    	      });
          });
          
          $('#loginBtn').click(function(e) {
               e.preventDefault();
-              $('#loginModal').reveal();
+              $('#loginModal').reveal({
+                  animation: 'fadeAndPop',                   //fade, fadeAndPop, none
+                  animationspeed: 300,                       //how fast animtions are
+                  closeonbackgroundclick: true,              //if you click background will modal close?
+                  dismissmodalclass: 'close-reveal-modal'    //the class of a button or element that will close an open modal
+              });
          });
     });
+    
+
+    
+    </script>
+
     
     
 {% endblock %}

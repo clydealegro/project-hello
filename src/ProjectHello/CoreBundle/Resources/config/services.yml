@@ -6,14 +6,13 @@ services:
         class: ProjectHello\CoreBundle\Services\CardService
         arguments: []
 
-    message_author_service:
-        class: ProjectHello\CoreBundle\Services\MessageAuthorService
-        arguments: []
-
     message_service:
         class: ProjectHello\CoreBundle\Services\MessageService
         arguments: []
 
+    user_service:
+        class: ProjectHello\CoreBundle\Services\UserService
+        arguments: [@doctrine.orm.entity_manager]
+
     token_service:
         class: ProjectHello\CoreBundle\Services\TokenGeneratorService
-        arguments: []
