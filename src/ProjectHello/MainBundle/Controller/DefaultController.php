@@ -148,9 +148,7 @@ class DefaultController extends Controller
             $this->get('mailer')->send($message);
         }
 
-        $response = new Response(json_encode(array(
-            'error'         => $error
-        )));
+        $response = new Response(json_encode(array('error' => $error)));
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;

@@ -5,8 +5,7 @@
 
     <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
     <header class="top-header">
-        {% block navbar %} 
-            
+        {% block navbar %}
             <div class="navbar navbar-fixed-top">
                 <div class="navbar-inner">
                     <div class="container">
@@ -15,15 +14,15 @@
                         </a>
                         <div class="nav-collapse collapse pull-right">
                             <ul class="nav">
-                                <li><a href="/">Logout</a></li>
+                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                    <li>Logged in as {{ app.user.username }} </li>
+                                    <li><a href="{{ path('logout') }}">Logout</a></li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            
-                     
         {% endblock %}
         {% block intro %} {% endblock %}
     </header>
