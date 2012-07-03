@@ -20,7 +20,8 @@ class DefaultController extends Controller
     public function homepageAction()
     {
         return $this->render('ProjectHelloMainBundle:Card:homepage.html.twig', array(
-            'registerAction' => $this->generateUrl('register')
+            'registerAction' => $this->generateUrl('register'),
+            'loginAction' => $this->generateUrl('login_check'),
         ));
     }
 
