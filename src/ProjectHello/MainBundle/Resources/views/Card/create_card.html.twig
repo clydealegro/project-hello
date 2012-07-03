@@ -1,306 +1,63 @@
+{% import "ProjectHelloMainBundle:Fragments:form_macros.html.twig" as forms %}
+
 {% extends 'ProjectHelloMainBundle:Default:create_card.html.twig' %}
 
 {% set create_card_action = path('create_card') %}
 
 {% block creator_name_field %}
-    <div class="control-group">
-        <label class="control-label" for="{{ form.creatorName.vars.id }}">Creator Name</label>
-        <div class="controls">
-            <input
-                id="{{ form.creatorName.vars.id }}"
-                name="{{ form.creatorName.vars.full_name }}"
-                type="{{ 'text' }}"
-                class="focused input-xlarge"
-                value="{{ form.creatorName.vars.value }}"
-            />
-        </div>
-    </div>
+    {{ forms.input_text(form.creatorName.vars.id, form.creatorName.vars.full_name, 'Creator Name', form.creatorName.vars.value) }}
 {% endblock %}
 
 {% block recipient_name_field %}
-    <div class="control-group">
-        <label class="control-label" for="{{ form.recipientName.vars.id }}">Recipient Name</label>
-        <div class="controls">
-            <input
-                id="{{ form.recipientName.vars.id }}"
-                name="{{ form.recipientName.vars.full_name }}"
-                type="{{ 'text' }}"
-                class="focused input-xlarge"
-                value="{{ form.recipientName.vars.value }}"
-            />
-        </div>
-    </div>
+    {{ forms.input_text(form.recipientName.vars.id, form.recipientName.vars.full_name, 'Recipient Name', form.recipientName.vars.value) }}
 {% endblock %}
 
 {% block recipient_email_field %}
-	<div class="control-group">
-        <label class="control-label" for="{{ form.recipientEmailAddress.vars.id }}">Recipient Email</label>
-        <div class="controls">
-            <input
-                id="{{ form.recipientEmailAddress.vars.id }}"
-                name="{{ form.recipientEmailAddress.vars.full_name }}"
-                type="{{ 'email' }}"
-                class="focused input-xlarge"
-                value="{{ form.recipientEmailAddress.vars.value }}"
-            />
-        </div>
-    </div>
+    {{ forms.email(form.recipientEmailAddress.vars.id, form.recipientEmailAddress.vars.full_name, 'Recipient Email', form.recipientEmailAddress.vars.value) }}
 {% endblock %}
 
 {% block creator_message_field %}
-	<div class="control-group">
-        <label class="control-label" for="{{ form.message.vars.id }}">Creator Message</label>
-        <div class="controls">
-            <textarea id="{{ form.message.vars.id }}" name="{{ form.message.vars.full_name }}" class="input-xlarge">{{ form.message.vars.value }}</textarea>
-        </div>
-    </div>
-{% endblock %}                    
+    {{ forms.textarea(form.message.vars.id, form.message.vars.full_name, 'Creator Message', form.message.vars.value) }}
+{% endblock %}
 
 {% block collaborator_field %}
-	{% if form.collaborators.count > 0 %}
-		{% for collaborator in form.collaborators %}
-			<div class="control-group">
-		        <label class="control-label" for="{{ collaborator.name.vars.id }}">Collaborator Name</label>
-		        <div class="controls">
-		            <input
-		                id="{{ collaborator.name.vars.id }}"
-		                name="{{ collaborator.name.vars.full_name }}"
-		                type="{{ 'text' }}"
-		                class="focused input-xlarge"
-		                value="{{ collaborator.name.vars.value }}"
-		            />
-		        </div>
-		    </div>
-		    <div class="control-group">
-		        <label class="control-label" for="{{ collaborator.email.vars.id }}">Collaborator Email</label>
-		        <div class="controls">
-		            <input
-		                id="{{ collaborator.email.vars.id }}"
-		                name="{{ collaborator.email.vars.full_name }}"
-		                type="{{ 'email' }}"
-		                class="focused input-xlarge"
-		                value="{{ collaborator.email.vars.value }}"
-		            />
-		        </div>
-		    </div>
-		{% endfor %}
-	{% else %}
-		{% for i in 0..1 %}
-			<div class="control-group">
-		        <label class="control-label" for="{{ 'card_collaborators_'~i~'_name' }}">Collaborator Name</label>
-		        <div class="controls">
-		            <input
-		                id="{{ 'card_collaborators_'~i~'_name' }}"
-		                name="{{ 'card[collaborators]['~i~'][name]' }}"
-		                type="{{ 'text' }}"
-		                class="focused input-xlarge"
-		                value=""
-		            />
-		        </div>
-		    </div>
-		    <div class="control-group">
-		        <label class="control-label" for="{{ 'card_collaborators_'~i~'_email' }}">Collaborator Email</label>
-		        <div class="controls">
-		            <input
-		                id="{{ 'card_collaborators_'~i~'_email' }}"
-		                name="{{ 'card[collaborators]['~i~'][email]' }}"
-		                type="{{ 'email' }}"
-		                class="focused input-xlarge"
-		                value=""
-		            />
-		        </div>
-		    </div>
-		{% endfor %}
-	{% endif%}
+    {% for i in 0..1 %}
+        {% include 'ProjectHelloMainBundle:Fragments:collaborator_field.html.twig' with {
+            name_field_id     : 'card_collaborators_' ~ i ~ '_name',
+            name_field_name   : 'card[collaborators][' ~ i ~ '][name]',
+            email_field_id    : 'card_collaborators_' ~ i ~ '_email',
+            email_field_name  : 'card[collaborators][' ~ i ~ '][email]'
+        } %}
+    {% endfor %}
 {% endblock %}
 
 {% block instruction_field %}
-    <div class="control-group">
-        <label class="control-label" for="{{ form.instruction.vars.id }}">Instruction</label>
-        <div class="controls">
-            <textarea id="{{ form.instruction.vars.id }}" name="{{ form.instruction.vars.full_name }}" class="input-xlarge">{{ form.instruction.vars.value }}</textarea>
-        </div>
-    </div>
+    {{ forms.textarea(form.instruction.vars.id, form.instruction.vars.full_name, 'Instructions', form.instruction.vars.value) }}
 {% endblock %}
 
-{% block sending_date_field %}
-    {{ form_widget(form.sendingDate) }}
+{# block sending_date_field %}
+    {{ forms.date(form.sendingDate.vars.id, form.sendingDate.vars.full_name, 'Sending Date', form.sendingDate.vars.value) }}
+{% endblock #}
+
+{% block hidden_fields %} 
     {{ form_widget(form._token) }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
 
-    {% javascripts
-        '@ProjectHelloMainBundle/Resources/public/js/bootstrap-datepicker.js'
-    %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-
     <script type="text/javascript">
-        $(function(){
-            $('#card_sendingDate').datepicker({
-                format: 'mm-dd-yyyy'
-            });
-            $('#add-collaborator-btn').click(function(e){
-            	e.preventDefault();
-            	
-            	var $newCollaborator = $('.collaborator:last').clone();
-		    	$newCollaborator.find('#collaborator-name').attr('value', '');
-		    	$newCollaborator.find('#collaborator-email').attr('value', '');
-            	console.log($newCollaborator);
-            	$('.collaborator:last').after($newCollaborator);
-		        
-		        return false;
-            });
-        });
-    </script>
-{% endblock %}
-{#
-
-{% block content %}
-    <form 
-    	action="{{ path('create_card') }}" 
-    	class="form-horizontal"
-    	method="post"
-    	{{ form_enctype(form) }}
-    >
-        <h1>Create a card</h1>
-
-        <fieldset>
-            <legend>My name is</legend>
-            <div class="control-group">
-                <label class="control-label" for="creator-name">Creator Name</label>
-                <div class="controls">
-                    {{ form_widget(form.proponent.firstName, { attr: { 'id': 'creator-name', 'class': 'focused input-xlarge' } }) }}
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="creator-email">Creator Email</label>
-                <div class="controls">
-                    {{ form_widget(form.proponent.emailAddress, { attr: { 'id': 'creator-email', 'class': 'focused input-xlarge' } }) }}
-                </div>
-            </div>
-        </fieldset>
-
-        <fieldset>
-            <legend>I will create this card for</legend>
-            <div class="control-group">
-                <label class="control-label" for="recipient-name">Recipient Name</label>
-                <div class="controls">
-                    <input id="recipient-name" type="text" class="focused input-xlarge" />
-                    {{ form_widget(form.proponent.emailAddress, { attr: { 'id': 'creator-email', 'class': 'focused input-xlarge' } }) }}
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="recipient-email">Recipient Email</label>
-                <div class="controls">
-                    <input id="recipient-email" type="text" class="focused input-xlarge" />
-                </div>
-            </div>
-        </fieldset>
-        <fieldset>
-            <legend>What is my message</legend>
-            <div class="control-group">
-                <label class="control-label" for="creator-message">Creator Message</label>
-                <div class="controls">
-                    <textarea id="creator-message" class="input-xlarge"></textarea>
-                </div>
-            </div>
-        </fieldset>
-        <fieldset>
-            <legend>I will invite others to add messages to the card</legend>
-            <div class="collaborator">
-                <div class="control-group">
-                    <label class="control-label" for="collaborator-name">Collaborator Name</label>
-                    <div class="controls">
-                        <input id="collaborator-name" type="text" class="focused input-xlarge" />
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="collaborator-name">Collaborator Email</label>
-                    <div class="controls">
-                        <input id="collaborator-email" type="text" class="focused input-xlarge" />
-                    </div>
-                </div>
-            </div>
-
-            <div class="collaborator">
-                <div class="control-group">
-                    <label class="control-label" for="collaborator-name">Collaborator Name</label>
-                    <div class="controls">
-                        <input id="collaborator-name" type="text" class="focused input-xlarge" />
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="collaborator-name">Collaborator Email</label>
-                    <div class="controls">
-                        <input id="collaborator-email" type="text" class="focused input-xlarge" />
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="form-actions">
-                <button class="btn">Add a collaborator</button>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label" for="collaborator-instruction">Instructions</label>
-                <div class="controls">
-                    <textarea id="collaborator-instruction" class="input-xlarge"></textarea>
-                </div>
-            </div>
-
-        </fieldset>
-
-        <fieldset>
-            <legend>This card must be sent on this date</legend>
-            <div class="control-group">
-                <label class="control-label" for="sending-date">Sending Date</label>
-                <div class="controls">
-                    <input id="sending-date" type="text" class="span2" value="06-22-2012" />
-                </div>
-            </div>
-        </fieldset>
-
-
-        <div class="form-actions">
-            <button class="btn btn-primary" type="submit">Create and Submit</button>
-        </div>
-    </form>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-
-    {% javascripts
-        '@ProjectHelloMainBundle/Resources/public/js/bootstrap-datepicker.js'
-    %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-
-    <script type="text/javascript">
-    	
-        // Get the div that holds the collection of tags
-        var collectionHolder = $('.collaborator').parent();
+        /*$(function(){
+            // add the "add a tag" anchor and li to the tags ul
+            collectionHolder.append($newLinkLi);
         
-        $(function(){
-            $('#sending-date').datepicker({
-                format: 'mm-dd-yyyy'
+            $('.form-actions ~ .collaborator').on('click', function(e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+        
+                // add a new tag form (see next code block)
+                addTagForm(collectionHolder, $newLinkLi);
             });
-            
-		    // add the "add a tag" anchor and li to the tags ul
-		    collectionHolder.append($newLinkLi);
-		
-		    $('.form-actions ~ .collaborator').on('click', function(e) {
-		        // prevent the link from creating a "#" on the URL
-		        e.preventDefault();
-		
-		        // add a new tag form (see next code block)
-		        addTagForm(collectionHolder, $newLinkLi);
-		    });
-		});
+        });*/
     </script>
 {% endblock %}
-#}

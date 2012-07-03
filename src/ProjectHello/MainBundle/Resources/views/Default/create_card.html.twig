@@ -37,8 +37,8 @@
             {% block recipient_email_field %}
                 {{ forms.email('recipient-email', '', 'Recipient Email') }}
             {% endblock %}
-
         </fieldset>
+
         <fieldset>
             <legend>What is my message</legend>
 
@@ -46,13 +46,14 @@
                 {{ forms.textarea('creator-message', '', 'Creator Message') }}
             {% endblock %}
         </fieldset>
+
         <fieldset>
             <legend>I will invite others to add messages to the card</legend>
 
             {% block collaborator_field %}
-	            {% for i in 1..2 %}
-	                {% include 'ProjectHelloMainBundle:Fragments:collaborator_field.html.twig' %}
-	            {% endfor %}
+                {% for i in 1..2 %}
+                    {% include 'ProjectHelloMainBundle:Fragments:collaborator_field.html.twig' %}
+                {% endfor %}
             {% endblock %}
 
             <div class="form-actions">
@@ -60,22 +61,19 @@
             </div>
 
             {% block instruction_field %}
-	            {{ forms.textarea('collaborator-instruction', '', 'Instructions') }}
+                {{ forms.textarea('collaborator-instruction', '', 'Instructions') }}
             {% endblock %}
-
         </fieldset>
 
         <fieldset>
             <legend>This card must be sent on this date</legend>
-            <div class="control-group">
-                <label class="control-label" for="sending-date">Sending Date</label>
-                <div class="controls">
-                    {% block sending_date_field %}
-                        <input id="sending-date" type="text" class="span2" value="06-22-2012" />
-                    {% endblock %}
-                </div>
-            </div>
+            
+            {% block sending_date_field %}
+                {{ forms.date('sending-date', '', 'Sending Date', '06-22-2012') }}
+            {% endblock %}
         </fieldset>
+
+        {% block hidden_fields %} {% endblock %}
 
         <div class="form-actions">
             <button class="btn btn-primary" type="submit">Create and Submit</button>
@@ -97,6 +95,7 @@
             $('#sending-date').datepicker({
                 format: 'mm-dd-yyyy'
             });
+            
             $('#add-collaborator-btn').click(function(e){
             	e.preventDefault();
             	
