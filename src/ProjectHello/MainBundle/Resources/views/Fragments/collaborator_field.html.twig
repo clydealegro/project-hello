@@ -1,7 +1,31 @@
 {% import "ProjectHelloMainBundle:Fragments:form_macros.html.twig" as forms %}
 
-<div class="collaborator">
-    {{ forms.input_text('collaborator-name', '', 'Collaborator Name') }}
+{% if name_field_id is not defined %}
+	{% set name_field_id = 'collaborator-name' %}
+{% endif %}
 
-    {{ forms.input_text('collaborator-email', '', 'Collaborator Email') }}
+{% if name_field_name is not defined %}
+	{% set name_field_name = '' %}
+{% endif %}
+
+{% if name_field_value is not defined %}
+	{% set name_field_value = '' %}
+{% endif %}
+
+{% if email_field_id is not defined %}
+	{% set email_field_id = 'collaborator-email' %}
+{% endif %}
+
+{% if email_field_name is not defined %}
+	{% set email_field_name = '' %}
+{% endif %}
+
+{% if email_field_value is not defined %}
+	{% set email_field_value = '' %}
+{% endif %}
+
+<div class="collaborator">
+    {{ forms.input_text(name_field_id, name_field_name, 'Collaborator Name', name_field_value) }}
+
+    {{ forms.input_text(email_field_id, email_field_name, 'Collaborator Email', email_field_value) }}
 </div>
