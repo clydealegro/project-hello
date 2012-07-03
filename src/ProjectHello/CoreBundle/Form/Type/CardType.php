@@ -5,7 +5,7 @@ namespace ProjectHello\CoreBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 use ProjectHello\CoreBundle\Form\Type\CollaboratorType;
-use Symfony\Component\Locale\Stub\StubIntlDateFormatter;
+//use Symfony\Component\Locale\Stub\StubIntlDateFormatter;
 
 class CardType extends AbstractType
 {
@@ -32,7 +32,7 @@ class CardType extends AbstractType
             ->add('instruction', 'textarea', array(
                 'property_path' => false,
             ))
-            ->add('sendingDate', 'date', array('widget' => 'single_text', 'format' => StubIntlDateFormatter::SHORT));
+            /*->add('sendingDate', 'date', array('widget' => 'single_text', 'format' => StubIntlDateFormatter::SHORT))*/;
     }
 
     public function getName()
