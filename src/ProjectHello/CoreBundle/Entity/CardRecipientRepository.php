@@ -24,4 +24,28 @@ class CardRecipientRepository extends EntityRepository
 
         return $queryBuilder;
     }
+    
+    /**
+     * Find all recipients of the specified card id joined with their
+     * associated users.
+     * 
+     * @param int $cardId
+     * 
+     * @return Array of CardRecipients | null
+     */
+    public function findAllJoinedToUsersByCardId($cardId)
+    {
+        $query = $this->getEntityManager()
+                ->createQuery("
+                    SELECT r, u FROM ProjectHelloCoreBundle:CardRecipient r
+                    JOIN r.recipient u
+                    WHERE r.card = :card_id
+                ")->setParameter('card_id', $cardId);
+        try {
+            return $query->getResult();
+        }
+        catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }

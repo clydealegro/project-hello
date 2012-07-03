@@ -27,12 +27,45 @@ class SendCardsCommand extends \Symfony\Bundle\FrameworkBundle\Command\Container
     
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $message = \Swift_Message::newInstance();
-        $message->setSubject("test");
-        $message->setFrom("johnsmith@example.com");
-        $message->setTo("czar.pino@goabroad.com");
-        $message->setBody("The quick brown fox jumps over the lazy dog.");
+        $doctrine = $this->getContainer()->get('doctrine');
+        $cardRepo = $doctrine->getRepository('ProjectHelloCoreBundle:Card');
+        $crRepo = $doctrine->getRepository('ProjectHelloCoreBundle:CardRecipient');
         
-        $this->getContainer()->get('mailer')->send($message);
+        // retrieve cards with the current date's sending date
+        $cards = $cardRepo->findBy(array (
+            'sendingDate' => new \DateTime(date('Y-m-d'))));
+        
+        foreach ($cards as $card) {
+            
+            $link = $this->getContainer()->get('router')->generate('view_card',
+                    array ('card_id' => $card->getId()));
+            $link = 'http://www.projecthello.com.local' . $link;
+            
+            // retrieve recipients
+            $cardRecipients = $crRepo->findAllJoinedToUsersByCardId(
+                    $card->getId());
+            
+            $recipientEmails = array ();
+            $recipientNames = array ();
+            
+            foreach ($cardRecipients as $cardRecipient) {
+                
+                $recipientNames[] = $cardRecipient->getRecipientName();
+                $recipientEmails[] = $cardRecipient->getRecipient()
+                        ->getEmailAddress();
+            }
+                        
+            $message = \Swift_Message::newInstance()
+                ->setSubject('A Card For You')
+                ->setFrom('projecthello@clydealegro.me', 'ProjectHello')
+                ->setTo($recipientEmails)
+                ->setBody($this->getContainer()->get('templating')->render(
+                        'ProjectHelloMainBundle:Card:card_email.html.twig',
+                        array(
+                            'recipients'    => implode(', ', $recipientNames),
+                            'link'          => $link
+                        )), 'text/html');
+            $this->getContainer()->get('mailer')->send($message);
+        }
     }
 }
