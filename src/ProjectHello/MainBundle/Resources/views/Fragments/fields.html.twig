@@ -1,6 +1,16 @@
 {% extends 'form_div_layout.html.twig' %}
 
-{# block field_widget %}
-    {% set type = type|default('text') %}
-    <input type="{{ type }}" {{ block('widget_attributes') }} value="{{ value }}" />
-{% endblock field_widget #}
+{% block field_widget %}
+	{% spaceless %}
+	    {% set type = type|default('text') %}
+	    {% set attr = attr|merge({'class': attr.class|default('') ~ ' focused input-xlarge' }) %}
+	    {{ parent() }}
+	{% endspaceless %}
+{% endblock field_widget %}
+
+{% block date_widget %}
+	{% spaceless %}
+		{% set attr = attr|merge({'class': attr.class|default('') ~ ' span2' }) %}
+	    {{ parent() }}
+	{% endspaceless %}
+{% endblock date_widget %}
