@@ -10,8 +10,7 @@ class MessageType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-        	->add('content', 'textarea', array('max_length' => 255))
-        	->add('dateCreated');
+        	->add('message', 'textarea', array('max_length' => 255));
     }
     
     public function getDefaultOptions(array $options)

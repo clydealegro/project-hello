@@ -1,8 +1,5 @@
 {% extends 'ProjectHelloMainBundle:Default:add_message.html.twig' %}
 
-{% set add_message_action = path('view_card') %}
-{% set collaborator_name = 'Clyde Alegro' %}
-
 {% if collaborator_name is not defined %}
     {% set collaborator_name = 'Neri Celeste' %}
 {% endif %}
@@ -18,4 +15,5 @@
             <textarea id="{{ form.message.vars.id }}" name="{{ form.message.vars.full_name }}" class="input-xxlarge">{{ form.message.vars.value }}</textarea>
         </div>
     </div>
+    {{ form_widget(form._token) }}
 {% endblock %}

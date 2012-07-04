@@ -5,9 +5,11 @@ namespace ProjectHello\MainBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ProjectHello\CoreBundle\Entity\Card;
 use ProjectHello\CoreBundle\Entity\CardRecipient;
+use ProjectHello\CoreBundle\Entity\CardRecipientRepository;
 use ProjectHello\CoreBundle\Entity\Message;
 use ProjectHello\CoreBundle\Entity\User;
 use ProjectHello\CoreBundle\Form\Type\CardType;
+use ProjectHello\CoreBundle\Form\Type\MessageType;
 use ProjectHello\CoreBundle\Form\Type\UserType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,12 +44,18 @@ class DefaultController extends Controller
         if ($request->getMethod() == 'POST') {
             $form->bindRequest($request);
 
-            if ($form->isValid()) {
+            $eMessage = '';
+            //if ($form->isValid()) {
                 try {
                     $parameters = $request->request->get('card');
+                    
+                    //todo
+                    $creator = $this->getDoctrine()->getRepository('ProjectHelloCoreBundle:User')->find(1);
 
                     $entityManager = $this->getDoctrine()->getEntityManager();
                     //insert card into database
+                    $card->setSendingDate(new \DateTime($parameters['sendingDate']));
+                    $card->setCreator($creator);
                     $entityManager->persist($card);
 
                     $recipient = new User();
@@ -57,18 +65,20 @@ class DefaultController extends Controller
                     $cRecipient = new CardRecipient();
                     $cRecipient->setCard($card);
                     $cRecipient->setRecipient($recipient);
+                    $cRecipient->setRecipientName($parameters['recipientName']);
                     $entityManager->persist($cRecipient);
 
                     $cMessage = new Message();
                     $cMessage->setMessage($parameters['message']);
                     $cMessage->setAuthorName($parameters['creatorName']); // todo
+                    $cMessage->setAuthor($creator);
+                    $cMessage->setCard($card);
                     $entityManager->persist($cMessage);
 
                     $entityManager->flush();
 
                     // send email to collaborators
                     foreach ($parameters['collaborators'] as $collaborator) {
-                        //var_dump($collaborator);
                         $tokenService = $this->get('token_service');
                         $link = $tokenService->getEncryptedToken(array(
                             'email' => $collaborator['email'],
@@ -78,13 +88,15 @@ class DefaultController extends Controller
 
                         $message = \Swift_Message::newInstance()
                             ->setSubject('You are a Collaborator on Project Hello')
-                            ->setFrom($this->get('security.context')->getToken()->getUser()->getEmailAddress())
-                            ->setTo('mercy.honor@goabroad.com')
+                            //->setFrom($this->get('security.context')->getToken()->getUser()->getEmailAddress())
+                            ->setFrom($creator->getEmailAddress())
+                            ->setTo(array($collaborator['email'] => $collaborator['name']))
                             ->setBody($this->renderView('ProjectHelloMainBundle:Mail:collaborator_mail.html.twig', array(
                                 'name' => $collaborator['name'],
-                                'recipient' => $parameters['recipientName'],//$form->get('recipientName'),
-                                'message' => $parameters['message'],//$cMessage->getMessage(),
-                                'link' => $link,
+                                'recipient' => $parameters['recipientName'],
+                                'creator' => $parameters['creatorName'],
+                                'instruction' => $parameters['instruction'],
+                                'link' => $this->generateUrl('add_message', array('link' => $link), true),
                         )), 'text/html');
                         $this->get('mailer')->send($message);
                     }
@@ -94,12 +106,10 @@ class DefaultController extends Controller
 
                 }
                 catch(\Exception $e) {
-                    //var_dump(get_class_methods($e));
-                    $this->get('session')->setFlash('card-notice', 'An error occurred! '.$e->getMessage(). '<br />Stack: '.$e->getTraceAsString());
+                    $eMessage = $e->getMessage(). ' Stack: '.$e->getTraceAsString();
                 }
-
-                //$this->get('session')->setFlash('card-notice', 'Please fill all required fields!');
-            }
+            //}
+            $this->get('session')->setFlash('card-notice', 'Please fill all required fields! '.var_export($form->getErrors(), true).' '.$eMessage);
         }
 
         return $this->render('ProjectHelloMainBundle:Card:create_card.html.twig', array(
@@ -109,62 +119,68 @@ class DefaultController extends Controller
 
     public function createCardSuccessAction()
     {
-        return $this->render('ProjectHelloMainBundle:Card:card_action_success.html.twig');
+        return $this->render('ProjectHelloMainBundle:Default:card_action_success.html.twig');
     }
 
     public function addMessageAction()
     {
         $request = $this->getRequest();
-        if ($link = $request->query('link')) {
+        if ($encryptLink = $request->query->get('link')) {
             $message = new Message();
 
             $form = $this->createForm(new MessageType(), $message);
-
+            $link = $this->get('token_service')->getDecryptedToken($encryptLink);
+            
             parse_str($link, $parameters);
             $email = isset($parameters['email']) ? $parameters['email'] : null;
             $name = isset($parameters['name']) ? $parameters['name'] : null;
             $cardId = isset($parameters['card']) ? $parameters['card'] : null;
-
-            $card = $this->getDoctrine()->getRepository('Card')->find($cardId);
-
+            
+            $card = $this->getDoctrine()->getRepository('ProjectHelloCoreBundle:Card')->find($cardId);
+            
+            // todo: check if collaborator has already submitted the form
             if (!$email || !$name || !$card) {
                 throw $this->createNotFoundException('You are on the wrong page.');
             }
             $recipients = array();
-            foreach ($this->get('card_recipient_service')->retrieveCardRecipientsByCard($card) as $cRecipient) {
+            $cRecipients = $this->get('doctrine')->getEntityManager()->getRepository('ProjectHelloCoreBundle:CardRecipient')->findBy(array('card' => $cardId));
+            foreach ($cRecipients as $cRecipient) {
                 $recipients[] = $cRecipient->getRecipientName();
             }
             $recipient = implode(',', $recipients);
 
             if ($request->getMethod() == 'POST') {
                 $form->bindRequest($request);
+                $eMessage = '';
 
                 if ($form->isValid()) {
                     try {
-                         /*$entityManager = $this->getDoctrine()->getEntityManager();
+                        $entityManager = $this->getDoctrine()->getEntityManager();
 
                         $collaborator = new User();
                         $collaborator->setEmailAddress($email);
-                        $entityManager->persist($recipient);
+                        $entityManager->persist($collaborator);
+                        
+                        $message->setAuthorName($name);
+                        $message->setAuthor($collaborator);
+                        $message->setCard($card);
+                        $entityManager->persist($message);
 
-                        $cMessage = new Message();
-                        $cMessage->setMessage($form->get('message'));
-                        $cMessage->setAuthorName($name);
-                        $cMessage->setCard($card);
-                        $entityManager->persist($cMessage);
-
-                        $entityManager->flush();*/
+                        $entityManager->flush();
                         return $this->redirect($this->generateUrl('card_action_success'));
                     }
                     catch(\Exception $e) {
-                        $this->get('session')->setFlash('card-notice', 'An error occurred! '.$e->getMessage(). '<br />Stack: '.$e->getTraceAsString());
+                    	$eMessage = $e->getMessage(). ' Stack: '.$e->getTraceAsString();
                     }
                 }
+                $this->get('session')->setFlash('card-notice', 'Please fill all required fields! '.var_export($form->getErrors(), true).' '.$eMessage);
             }
 
-            return $this->render('ProjectHelloMainBundle:Default:card_action_success.html.twig', array(
+            return $this->render('ProjectHelloMainBundle:Card:add_message.html.twig', array(
                 'collaborator_name' => $name,
-                'recipient_name' => $recipient
+                'recipient_name' => $recipient,
+                'form' => $form->createView(),
+                'add_message_action' => $this->generateUrl('add_message', array('link' => $encryptLink))
             ));
         }
         else {

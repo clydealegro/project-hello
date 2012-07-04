@@ -1,10 +1,7 @@
 ProjectHello\CoreBundle\Entity\Message:
     properties:
-        content:
+        message:
             - NotBlank: ~
-        dateCreated:
-            - NotBlank: ~
-            - Type: \DateTime
 
 ProjectHello\CoreBundle\Entity\User:
     properties:

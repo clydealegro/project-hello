@@ -24,7 +24,7 @@
                 margin:0;
                 padding:20px;
                 text-shadow:0 1px #FFFFFF;
-            ">Project Hello Registration</h2>
+            ">Project Hello Card Collaboration</h2>
         </div>
         <div id="mailBody" style="
             border-bottom:1px solid #BFBFBF;
@@ -46,9 +46,15 @@
                 padding:10px 20px;
             ">
                 <p style="margin:10px 0;">
-                    I have added you as a collaborator on my card to {{ recipient }}.
-                    {{ message }}
+                    {{ creator }} has added you as a collaborator on his/her card to {{ recipient }}.
+                </p>
+                <p style="margin:10px 0;">
+                    {{ instruction }}
+                </p>
+                <p style="margin:10px 0;">
                     To add your message, follow this link: {{ link }}
+                </p>
+                <p style="margin:10px 0;">
                     Thank you!
                 </p>
             </div>

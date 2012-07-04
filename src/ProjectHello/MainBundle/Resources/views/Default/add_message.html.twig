@@ -14,6 +14,12 @@
     {% if recipient_name is not defined %}
         {% set recipient_name = 'Mon Abilar' %}
     {% endif %}
+    
+    {% if app.session.hasFlash('card-notice') %}
+	    <div class="flash-notice">
+	        {{ app.session.flash('card-notice') }}
+	    </div>
+	{% endif %}
 
     <form action="{{ add_message_action }}" class="form-horizontal" method="post">
         <h1>Hi {{ collaborator_name }},</h1>
