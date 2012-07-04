@@ -1,0 +1,114 @@
+{% import "ProjectHelloMainBundle:Fragments:form_macros.html.twig" as forms %}
+
+{% extends 'ProjectHelloMainBundle::layout_main.html.twig' %}
+
+{% block content %}
+    {% if create_card_action is not defined %}
+        {% set create_card_action = '' %}
+    {% endif %}
+
+    {% if app.session.hasFlash('card-notice') %}
+	    <div class="flash-notice">
+	        {{ app.session.flash('card-notice') }}
+	    </div>
+	{% endif %}
+
+    <div class="page-header page-header-noborder">
+        <h1>Create a card</h1>
+    </div>
+
+    <form action="{{ create_card_action }}" class="form-horizontal" method="post">        
+
+        <fieldset>
+            <legend>My name is</legend>
+            
+            {% block creator_name_field %}
+                {# forms.input_text('creator-name', '', 'Creator Name') #}
+            {% endblock %}
+        </fieldset>
+
+        <fieldset>
+            <legend>I will create this card for</legend>
+            
+            {% block recipient_name_field %}
+                {# forms.input_text('recipient-name', '', 'Recipient Name') #}
+            {% endblock %}
+
+            {% block recipient_email_field %}
+                {# forms.email('recipient-email', '', 'Recipient Email') #}
+            {% endblock %}
+        </fieldset>
+
+        <fieldset>
+            <legend>What is my message</legend>
+
+            {% block creator_message_field %}
+                {# forms.textarea('creator-message', '', 'Creator Message') #}
+            {% endblock %}
+        </fieldset>
+
+        <fieldset>
+            <legend>I will invite others to add messages to the card</legend>
+
+            {% block collaborator_field %}
+                {# for i in 1..2 %}
+                    {% include 'ProjectHelloMainBundle:Fragments:collaborator_field.html.twig' %}
+                {% endfor #}
+            {% endblock %}
+
+            <div class="form-actions">
+                <button class="btn" id="add-collaborator-btn">Add a collaborator</button>
+            </div>
+
+            {% block instruction_field %}
+                {# forms.textarea('collaborator-instruction', '', 'Instructions') #}
+            {% endblock %}
+        </fieldset>
+
+        {#
+        <fieldset>
+            <legend>This card must be sent on this date</legend>
+            
+            {% block sending_date_field %}
+                {{ forms.date('sending-date', '', 'Sending Date', '06-22-2012') }}
+            {% endblock %}
+        </fieldset>
+        #}
+
+        {% block hidden_fields %} {% endblock %}
+
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Create and Submit</button>
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts
+        '@ProjectHelloMainBundle/Resources/public/js/bootstrap-datepicker.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript">
+    	$(function(){
+            $('#sending-date').datepicker({
+                format: 'mm-dd-yyyy'
+            });
+            
+            $('#add-collaborator-btn').click(function(e){
+            	e.preventDefault();
+            	
+            	var $newCollaborator = $('.collaborator:last').clone();
+		    	$newCollaborator.find('#collaborator-name').attr('value', '');
+		    	$newCollaborator.find('#collaborator-email').attr('value', '');
+            	console.log($newCollaborator);
+            	$('.collaborator:last').after($newCollaborator);
+		        
+		        return false;
+            });
+        });
+    </script>
+{% endblock %}

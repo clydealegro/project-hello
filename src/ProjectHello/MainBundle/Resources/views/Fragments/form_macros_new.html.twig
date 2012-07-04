@@ -1,0 +1,19 @@
+{% macro fieldRow(formField, label, class) %}
+    {% spaceless %}
+        {% set label_attr = {'attr' : {'class' : 'control-label'}} %}
+        {% set widget_attr = {'attr' : {'class' : class|default('')}} %}
+
+        <div class="control-group">
+            {{ form_label(formField, label|default(''), label_attr) }}
+
+            <div class="controls">
+               {{ form_widget(formField, widget_attr) }}
+               {{ form_errors(formField) }}
+            </div>
+        </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{# macro extra_large_textarea(id, name, label, value) %}
+    {{ _self.textarea(id|default(''), name|default(''), label|default(''), value|default(''), 'input-xxlarge') }}
+{% endmacro #}

@@ -1,0 +1,63 @@
+{% import "ProjectHelloMainBundle:Fragments:form_macros.html.twig" as forms %}
+
+{% extends 'ProjectHelloMainBundle:Default:create_card.html.twig' %}
+
+{% set create_card_action = path('create_card') %}
+
+{% block creator_name_field %}
+    {{ forms.fieldRow(form.creatorName, 'Creator Name') }}
+{% endblock %}
+
+{% block recipient_name_field %}
+    {{ forms.fieldRow(form.recipientName, 'Recipient Name') }}
+{% endblock %}
+
+{% block recipient_email_field %}
+    {{ forms.fieldRow(form.recipientEmailAddress, 'Recipient Email') }}
+{% endblock %}
+
+{% block creator_message_field %}
+    {{ forms.fieldRow(form.message, 'Creator Message', 'input-xlarge') }}
+{% endblock %}
+
+{% block collaborator_field %}
+    {# for i in 0..1 %}
+        {% include 'ProjectHelloMainBundle:Fragments:collaborator_field.html.twig' with {
+            name_field_id     : 'card_collaborators_' ~ i ~ '_name',
+            name_field_name   : 'card[collaborators][' ~ i ~ '][name]',
+            email_field_id    : 'card_collaborators_' ~ i ~ '_email',
+            email_field_name  : 'card[collaborators][' ~ i ~ '][email]'
+        } %}
+    {% endfor #}
+{% endblock %}
+
+{% block instruction_field %}
+    {{ forms.fieldRow(form.instruction, 'Instructions', 'input-xlarge') }}
+{% endblock %}
+
+{# block sending_date_field %}
+    {{ forms.date(form.sendingDate.vars.id, form.sendingDate.vars.full_name, 'Sending Date', form.sendingDate.vars.value) }}
+{% endblock #}
+
+{% block hidden_fields %} 
+    {{ form_widget(form._token) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        /*$(function(){
+            // add the "add a tag" anchor and li to the tags ul
+            collectionHolder.append($newLinkLi);
+        
+            $('.form-actions ~ .collaborator').on('click', function(e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+        
+                // add a new tag form (see next code block)
+                addTagForm(collectionHolder, $newLinkLi);
+            });
+        });*/
+    </script>
+{% endblock %}
