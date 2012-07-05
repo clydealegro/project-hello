@@ -37,9 +37,11 @@ class SendCardsCommand extends \Symfony\Bundle\FrameworkBundle\Command\Container
         
         foreach ($cards as $card) {
             
-            $link = $this->getContainer()->get('router')->generate('view_card',
-                    array ('card_id' => $card->getId()));
-            $link = 'http://www.projecthello.com.local' . $link;
+            $link = $this->getContainer()->get('router')->generate(
+                    'guest_view_card');
+            
+            $link = 'http://www.projecthello.com.local' . $link . '?token='
+                    . $card->getGuestToken();
             
             // retrieve recipients
             $cardRecipients = $crRepo->findAllJoinedToUsersByCardId(
@@ -54,7 +56,7 @@ class SendCardsCommand extends \Symfony\Bundle\FrameworkBundle\Command\Container
                 $recipientEmails[] = $cardRecipient->getRecipient()
                         ->getEmailAddress();
             }
-                        
+            
             $message = \Swift_Message::newInstance()
                 ->setSubject('A Card For You')
                 ->setFrom('projecthello@clydealegro.me', 'ProjectHello')

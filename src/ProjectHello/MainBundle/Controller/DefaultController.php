@@ -56,6 +56,16 @@ class DefaultController extends Controller
                     //insert card into database
                     $card->setSendingDate(new \DateTime($parameters['sendingDate']));
                     $card->setCreator($creator);
+                    /*
+                     * // TODO -> can't proceed b/c lacking PHP intl
+                    $token = $this->container->get('token_service')->getEncryptedToken(
+                            array (
+                                'creator_id'    => $card->getCreator()->getId(),
+                                'date_created'  => date('Y-m-d H:i:s')
+                            ));
+                    $card->setGuestToken($token);
+                     * 
+                     */
                     $entityManager->persist($card);
 
                     $recipient = new User();
@@ -191,14 +201,16 @@ class DefaultController extends Controller
     /**
      * View card.
      */
-    public function viewCardAction()
+    public function guestViewCardAction()
     {
-        $request = $this->getRequest();
-
         $cardRepo = $this->getDoctrine()->getRepository(
                 'ProjectHelloCoreBundle:Card');
-        $card = $cardRepo->find($request->get('card_id'));
-
+        
+        // TODO refactor retrieve by token -> this is slow since
+        // token is not indexed
+        $card = $cardRepo->findOneBy(
+                array ('guestToken' => str_replace(' ', '+', $_GET['token'])));
+        
         if (! $card) {
 
             throw $this->createNotFoundException(

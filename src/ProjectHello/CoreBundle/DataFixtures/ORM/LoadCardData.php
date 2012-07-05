@@ -6,7 +6,9 @@ use
     Doctrine\Common\DataFixtures\AbstractFixture,
     Doctrine\Common\DataFixtures\OrderedFixtureInterface,
     Doctrine\Common\Persistence\ObjectManager,
-    ProjectHello\CoreBundle\Entity\Card
+    ProjectHello\CoreBundle\Entity\Card,
+    Symfony\Component\DependencyInjection\ContainerAwareInterface,
+    Symfony\Component\DependencyInjection\ContainerInterface
 ;
 
 /**
@@ -14,8 +16,20 @@ use
  *
  * @author projecthello
  */
-class LoadCardData extends AbstractFixture implements OrderedFixtureInterface
+class LoadCardData extends AbstractFixture implements OrderedFixtureInterface,
+        ContainerAwareInterface
 {
+    /**
+     * @var ContainerInterface
+     */
+    private $container = null;
+    
+    // implementing ContainerAware allows us to use service container
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+    
     public function load(ObjectManager $manager)
     {
         // init data
@@ -36,6 +50,13 @@ class LoadCardData extends AbstractFixture implements OrderedFixtureInterface
             
             // creator is always clyde
             $card->setCreator($manager->merge($this->getReference('user12')));
+            
+            $token = $this->container->get('token_service')->getEncryptedToken(
+                    array (
+                        'creator_id'    => $card->getCreator()->getId(),
+                        'date_created'  => date('Y-m-d H:i:s')
+                    ));
+            $card->setGuestToken($token);
             
             $manager->persist($card);
             $manager->flush();

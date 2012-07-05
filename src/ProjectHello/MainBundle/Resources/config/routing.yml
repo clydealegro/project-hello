@@ -19,9 +19,9 @@ add_message:
     pattern: /add-message
     defaults: { _controller: ProjectHelloMainBundle:Default:addMessage }
 
-view_card:
-    pattern: /view-card/{card_id}
-    defaults: { _controller: ProjectHelloMainBundle:Default:viewCard }
+guest_view_card:
+    pattern: /guest-view-card
+    defaults: { _controller: ProjectHelloMainBundle:Default:guestViewCard }
 
 register:
     pattern: /register

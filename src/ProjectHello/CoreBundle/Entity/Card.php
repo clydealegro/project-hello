@@ -27,6 +27,13 @@ class Card
      * @ORM\Column(name="sending_date", type="date")
      */
     private $sendingDate;
+    
+    /**
+     * @var string $guestToken
+     *
+     * @ORM\Column(name="guest_token", type="string", length=255)
+     */
+    private $guestToken;
 
     /**
      * @var datetime $dateCreated
@@ -114,5 +121,25 @@ class Card
     public function getCreator()
     {
         return $this->creator;
+    }
+
+    /**
+     * Set guestToken
+     *
+     * @param string $guestToken
+     */
+    public function setGuestToken($guestToken)
+    {
+        $this->guestToken = $guestToken;
+    }
+
+    /**
+     * Get guestToken
+     *
+     * @return string 
+     */
+    public function getGuestToken()
+    {
+        return $this->guestToken;
     }
 }
