@@ -15,9 +15,9 @@
     </div>
 {% endmacro %}
 
-{# macro password(id, name, label, max_length, required) %}
-    {{ _self.input_text(id|default(''), name|default(''), label|default(''), '', password', max_length|default(0), required|default(false)) }}
-{% endmacro #}
+{% macro password(id, name, label, max_length, required) %}
+    {{ _self.input_text(id|default(''), name|default(''), label|default(''), '', 'password', max_length|default(0), required|default(false)) }}
+{% endmacro %}
 
 {% macro email(id, name, label, value, max_length, required) %}
     {{ _self.input_text(id|default(''), name|default(''), label|default(''), value|default(''), 'email', max_length|default(0), required|default(false)) }}
@@ -41,6 +41,6 @@
     </div>
 {% endmacro%}
 
-{# macro extra_large_textarea(id, name, label, value) %}
+{% macro extra_large_textarea(id, name, label, value) %}
     {{ _self.textarea(id|default(''), name|default(''), label|default(''), value|default(''), 'input-xxlarge') }}
-{% endmacro #}
+{% endmacro %}
