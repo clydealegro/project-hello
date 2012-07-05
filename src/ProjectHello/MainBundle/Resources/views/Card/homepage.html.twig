@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block register_email_field %}
-    {{ forms.email('user_emailAddress', 'user[emailAddress]', 'Email', 100, true) }}
+    {{ forms.email('user_emailAddress', 'user[emailAddress]', 'Email', '', 100, true) }}
 {% endblock %}
 
 {% block register_password_field %}
@@ -54,12 +54,12 @@
                     $('#hdnRegistrationLink').val(),
                     $('div#registrationModal > form').serialize(),
                     function(json) {
+                        submitBtn.show();
+                        loadingImg.hide();
+
                         if (json.error) {
                             $('#user_emailAddress').parent().append('<span class="errorMsg">' + json.error + '</span>');
                         } else {
-                            submitBtn.show();
-                            loadingImg.hide();
-
                             $('div#registrationModal').find('p, form').remove();
                             $('div#registrationModal').append('<p>Thank you for registering. Please check your email to verify your account.</p>');
 
