@@ -22,4 +22,7 @@ security:
             anonymous: true
 
     access_control:
-        - { path: /.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /dashboard, roles: ROLE_MEMBER }
+        - { path: /create-card, roles: ROLE_MEMBER }
+        - { path: /add-message, roles: ROLE_MEMBER }
+        - { path: /.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
