@@ -38,17 +38,21 @@
     {{ parent() }}
 
     <script type="text/javascript">
-        /*$(function(){
-            // add the "add a tag" anchor and li to the tags ul
-            collectionHolder.append($newLinkLi);
+        $(function(){
+            $('#card_sendingDate').datepicker({
+                'format': 'mm-dd-yyyy',
+                'minDate': +1
+            });
 
-            $('.form-actions ~ .collaborator').on('click', function(e) {
-                // prevent the link from creating a "#" on the URL
+            $('#add-collaborator-btn').click(function(e){
                 e.preventDefault();
 
-                // add a new tag form (see next code block)
-                addTagForm(collectionHolder, $newLinkLi);
+                var $newCollaborator = $('.collaborator:last').clone();
+                $newCollaborator.find('input[id^=card_collaborators]').attr('value', '');
+                $('.collaborator:last').after($newCollaborator);
+
+                return false;
             });
-        });*/
+        });
     </script>
 {% endblock %}
