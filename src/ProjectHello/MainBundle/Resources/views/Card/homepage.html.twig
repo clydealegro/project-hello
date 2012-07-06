@@ -58,7 +58,7 @@
                         loadingImg.hide();
 
                         if (json.error) {
-                            $('#user_emailAddress').parent().append('<span class="errorMsg">' + json.error + '</span>');
+                            $('#user_emailAddress').parent().append('<span class="errorMsg help-inline">' + json.error + '</span>');
                         } else {
                             $('div#registrationModal').find('p, form').remove();
                             $('div#registrationModal').append('<p>Thank you for registering. Please check your email to verify your account.</p>');
@@ -71,19 +71,19 @@
                 );
             } else {
                 if (!email) {
-                    $('#user_emailAddress').parent().append('<span class="errorMsg">Email address is required.</span>');
+                    $('#user_emailAddress').parent().append('<span class="errorMsg help-inline">Email address is required.</span>');
                 } else if (!isValidEmail) {
-                    $('#user_emailAddress').parent().append('<span class="errorMsg">A valid email address is required.</span>');
+                    $('#user_emailAddress').parent().append('<span class="errorMsg help-inline">A valid email address is required.</span>');
                 }
 
                 if (!password) {
-                    $('#user_password').parent().append('<span class="errorMsg">Password is required.</span>');
+                    $('#user_password').parent().append('<span class="errorMsg help-inline">Password is required.</span>');
                 }
 
                 if (!confirmPassword) {
-                    $('#user_confirmPassword').parent().append('<span class="errorMsg">Password must be confirmed.</span>');
+                    $('#user_confirmPassword').parent().append('<span class="errorMsg help-inline">Password must be confirmed.</span>');
                 } else if (password != confirmPassword) {
-                    $('#user_confirmPassword').parent().append('<span class="errorMsg">Both passwords must be equal.</span>');
+                    $('#user_confirmPassword').parent().append('<span class="errorMsg help-inline">Both passwords must be equal.</span>');
                 }
             }
 
