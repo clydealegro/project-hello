@@ -1786,7 +1786,7 @@ table .span24 {
   *margin-right: .3em;
   line-height: 14px;
   vertical-align: text-top;
-  background-image: url("../img/glyphicons-halflings.png");
+  background-image: url("/bundles/projecthellomain/img/glyphicons-halflings.png");
   background-position: 14px 14px;
   background-repeat: no-repeat;
 }
@@ -1797,7 +1797,7 @@ table .span24 {
 }
 
 .icon-white {
-  background-image: url("../img/glyphicons-halflings-white.png");
+  background-image: url("/bundles/projecthellomain/img/glyphicons-halflings-white.png");
 }
 
 .icon-glass {
@@ -2635,7 +2635,7 @@ button.close {
 }
 
 .btn:first-child {
-  *margin-left: 0;  
+  *margin-left: 0;
 }
 
 .btn:hover {
@@ -2688,7 +2688,7 @@ button.close {
     line-height: 18px;
     -webkit-border-radius: 5px;
        -moz-border-radius: 5px;
-            border-radius: 5px;    
+            border-radius: 5px;
 }
 
 .btn-large {
