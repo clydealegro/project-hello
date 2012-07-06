@@ -73,11 +73,12 @@
 
                 <div class="form-actions">
                     <button class="btn btn-primary" type="submit">Login</button>
+                    <span class="help-inline" style="display:none"> </span>
                     <br/>
                     <em style="display: none">
                         <img src="/bundles/projecthellomain/img/ajax-loader.gif" />
+                        Verifying account...
                     </em>
-                    <span></span>
                 </div>
             </form>
         </p>
@@ -108,21 +109,5 @@
     %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-             
-            $('#registrationBtn').click(function(e) {
-                e.preventDefault();
-                $('#registrationModal').reveal({
-                    animation: 'fadeAndPop',                   //fade, fadeAndPop, none
-                    animationspeed: 300,                       //how fast animtions are
-                    closeonbackgroundclick: true,              //if you click background will modal close?
-                    dismissmodalclass: 'close-reveal-modal'    //the class of a button or element that will close an open modal
-                });
-            });
-             
-        });
-    </script>
 {% endblock %}
 

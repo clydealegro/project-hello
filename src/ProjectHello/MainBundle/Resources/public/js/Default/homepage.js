@@ -98,7 +98,7 @@ $(document).ready(function () {
                     loadingImg.hide();
 
                     if (json.error) {
-                        $('#user_emailAddress').parent().append('<span class="errorMsg">' + json.error + '</span>');
+                        displayRegistrationError($('#user_emailAddress').parent(), json.error);
                     } else {
                         $('div#registrationModal').find('p, form').remove();
                         $('div#registrationModal').append('<p>Thank you for registering. Please check your email to verify your account.</p>');
@@ -111,22 +111,26 @@ $(document).ready(function () {
             );
         } else {
             if (!email) {
-                $('#user_emailAddress').parent().append('<span class="errorMsg">Email address is required.</span>');
+                displayRegistrationError($('#user_emailAddress').parent(), 'Email address is required.');
             } else if (!isValidEmail) {
-                $('#user_emailAddress').parent().append('<span class="errorMsg">A valid email address is required.</span>');
+                displayRegistrationError($('#user_emailAddress').parent(), 'A valid email address is required.');
             }
 
             if (!password) {
-                $('#user_password').parent().append('<span class="errorMsg">Password is required.</span>');
+                displayRegistrationError($('#user_password').parent(), 'Password is required.');
             }
 
             if (!confirmPassword) {
-                $('#user_confirmPassword').parent().append('<span class="errorMsg">Password must be confirmed.</span>');
+                displayRegistrationError($('#user_confirmPassword').parent(), 'Password must be confirmed.');
             } else if (password != confirmPassword) {
-                $('#user_confirmPassword').parent().append('<span class="errorMsg">Both passwords must be equal.</span>');
+                displayRegistrationError($('#user_confirmPassword').parent(), 'Both passwords must be equal.');
             }
         }
 
         return false;
     });
+
+    function displayRegistrationError(element, message) {
+        element.append('<span class="errorMsg help-inline">' + message + '</span>');
+    }
 });
