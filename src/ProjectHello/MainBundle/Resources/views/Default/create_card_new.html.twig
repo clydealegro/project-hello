@@ -89,24 +89,4 @@
     %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
-
-    <script type="text/javascript">
-        $(function(){
-            $('#card_sendingDate').datepicker({
-                format: 'mm-dd-yyyy'
-            });
-
-            $('#add-collaborator-btn').click(function(e){
-                e.preventDefault();
-
-                var $newCollaborator = $('.collaborator:last').clone();
-                $newCollaborator.find('#collaborator-name').attr('value', '');
-                $newCollaborator.find('#collaborator-email').attr('value', '');
-                console.log($newCollaborator);
-                $('.collaborator:last').after($newCollaborator);
-
-                return false;
-            });
-        });
-    </script>
 {% endblock %}
