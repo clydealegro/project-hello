@@ -58,13 +58,14 @@ class DefaultController extends Controller
                     $card->setCreator($creator);
                     /*
                      * // TODO -> can't proceed b/c lacking PHP intl
+                     */
                     $token = $this->container->get('token_service')->getEncryptedToken(
                             array (
                                 'creator_id'    => $card->getCreator()->getId(),
                                 'date_created'  => date('Y-m-d H:i:s')
                             ));
                     $card->setGuestToken($token);
-                     * 
+                    /* 
                      */
                     $entityManager->persist($card);
 
@@ -99,7 +100,7 @@ class DefaultController extends Controller
                         $message = \Swift_Message::newInstance()
                             ->setSubject('You are a Collaborator on Project Hello')
                             //->setFrom($this->get('security.context')->getToken()->getUser()->getEmailAddress())
-                            ->setFrom($creator->getEmailAddress())
+                            ->setFrom(array($creator->getEmailAddress() => $parameters['creatorName']))
                             ->setTo(array($collaborator['email'] => $collaborator['name']))
                             ->setBody($this->renderView('ProjectHelloMainBundle:Mail:collaborator_mail.html.twig', array(
                                 'name' => $collaborator['name'],
@@ -145,6 +146,13 @@ class DefaultController extends Controller
             $email = isset($parameters['email']) ? $parameters['email'] : null;
             $name = isset($parameters['name']) ? $parameters['name'] : null;
             $cardId = isset($parameters['card']) ? $parameters['card'] : null;
+            
+            // todo: determine user
+            if ($user = $this->get('security.context')->getToken()->getUser()) {
+	            if (is_callable(array($user, 'getEmailAddress')) && $user->getEmailAddress() != $email) {
+		            throw $this->createNotFoundException('You are on the wrong page.');
+	            }
+            }
             
             $card = $this->getDoctrine()->getRepository('ProjectHelloCoreBundle:Card')->find($cardId);
             

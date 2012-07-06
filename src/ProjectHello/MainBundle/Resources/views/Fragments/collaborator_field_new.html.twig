@@ -1,0 +1,11 @@
+{% import "ProjectHelloMainBundle:Fragments:form_macros_new.html.twig" as forms %}
+
+<div class="collaborator">
+    {% set collaborator = item %}
+
+    {{ forms.fieldRow(collaborator.name, 'Collaborator Name') }}
+
+    {{ forms.fieldRow(collaborator.email, 'Collaborator Email') }}
+
+    {{ form_rest(collaborator) }}
+</div>

@@ -14,6 +14,16 @@
     {% endspaceless %}
 {% endmacro %}
 
+{% macro fieldGroupCollection(collection, itemTemplate) %}
+    {% spaceless %}
+        {% set collectionPrototype = collection.get('prototype') %}
+
+        {% include itemTemplate with { 'item': collectionPrototype } %}
+
+        {{ form_rest(collection) }}
+    {% endspaceless %}
+{% endmacro %}
+
 {# macro extra_large_textarea(id, name, label, value) %}
     {{ _self.textarea(id|default(''), name|default(''), label|default(''), value|default(''), 'input-xxlarge') }}
 {% endmacro #}

@@ -1,4 +1,4 @@
-{% import "ProjectHelloMainBundle:Fragments:form_macros.html.twig" as forms %}
+{% import "ProjectHelloMainBundle:Fragments:form_macros_new.html.twig" as forms %}
 
 {% extends 'ProjectHelloMainBundle::layout_main.html.twig' %}
 
@@ -8,20 +8,20 @@
     {% endif %}
 
     {% if app.session.hasFlash('card-notice') %}
-	    <div class="flash-notice">
-	        {{ app.session.flash('card-notice') }}
-	    </div>
-	{% endif %}
+        <div class="flash-notice">
+            {{ app.session.flash('card-notice') }}
+        </div>
+    {% endif %}
 
     <div class="page-header page-header-noborder">
         <h1>Create a card</h1>
     </div>
 
-    <form action="{{ create_card_action }}" class="form-horizontal" method="post">        
+    <form action="{{ create_card_action }}" class="form-horizontal" method="post">
 
         <fieldset>
             <legend>My name is</legend>
-            
+
             {% block creator_name_field %}
                 {# forms.input_text('creator-name', '', 'Creator Name') #}
             {% endblock %}
@@ -29,7 +29,7 @@
 
         <fieldset>
             <legend>I will create this card for</legend>
-            
+
             {% block recipient_name_field %}
                 {# forms.input_text('recipient-name', '', 'Recipient Name') #}
             {% endblock %}
@@ -68,7 +68,7 @@
         {#
         <fieldset>
             <legend>This card must be sent on this date</legend>
-            
+
             {% block sending_date_field %}
                 {{ forms.date('sending-date', '', 'Sending Date', '06-22-2012') }}
             {% endblock %}
@@ -93,21 +93,21 @@
     {% endjavascripts %}
 
     <script type="text/javascript">
-    	$(function(){
+        $(function(){
             $('#sending-date').datepicker({
                 format: 'mm-dd-yyyy'
             });
-            
+
             $('#add-collaborator-btn').click(function(e){
-            	e.preventDefault();
-            	
-            	var $newCollaborator = $('.collaborator:last').clone();
-		    	$newCollaborator.find('#collaborator-name').attr('value', '');
-		    	$newCollaborator.find('#collaborator-email').attr('value', '');
-            	console.log($newCollaborator);
-            	$('.collaborator:last').after($newCollaborator);
-		        
-		        return false;
+                e.preventDefault();
+
+                var $newCollaborator = $('.collaborator:last').clone();
+                $newCollaborator.find('#collaborator-name').attr('value', '');
+                $newCollaborator.find('#collaborator-email').attr('value', '');
+                console.log($newCollaborator);
+                $('.collaborator:last').after($newCollaborator);
+
+                return false;
             });
         });
     </script>
