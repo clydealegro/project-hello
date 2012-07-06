@@ -190,6 +190,9 @@ class DefaultController extends Controller
 
                             return $response;
                         }
+                        else {
+	                        return $this->redirect($this->generateUrl('homepage'));
+                        }
                     }
                     catch(\Exception $e) {
                         if ($request->isXmlHttpRequest()) {
