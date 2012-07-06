@@ -65,15 +65,13 @@
             {% endblock %}
         </fieldset>
 
-        {#
         <fieldset>
             <legend>This card must be sent on this date</legend>
 
             {% block sending_date_field %}
-                {{ forms.date('sending-date', '', 'Sending Date', '06-22-2012') }}
+                {# forms.date('sending-date', '', 'Sending Date', '06-22-2012') #}
             {% endblock %}
         </fieldset>
-        #}
 
         {% block hidden_fields %} {% endblock %}
 
@@ -94,7 +92,7 @@
 
     <script type="text/javascript">
         $(function(){
-            $('#sending-date').datepicker({
+            $('#card_sendingDate').datepicker({
                 format: 'mm-dd-yyyy'
             });
 

@@ -26,9 +26,9 @@
     {{ forms.fieldRow(form.instruction, 'Instructions', 'input-xlarge') }}
 {% endblock %}
 
-{# block sending_date_field %}
-    {{ forms.date(form.sendingDate.vars.id, form.sendingDate.vars.full_name, 'Sending Date', form.sendingDate.vars.value) }}
-{% endblock #}
+{% block sending_date_field %}
+    {{ forms.fieldRow(form.sendingDate, 'Sending Date') }}
+{% endblock %}
 
 {% block hidden_fields %}
     {{ form_widget(form._token) }}
