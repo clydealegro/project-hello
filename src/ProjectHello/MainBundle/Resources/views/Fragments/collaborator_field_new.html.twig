@@ -1,6 +1,6 @@
 {% import "ProjectHelloMainBundle:Fragments:form_macros_new.html.twig" as forms %}
 
-<div class="collaborator">
+<div class="collaborator clearfix">
     {% set collaborator = item %}
 
     {{ forms.fieldRow(collaborator.name, 'Collaborator Name') }}
@@ -9,5 +9,5 @@
 
     {{ form_rest(collaborator) }}
     
-    <span class="remove-collaborator-btn">Remove</span>
+    <span class="remove-collaborator-btn btn btn-mini btn-danger pull-right">Remove</span>
 </div>
