@@ -11,6 +11,9 @@
 {% block date_widget %}
 	{% spaceless %}
 		{% set attr = attr|merge({'class': attr.class|default('') ~ ' span2' }) %}
-	    {{ parent() }}
+		<div class="input-append date" id="dp3" data-date="{{ form.vars.value }}" data-date-format="mm-dd-yyyy">
+		    {{ parent() }}
+		    <span class="add-on"><i class="icon-th"></i></span>
+	    </div>
 	{% endspaceless %}
 {% endblock date_widget %}

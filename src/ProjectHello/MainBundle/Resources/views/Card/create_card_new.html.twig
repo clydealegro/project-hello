@@ -26,9 +26,9 @@
     {{ forms.fieldRow(form.instruction, 'Instructions', 'input-xlarge') }}
 {% endblock %}
 
-{# block sending_date_field %}
-    {{ forms.date(form.sendingDate.vars.id, form.sendingDate.vars.full_name, 'Sending Date', form.sendingDate.vars.value) }}
-{% endblock #}
+{% block sending_date_field %}
+    {{ forms.fieldRow(form.sendingDate, 'Sending Date') }}
+{% endblock %}
 
 {% block hidden_fields %}
     {{ form_widget(form._token) }}
@@ -38,17 +38,39 @@
     {{ parent() }}
 
     <script type="text/javascript">
-        /*$(function(){
-            // add the "add a tag" anchor and li to the tags ul
-            collectionHolder.append($newLinkLi);
-
-            $('.form-actions ~ .collaborator').on('click', function(e) {
-                // prevent the link from creating a "#" on the URL
-                e.preventDefault();
-
-                // add a new tag form (see next code block)
-                addTagForm(collectionHolder, $newLinkLi);
+    (function($){
+    	$('#dp3').datepicker({
+            format: 'mm-dd-yyyy'
+        });
+        
+        function removeCollaborator($el, e) {
+        	e.preventDefault();
+        	
+        	$el.parent().remove();
+        	return false;
+        }
+        
+        $(function(){
+        	if ($('.collaborator').index() < 2) {
+        		$('.remove-collaborator-btn').hide();
+        	}
+        	
+            $('.remove-collaborator-btn').click(function(e){
+            	removeCollaborator($(this), e);
+            })
+            
+            $('#add-collaborator-btn').click(function(e){
+            	e.preventDefault();
+            	
+            	var $newCollaborator = $('.collaborator:last').clone();
+            	$newCollaborator.find('.remove-collaborator-btn').show().bind('click', function(e){
+            		removeCollaborator($(this), e);
+            	});
+		    	$newCollaborator.find('input[id^=card_collaborators]').attr('value', '');
+            	$('.collaborator:last').after($newCollaborator);
+		        return false;
             });
-        });*/
+        });
+    })(jQuery);
     </script>
 {% endblock %}
