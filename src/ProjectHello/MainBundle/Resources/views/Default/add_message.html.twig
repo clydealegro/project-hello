@@ -15,12 +15,6 @@
         {% set recipient_name = 'Mon Abilar' %}
     {% endif %}
     
-    {% if app.session.hasFlash('card-notice') %}
-	    <div class="flash-notice">
-	        {{ app.session.flash('card-notice') }}
-	    </div>
-	{% endif %}
-
     <form id="add-message-form" action="{{ add_message_action }}" class="form-horizontal" method="post">
         <h1>Hi {{ collaborator_name }},</h1>
         <fieldset>
@@ -29,6 +23,13 @@
                 {{ forms.extra_large_textarea('collaborator-message', '', 'Message') }}
             {% endblock %}
         </fieldset>
+        
+        {% if app.session.hasFlash('card-notice') %}
+		    <div class="flash-notice alert alert-error">
+		        {{ app.session.flash('card-notice') }}
+		    </div>
+		{% endif %}
+
 
         <div class="form-actions">
             <button class="btn btn-primary" type="submit">Submit Message</button>
