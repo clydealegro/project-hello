@@ -161,3 +161,8 @@ form fieldset {
     box-shadow: 0 5px 14px rgba(0, 0, 0, 0.2);
     margin: 10px 0 0 10px;
 }
+
+.sharethis_wrapper {
+    width: 205px;
+    margin: 0 auto 20px;
+}
