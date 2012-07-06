@@ -1,0 +1,104 @@
+{% import "ProjectHelloMainBundle:Fragments:form_macros_new.html.twig" as forms %}
+
+{% extends 'ProjectHelloMainBundle::layout_main.html.twig' %}
+
+{% block content %}
+    <div class="homepage-header">
+        <img src="/bundles/projecthellomain/img/logo.png" alt="" />
+        <h1 class="homepage-header">project-hello</h1>
+        <p>Create a card</p>
+        <p>Add a personal message</p>
+        <p>Let others add their messages</p>
+        <p>Send it to someone</p>
+        <br />
+        <p>Enjoy.</p>
+
+        <div class="actions">
+            <a class="btn btn-xlarge btn-primary" id="registrationBtn" href="#" data-reveal-id="myModal" data-animation="fadeAndPop" data-animationspeed="300" data-closeonbackgroundclick="true" data-dismissmodalclass="close-reveal-modal">Register Now!</a>
+            <a class="btn btn-xlarge" id="loginBtn" href="#" data-reveal-id="myModal" data-animation="fadeAndPop" data-animationspeed="300" data-closeonbackgroundclick="true" data-dismissmodalclass="close-reveal-modal">Log-in</a>
+        </div>
+
+        <input type="hidden" id="hdnRegistrationLink" value="{{ registerAction }}" />
+        <input type="hidden" id="hdnLoginLink" value="{{ loginAction }}" />
+    </div>
+
+    <div id="registrationModal" class="reveal-modal">
+        <h1>Register Now</h1>
+        <p>
+            <form class="form-horizontal" method="POST">
+                <fieldset>
+                    {{ forms.fieldRow(registrationForm.emailAddress, 'Email') }}
+
+                    {{ forms.fieldRow(registrationForm.password, 'Password') }}
+
+                    {{ forms.fieldRow(registrationForm.confirmPassword, 'Confirm Password') }}
+                </fieldset>
+
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <em style="display: none">
+                        <img src="/bundles/projecthellomain/img/ajax-loader.gif" />
+                        Registering account...
+                    </em>
+                </div>
+            </form>
+        </p>
+       <a class="close-reveal-modal">&#215;</a>
+    </div>
+
+    <div id="loginModal" class="reveal-modal">
+        <h1>Login</h1>
+        <p>
+            <form action="{{ path('login_check') }}" class="form-horizontal" method="POST">
+                <fieldset>
+                    <div class="control-group">
+                        <label for="email" class="control-label required">Email</label>
+                        <div class="controls">
+                            <input type="email" class="focused input-xlarge" name="_username" id="loginEmail">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="email" class="control-label required">Password</label>
+                        <div class="controls">
+                            <input type="password" class="focused input-xlarge" name="_password" id="loginPassword">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="submit">Login</button>
+                    <span class="help-inline" style="display:none"> </span>
+                    <br/>
+                    <em style="display: none">
+                        <img src="/bundles/projecthellomain/img/ajax-loader.gif" />
+                        Verifying account...
+                    </em>
+                </div>
+            </form>
+        </p>
+        <a class="close-reveal-modal">&#215;</a>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets
+        '@ProjectHelloMainBundle/Resources/public/css/reveal.css'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts
+        '@ProjectHelloMainBundle/Resources/public/js/libs/jquery.reveal.js'
+        '@ProjectHelloMainBundle/Resources/public/js/libs/jquery.form.plugin.js'
+        '@ProjectHelloMainBundle/Resources/public/js/Default/homepage.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
