@@ -38,21 +38,39 @@
     {{ parent() }}
 
     <script type="text/javascript">
+    (function($){
+    	$('#dp3').datepicker({
+            format: 'mm-dd-yyyy'
+        });
+        
+        function removeCollaborator($el, e) {
+        	e.preventDefault();
+        	
+        	$el.parent().remove();
+        	return false;
+        }
+        
         $(function(){
-            $('#card_sendingDate').datepicker({
-                'format': 'mm-dd-yyyy',
-                'minDate': +1
-            });
-
+        	if ($('.collaborator').index() < 2) {
+        		$('.remove-collaborator-btn').hide();
+        	}
+        	
+            $('.remove-collaborator-btn').click(function(e){
+            	removeCollaborator($(this), e);
+            })
+            
             $('#add-collaborator-btn').click(function(e){
-                e.preventDefault();
-
-                var $newCollaborator = $('.collaborator:last').clone();
-                $newCollaborator.find('input[id^=card_collaborators]').attr('value', '');
-                $('.collaborator:last').after($newCollaborator);
-
-                return false;
+            	e.preventDefault();
+            	
+            	var $newCollaborator = $('.collaborator:last').clone();
+            	$newCollaborator.find('.remove-collaborator-btn').show().bind('click', function(e){
+            		removeCollaborator($(this), e);
+            	});
+		    	$newCollaborator.find('input[id^=card_collaborators]').attr('value', '');
+            	$('.collaborator:last').after($newCollaborator);
+		        return false;
             });
         });
+    })(jQuery);
     </script>
 {% endblock %}
