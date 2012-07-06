@@ -13,8 +13,18 @@
 {% block body %}<body class="view-card">{% endblock %}
 
 {% block intro %}
+
+    <div class="sharethis_wrapper">
+        <span class="label">I'll post this card to</span>
+        <span class='st_facebook_large' displayText='Facebook'></span>
+        <span class='st_twitter_large' displayText='Tweet'></span>
+        <span class='st_googleplus_large' displayText='Google +'></span>
+        <span class='st_tumblr_large' displayText='Tumblr'></span>
+    </div>
+
     <div class="intro">
-        <h1>{{ recipient_name }}</h1>
+        
+        <h1>hello {{ recipient_name }}</h1>
         <p>
             your friends sent you <br />
             some greetings & messages
@@ -23,13 +33,6 @@
 {% endblock %}
 
 {% block content %}
-
-    <div class="sharethis_wrapper">
-        <span class='st_facebook_large' displayText='Facebook'></span>
-        <span class='st_twitter_large' displayText='Tweet'></span>
-        <span class='st_googleplus_large' displayText='Google +'></span>
-        <span class='st_tumblr_large' displayText='Tumblr'></span>
-    </div>
 
     <div id="slides">
         <div class="slides_container">
