@@ -178,3 +178,7 @@ form fieldset {
     text-align: center;
     margin-bottom: 10px;
 }
+
+.flash-notice {
+    margin: 10px 0 30px;
+}

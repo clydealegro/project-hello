@@ -3,7 +3,7 @@
 {% block content %}
 
     {% if app.session.hasFlash('card-notice') %}
-	    <div class="flash-notice">
+	    <div class="flash-notice alert alert-success">
 	        {{ app.session.flash('card-notice') }}
 	    </div>
 	{% endif %}
