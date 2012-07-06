@@ -17,3 +17,22 @@
     </div>
     {{ form_widget(form._token) }}
 {% endblock %}
+{#
+{% block javascripts %}
+    <script type="text/javascript">
+    (function($){
+    	$(function(){
+    		$('#add-message-form').submit(function(e){
+    			e.preventDefault();
+    			
+    			$.ajax({
+    				url: {{ add_message_action }}
+    			});
+    			
+    			return false;
+    		});
+    	});
+    })(jQuery);
+    </scriipt>
+{% endblock %}
+#}
