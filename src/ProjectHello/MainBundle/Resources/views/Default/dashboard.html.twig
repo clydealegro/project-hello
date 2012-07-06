@@ -2,6 +2,12 @@
 
 {% block content %}
 
+    {% if app.session.hasFlash('card-notice') %}
+	    <div class="flash-notice">
+	        {{ app.session.flash('card-notice') }}
+	    </div>
+	{% endif %}
+	
     <div class="page-header clearfix">
         <div class="welcome pull-left">
             <h1>Welcome!</h1>

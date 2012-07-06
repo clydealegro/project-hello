@@ -3,9 +3,8 @@ ProjectHello\CoreBundle\Entity\Message:
         message:
             - NotBlank: ~
 
-ProjectHello\CoreBundle\Entity\User:
+ProjectHello\CoreBundle\Entity\Card:
     properties:
-        firstName:
+        sendingDate:
             - NotBlank: ~
-        emailAddress:
-            - NotBlank: ~
+            - Type: \DateTime

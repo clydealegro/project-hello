@@ -32,13 +32,21 @@ class CardType extends AbstractType
                 'property_path' => false,
             ))
             ->add('sendingDate', 'date', array(
-            	'property_path' => false,
             	'widget' => 'single_text', 
-            	'format' => 'MM-dd-Y', 
-            	'data' => new \DateTime('now')
+            	'format' => 'MM-dd-YYYY', 
+            	'data' => new \DateTime("now")
             ));
     }
-
+    
+    public function getDefaultOptions(array $options)
+    {
+    	return array(
+    		'data_class'	  => 'ProjectHello\CoreBundle\Entity\Card', 
+    		'csrf_protection' => true, 
+    		'csrf_field_name' => '_token',
+    	);
+    }
+    
     public function getName()
     {
         return 'card';

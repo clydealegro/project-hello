@@ -67,7 +67,14 @@ class SendCardsCommand extends \Symfony\Bundle\FrameworkBundle\Command\Container
                             'recipients'    => implode(', ', $recipientNames),
                             'link'          => $link
                         )), 'text/html');
-            $this->getContainer()->get('mailer')->send($message);
+            try{
+            	$this->getContainer()->get('mailer')->send($message);
+            	$output->writeln('card: '.$card->getId().' sent to: '.implode(', ', $recipientEmails));
+            }
+            catch (Exception $e) {
+	        	$output->writeln($e->getMessage());
+            }
+            
         }
     }
 }
