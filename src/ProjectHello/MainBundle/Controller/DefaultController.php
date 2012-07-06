@@ -21,9 +21,12 @@ class DefaultController extends Controller
 {
     public function homepageAction()
     {
-        return $this->render('ProjectHelloMainBundle:Card:homepage.html.twig', array(
-            'registerAction' => $this->generateUrl('register'),
-            'loginAction' => $this->generateUrl('login_check'),
+        $registrationForm = $this->createForm(new UserType(), new User());
+
+        return $this->render('ProjectHelloMainBundle:Card:homepage_new.html.twig', array(
+            'registerAction'    => $this->generateUrl('register'),
+            'loginAction'       => $this->generateUrl('login_check'),
+            'registrationForm'  => $registrationForm->createView()
         ));
     }
 
@@ -49,24 +52,25 @@ class DefaultController extends Controller
                 try {
                     $creator = $this->get('security.context')->getToken()->getUser();
                     $parameters = $request->request->get('card');
-                    
+
                     $entityManager = $this->getDoctrine()->getEntityManager();
                     $card->setCreator($creator);
                     $card->setSendingDate(new \DateTime($parameters['sendingDate']));
-                    
+
                     $token = $this->get('token_service')->getEncryptedToken(
                             array (
                                 'creator_id'    => $card->getCreator()->getId(),
                                 'date_created'  => date('Y-m-d H:i:s')
                             ));
                     $card->setGuestToken($token);
+
                     $entityManager->persist($card);
-                    
+
                     $recipient = $this->get('user_service')->retrieveUserByEmailAddress($parameters['recipientEmailAddress']);
                     if (!$recipient) {
-	                	$recipient = new User();
-	                    $recipient->setEmailAddress($parameters['recipientEmailAddress']);
-	                    $entityManager->persist($recipient);    
+                        $recipient = new User();
+                        $recipient->setEmailAddress($parameters['recipientEmailAddress']);
+                        $entityManager->persist($recipient);
                     }
 
                     $cRecipient = new CardRecipient();
@@ -112,7 +116,7 @@ class DefaultController extends Controller
 
                 }
                 catch(\Exception $e) {
-                	$error = $this->get('kernel')->isDebug() ? $e->getMessage() : 'An error occurred! Please try again!';
+                    $error = $this->get('kernel')->isDebug() ? $e->getMessage() : 'An error occurred! Please try again!';
                     $this->get('session')->setFlash('card-notice', $error);
                 }
             }
@@ -132,25 +136,26 @@ class DefaultController extends Controller
 
             $form = $this->createForm(new MessageType(), $message);
             $link = $this->get('token_service')->getDecryptedToken($encryptLink);
-            
+
             parse_str($link, $parameters);
             $email = isset($parameters['email']) ? $parameters['email'] : null;
             $name = isset($parameters['name']) ? $parameters['name'] : null;
             $cardId = isset($parameters['card']) ? $parameters['card'] : null;
-            
+
             if ($user = $this->get('security.context')->getToken()->getUser()) {
-	            if (is_callable(array($user, 'getEmailAddress')) && $user->getEmailAddress() != $email) {
-		            throw $this->createNotFoundException('You are on the wrong page.');
-	            }
+                if (is_callable(array($user, 'getEmailAddress')) && $user->getEmailAddress() != $email) {
+                    throw $this->createNotFoundException('You are on the wrong page.');
+                }
             }
+
             $card = $this->getDoctrine()->getRepository('ProjectHelloCoreBundle:Card')->find($cardId);
-            
+
             // todo: check if collaborator has already submitted the form
             if (!$email || !$name || !$card) {
                 throw $this->createNotFoundException('You are on the wrong page.');
             }
             if ($card->getSendingDate() < new \DateTime('now')){
-	            throw $this->createNotFoundException('This card has expired.');
+                throw $this->createNotFoundException('This card has expired.');
             }
             $recipients = array();
             $cRecipients = $this->get('doctrine')->getEntityManager()->getRepository('ProjectHelloCoreBundle:CardRecipient')->findBy(array('card' => $cardId));
@@ -167,36 +172,39 @@ class DefaultController extends Controller
 
                         $collaborator = $this->get('user_service')->retrieveUserByEmailAddress($email);
                         if (!$collaborator) {
-	                    	$collaborator = new User();
-	                        $collaborator->setEmailAddress($email);
-	                        $entityManager->persist($collaborator);    
+                            $collaborator = new User();
+                            $collaborator->setEmailAddress($email);
+                            $entityManager->persist($collaborator);
                         }
-                        
+
                         $message->setAuthorName($name);
                         $message->setAuthor($collaborator);
                         $message->setCard($card);
                         $entityManager->persist($message);
 
                         $entityManager->flush();
-                        
+
                         if ($request->isXmlHttpRequest()) {
-	                        $response = new Response(json_encode(array('message' => 'Thank you for submitting your message!')));
-	                        $response->headers->set('Content-Type', 'application/json');
-	                        
-	                        return $response;
+                            $response = new Response(json_encode(array('message' => 'Thank you for submitting your message!')));
+                            $response->headers->set('Content-Type', 'application/json');
+
+                            return $response;
+                        }
+                        else {
+	                        return $this->redirect($this->generateUrl('homepage'));
                         }
                     }
                     catch(\Exception $e) {
-                    	if ($request->isXmlHttpRequest()) {
-                    		$error = $this->get('kernel')->isDebug() ? $e->getMessage() : 'An error occurred! Please try again!';
-	                    	$response = new Response(json_encode(array('error' => $error)), 500);
-	                        $response->headers->set('Content-Type', 'application/json');
-	                        
-	                        return $response;
-                    	}
-                    	else {
-	                    	$this->get('session')->setFlash('card-notice', $e->getMessage());	
-                    	}
+                        if ($request->isXmlHttpRequest()) {
+                            $error = $this->get('kernel')->isDebug() ? $e->getMessage() : 'An error occurred! Please try again!';
+                            $response = new Response(json_encode(array('error' => $error)), 500);
+                            $response->headers->set('Content-Type', 'application/json');
+
+                            return $response;
+                        }
+                        else {
+                            $this->get('session')->setFlash('card-notice', $e->getMessage());
+                        }
                     }
                 }
                 $this->get('session')->setFlash('card-notice', 'Please fill all required fields!');
@@ -221,12 +229,12 @@ class DefaultController extends Controller
     {
         $cardRepo = $this->getDoctrine()->getRepository(
                 'ProjectHelloCoreBundle:Card');
-        
+
         // TODO refactor retrieve by token -> this is slow since
         // token is not indexed
         $card = $cardRepo->findOneBy(
                 array ('guestToken' => str_replace(' ', '+', $_GET['token'])));
-        
+
         if (! $card) {
 
             throw $this->createNotFoundException(
