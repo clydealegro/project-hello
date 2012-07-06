@@ -1,6 +1,4 @@
-{% import "ProjectHelloMainBundle:Fragments:form_macros.html.twig" as forms %}
-
-{% extends 'ProjectHelloMainBundle:Default:create_card.html.twig' %}
+{% extends 'ProjectHelloMainBundle:Default:create_card_new.html.twig' %}
 
 {% set create_card_action = path('create_card') %}
 
@@ -21,14 +19,7 @@
 {% endblock %}
 
 {% block collaborator_field %}
-    {# for i in 0..1 %}
-        {% include 'ProjectHelloMainBundle:Fragments:collaborator_field.html.twig' with {
-            name_field_id     : 'card_collaborators_' ~ i ~ '_name',
-            name_field_name   : 'card[collaborators][' ~ i ~ '][name]',
-            email_field_id    : 'card_collaborators_' ~ i ~ '_email',
-            email_field_name  : 'card[collaborators][' ~ i ~ '][email]'
-        } %}
-    {% endfor #}
+    {{ forms.fieldGroupCollection(form.collaborators, 'ProjectHelloMainBundle:Fragments:collaborator_field_new.html.twig') }}
 {% endblock %}
 
 {% block instruction_field %}
@@ -39,7 +30,7 @@
     {{ forms.date(form.sendingDate.vars.id, form.sendingDate.vars.full_name, 'Sending Date', form.sendingDate.vars.value) }}
 {% endblock #}
 
-{% block hidden_fields %} 
+{% block hidden_fields %}
     {{ form_widget(form._token) }}
 {% endblock %}
 
@@ -50,11 +41,11 @@
         /*$(function(){
             // add the "add a tag" anchor and li to the tags ul
             collectionHolder.append($newLinkLi);
-        
+
             $('.form-actions ~ .collaborator').on('click', function(e) {
                 // prevent the link from creating a "#" on the URL
                 e.preventDefault();
-        
+
                 // add a new tag form (see next code block)
                 addTagForm(collectionHolder, $newLinkLi);
             });
