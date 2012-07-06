@@ -182,3 +182,8 @@ form fieldset {
 .flash-notice {
     margin: 10px 0 30px;
 }
+
+.biglogo {
+    margin: 80px auto 0;
+    display: block;
+}
