@@ -157,6 +157,13 @@ class DefaultController extends Controller
             if ($card->getSendingDate() < new \DateTime('now')){
                 throw $this->createNotFoundException('This card has expired.');
             }
+            
+            if ($collaborator = $this->get('user_service')->retrieveUserByEmailAddress($email)) {
+	        	if ($mCollaborator = $this->get('doctrine')->getEntityManager()->getRepository('ProjectHelloCoreBundle:Message')->findOneBy(array('card' => $cardId, 'author' => $collaborator->getId()))) {
+		        	throw $this->createNotFoundException('This card has expired.');
+	        	}
+            }
+            
             $recipients = array();
             $cRecipients = $this->get('doctrine')->getEntityManager()->getRepository('ProjectHelloCoreBundle:CardRecipient')->findBy(array('card' => $cardId));
             foreach ($cRecipients as $cRecipient) {
