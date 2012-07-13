@@ -1,0 +1,131 @@
+{% import "ProjectHelloMainBundle:Fragments:form_macros_new.html.twig" as forms %}
+
+{% extends 'ProjectHelloMainBundle::layout_main.html.twig' %}
+
+{% block content %}
+    {% if create_card_action is not defined %}
+        {% set create_card_action = '' %}
+    {% endif %}
+
+    {% if app.session.hasFlash('card-notice') %}
+	    <div class="flash-notice">
+	        {{ app.session.flash('card-notice') }}
+	    </div>
+	{% endif %}
+
+    <div class="page-header page-header-noborder">
+        <h1>Edit your card</h1>
+    </div>
+
+    <form action="{{ edit_card_action }}" class="form-horizontal" method="post">
+
+        <fieldset>
+            <legend>What is my message</legend>
+
+            {% block creator_message_field %}
+                {{ forms.fieldRow(form.message, 'Creator Message', 'input-xlarge') }}
+            {% endblock %}
+        </fieldset>
+
+        <fieldset>
+            <legend>I will invite others to add messages to the card</legend>
+
+            {% block collaborator_field %}
+                <div id="collaborator-container" data-prototype="{{ forms.fieldGroupCollection(form.collaborators, 'ProjectHelloMainBundle:Fragments:collaborator_field_new.html.twig') | e }}"></div>
+            {% endblock %}
+
+            <div class="form-actions">
+                <button class="btn" id="add-collaborator-btn">Add a collaborator</button>
+            </div>
+            
+            {% block instruction_field %}
+                {{ forms.fieldRow(form.instruction, 'Instructions', 'input-xlarge') }}
+            {% endblock %}
+        </fieldset>
+
+        <fieldset>
+            <legend>This card must be sent on this date</legend>
+            
+            {% block sending_date_field %}
+                {{ forms.fieldRow(form.sendingDate, 'Sending Date') }}
+            {% endblock %}
+        </fieldset>
+
+        {% block hidden_fields %}
+        	{{ form_widget(form._token) }}
+        {% endblock %}
+
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Save Changes</button>
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {#
+    {% javascripts
+        '@ProjectHelloMainBundle/Resources/public/js/bootstrap-datepicker.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    #}
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.js"></script>
+    
+    <script type="text/javascript">
+    (function($){
+    	var collectionHolder = $('#collaborator-container');
+    	var instructionHolder = $('#card_instruction').closest('.control-group');
+    	
+    	$('#card_sendingDate').datepicker({
+            dateFormat: 'yy-mm-dd',
+            showAnim: 'fadeIn',
+            minDate: '+1'
+        });
+        
+        function removeCollaborator($el, e) {
+        	e.preventDefault();
+        	
+        	$el.parent().remove();
+        	return false;
+        }
+    	
+    	function addCollaboratorForm(collectionHolder) {
+    		// Get the data-prototype
+    		var prototype = collectionHolder.attr('data-prototype');
+    		
+    		// Replace '$$name$$' in the prototype's HTML to
+    		// instead be a number based on the current collection's length.
+    		var $newForm = $(prototype.replace(/\$\$name\$\$/g, collectionHolder.children().length));
+    		$newForm.find('.remove-collaborator-btn').show().bind('click', function(e){
+    			removeCollaborator($(this), e);
+    		});
+    		$newForm.find('input[id^=card_collaborators]').attr('value', '');
+    		
+    		// Display the form in the page in an li, before the "Add a tag" link li
+    		collectionHolder.append($newForm);
+    	}
+    	
+    	$(function(){
+            $('.remove-collaborator-btn').click(function(e){
+            	removeCollaborator($(this), e);
+            })
+    		$('#add-collaborator-btn').click(function(e){
+    			// prevent the link from creating a "#" on the URL
+    			e.preventDefault();
+    			
+    			// add a new tag form (see next code block)
+    			addCollaboratorForm(collectionHolder);
+    			$('#card_instruction').closest('.control-group').show();
+    			if (!$('#card_instruction').length) {
+    				collectionHolder.parent().append(instructionHolder);
+    			}
+    		});
+    		if ($('.collaborator').index() < 1) {
+    			instructionHolder.remove();
+        	}
+    	});
+    })(jQuery);
+    </script>
+{% endblock %}

@@ -84,9 +84,12 @@
 {% block javascripts %}
     {{ parent() }}
 
+    {#
     {% javascripts
         '@ProjectHelloMainBundle/Resources/public/js/bootstrap-datepicker.js'
     %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
+    #}
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.js"></script>
 {% endblock %}

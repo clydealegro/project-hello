@@ -24,4 +24,5 @@ security:
     access_control:
         - { path: /dashboard, roles: ROLE_MEMBER }
         - { path: /create-card, roles: ROLE_MEMBER }
+        - { path: /edit-card, roles: ROLE_MEMBER }
         - { path: /.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }

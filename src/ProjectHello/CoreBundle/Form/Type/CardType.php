@@ -33,8 +33,7 @@ class CardType extends AbstractType
             ))
             ->add('sendingDate', 'date', array(
             	'widget' => 'single_text', 
-            	'format' => 'MM-dd-YYYY', 
-            	'data' => new \DateTime("now")
+            	'format' => 'YYYY-MM-dd'
             ));
     }
     
