@@ -19,36 +19,18 @@
     
     <div class="row">
         <ul class="thumbnails">
-            <li class="span2">
-                <div href="#" class="thumbnail">
-                    <img src="http://placehold.it/160x120" alt="" />
-                    <div class="actions">
-                        <a class="btn btn-mini" href="">Edit Card</a>
-                        <a class="btn btn-mini" href="">View Card</a>
+            {% for card in cards %}
+                <li class="span2">
+                    <div href="#" class="thumbnail">
+                        <img src="http://th03.deviantart.net/fs71/150/f/2012/194/0/d/mmd_model_rq__ultra_chibi_mordecai_by_xan_seyro-d574kyk.png" alt="" />
+                        <div class="actions">
+                            <a class="btn btn-mini" href="">Edit Card</a>
+                            <a class="btn btn-mini" href="{{ path('guest_view_card', {'token':card.guestToken}) }}">View Card</a>
+                        </div>
                     </div>
-                </div>
-            </li>
-            <li class="span2">
-                <div href="#" class="thumbnail">
-                    <img src="http://placehold.it/160x120" alt="" />
-                    <div class="actions">
-                        <a class="btn btn-mini" href="">Edit Card</a>
-                        <a class="btn btn-mini" href="">View Card</a>
-                    </div>
-                </div>
-            </li>
-            <li class="span2">
-                <div href="#" class="thumbnail">
-                    <img src="http://placehold.it/160x120" alt="" />
-                    <div class="actions">
-                        <a class="btn btn-mini" href="">Edit Card</a>
-                        <a class="btn btn-mini" href="">View Card</a>
-                    </div>
-                </div>
-            </li>
-            
+                </li>
+            {% endfor %}            
         </ul>
-        
     </div>
     
 {% endblock %}

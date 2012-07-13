@@ -30,9 +30,24 @@ class DefaultController extends Controller
         ));
     }
 
+    /**
+     * User dashboard.
+     * 
+     * @return type
+     */
     public function dashboardAction()
     {
-        return $this->render('ProjectHelloMainBundle:Default:dashboard.html.twig');
+        $userId = $this->getRequest()->get('userId');
+        $cardRepo = $this->getDoctrine()->getRepository(
+                'ProjectHelloCoreBundle:Card');
+        
+        $cards = $cardRepo->findBy(array ('creator' => $userId));
+        
+        return $this->render(
+                'ProjectHelloMainBundle:Default:dashboard.html.twig',
+                array (
+                    'cards' => $cards
+                ));
     }
 
 
@@ -230,7 +245,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * View card.
+     * View card for non-registered users.
      */
     public function guestViewCardAction()
     {
@@ -262,7 +277,7 @@ class DefaultController extends Controller
                     'recipientName' => $cardRecipient->getRecipientName()
                 ));
     }
-
+    
     public function registerUserAction()
     {
         $error = '';
