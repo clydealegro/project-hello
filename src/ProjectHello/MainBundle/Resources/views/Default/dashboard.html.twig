@@ -24,7 +24,9 @@
                     <div href="#" class="thumbnail">
                         <img src="http://th03.deviantart.net/fs71/150/f/2012/194/0/d/mmd_model_rq__ultra_chibi_mordecai_by_xan_seyro-d574kyk.png" alt="" />
                         <div class="actions">
-                            <a class="btn btn-mini" href="">Edit Card</a>
+                        	{% if card.sendingDate > date("today") %}
+                            <a class="btn btn-mini" href="{{ path('edit_card', {'id':card.id}) }}">Edit Card</a>
+                            {% endif %}
                             <a class="btn btn-mini" href="{{ path('guest_view_card', {'token':card.guestToken}) }}">View Card</a>
                         </div>
                     </div>

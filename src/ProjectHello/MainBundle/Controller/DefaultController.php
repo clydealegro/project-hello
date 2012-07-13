@@ -37,7 +37,7 @@ class DefaultController extends Controller
      */
     public function dashboardAction()
     {
-        $userId = $this->getRequest()->get('userId');
+        $userId = $this->get('security.context')->getToken()->getUser()->getId();
         $cardRepo = $this->getDoctrine()->getRepository(
                 'ProjectHelloCoreBundle:Card');
         
