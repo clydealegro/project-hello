@@ -19,7 +19,10 @@
 {% endblock %}
 
 {% block collaborator_field %}
-    {{ forms.fieldGroupCollection(form.collaborators, 'ProjectHelloMainBundle:Fragments:collaborator_field_new.html.twig') }}
+	<div id="collaborator-container" data-prototype="{{ forms.fieldGroupCollection(form.collaborators, 'ProjectHelloMainBundle:Fragments:collaborator_field_new.html.twig') | e }}"></div>
+	{#
+	{{ forms.fieldGroupCollection(form.collaborators, 'ProjectHelloMainBundle:Fragments:collaborator_field_new.html.twig') }}
+	#}
 {% endblock %}
 
 {% block instruction_field %}
@@ -37,7 +40,7 @@
 {% block javascripts %}
     {{ parent() }}
 
-    <script type="text/javascript">
+    {#<script type="text/javascript">
     (function($){
     	$('#dp3').datepicker({
             format: 'mm-dd-yyyy'
@@ -55,11 +58,8 @@
         		$('.remove-collaborator-btn').hide();
         	}
         	
-            $('.remove-collaborator-btn').click(function(e){
-            	removeCollaborator($(this), e);
-            })
             
-            $('#add-collaborator-btn').click(function(e){
+            /*$('#add-collaborator-btn').click(function(e){
             	e.preventDefault();
             	
             	var $newCollaborator = $('.collaborator:last').clone();
@@ -70,7 +70,61 @@
             	$('.collaborator:last').after($newCollaborator);
 		        return false;
             });
+        });*/
+    })(jQuery);
+    </script>#}
+    
+    <script type="text/javascript">
+    (function($){
+    	var collectionHolder = $('#collaborator-container');
+    	
+    	$('#card_sendingDate').datepicker({
+            dateFormat: 'yy-mm-dd',
+            showAnim: 'fadeIn',
+            minDate: '+1'
         });
+        
+        function removeCollaborator($el, e) {
+        	e.preventDefault();
+        	
+        	$el.parent().remove();
+        	return false;
+        }
+    	
+    	function addCollaboratorForm(collectionHolder) {
+    		// Get the data-prototype
+    		var prototype = collectionHolder.attr('data-prototype');
+    		
+    		// Replace '$$name$$' in the prototype's HTML to
+    		// instead be a number based on the current collection's length.
+    		var $newForm = $(prototype.replace(/\$\$name\$\$/g, collectionHolder.children().length));
+    		$newForm.find('.remove-collaborator-btn').show().bind('click', function(e){
+    			removeCollaborator($(this), e);
+    		});
+    		$newForm.find('input[id^=card_collaborators]').attr('value', '');
+    		
+    		// Display the form in the page in an li, before the "Add a tag" link li
+    		collectionHolder.append($newForm);
+    	}
+    	
+    	$(function(){
+            $('.remove-collaborator-btn').click(function(e){
+            	removeCollaborator($(this), e);
+            })
+    		$('#add-collaborator-btn').click(function(e){
+    			// prevent the link from creating a "#" on the URL
+    			e.preventDefault();
+    			
+    			// add a new tag form (see next code block)
+    			addCollaboratorForm(collectionHolder);
+    		});
+    		if (collectionHolder.is(':empty')){
+    			$('#add-collaborator-btn').trigger('click');
+    		}
+    		if ($('.collaborator').index() < 2) {
+        		$('.remove-collaborator-btn').hide();
+        	}
+    	});
     })(jQuery);
     </script>
 {% endblock %}

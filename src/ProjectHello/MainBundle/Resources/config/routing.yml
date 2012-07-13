@@ -11,9 +11,9 @@ create_card:
     pattern: /create-card
     defaults: { _controller: ProjectHelloMainBundle:Default:createCard }
 
-card_action_success:
-    pattern: /card-action-success
-    defaults: { _controller: ProjectHelloMainBundle:Default:createCardSuccess }
+edit_card:
+    pattern: /edit-card
+    defaults: { _controller: ProjectHelloMainBundle:Default:editCard }
 
 add_message:
     pattern: /add-message
