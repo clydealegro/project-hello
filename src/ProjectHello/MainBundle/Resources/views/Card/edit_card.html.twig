@@ -63,14 +63,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-
-    {#
-    {% javascripts
-        '@ProjectHelloMainBundle/Resources/public/js/bootstrap-datepicker.js'
-    %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-    #}
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.js"></script>
     
     <script type="text/javascript">
@@ -86,7 +79,6 @@
         
         function removeCollaborator($el, e) {
         	e.preventDefault();
-        	
         	$el.parent().remove();
         	return false;
         }
@@ -100,10 +92,10 @@
     		var $newForm = $(prototype.replace(/\$\$name\$\$/g, collectionHolder.children().length));
     		$newForm.find('.remove-collaborator-btn').show().bind('click', function(e){
     			removeCollaborator($(this), e);
+	    		if ($('.collaborator').length < 1) {
+	    			instructionHolder.remove();
+	        	}
     		});
-    		$newForm.find('input[id^=card_collaborators]').attr('value', '');
-    		
-    		// Display the form in the page in an li, before the "Add a tag" link li
     		collectionHolder.append($newForm);
     	}
     	
@@ -114,8 +106,6 @@
     		$('#add-collaborator-btn').click(function(e){
     			// prevent the link from creating a "#" on the URL
     			e.preventDefault();
-    			
-    			// add a new tag form (see next code block)
     			addCollaboratorForm(collectionHolder);
     			$('#card_instruction').closest('.control-group').show();
     			if (!$('#card_instruction').length) {

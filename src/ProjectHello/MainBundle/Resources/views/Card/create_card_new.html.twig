@@ -39,40 +39,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-
-    {#<script type="text/javascript">
-    (function($){
-    	$('#dp3').datepicker({
-            format: 'mm-dd-yyyy'
-        });
-        
-        function removeCollaborator($el, e) {
-        	e.preventDefault();
-        	
-        	$el.parent().remove();
-        	return false;
-        }
-        
-        $(function(){
-        	if ($('.collaborator').index() < 2) {
-        		$('.remove-collaborator-btn').hide();
-        	}
-        	
-            
-            /*$('#add-collaborator-btn').click(function(e){
-            	e.preventDefault();
-            	
-            	var $newCollaborator = $('.collaborator:last').clone();
-            	$newCollaborator.find('.remove-collaborator-btn').show().bind('click', function(e){
-            		removeCollaborator($(this), e);
-            	});
-		    	$newCollaborator.find('input[id^=card_collaborators]').attr('value', '');
-            	$('.collaborator:last').after($newCollaborator);
-		        return false;
-            });
-        });*/
-    })(jQuery);
-    </script>#}
     
     <script type="text/javascript">
     (function($){
@@ -86,7 +52,6 @@
         
         function removeCollaborator($el, e) {
         	e.preventDefault();
-        	
         	$el.parent().remove();
         	return false;
         }
@@ -102,8 +67,6 @@
     			removeCollaborator($(this), e);
     		});
     		$newForm.find('input[id^=card_collaborators]').attr('value', '');
-    		
-    		// Display the form in the page in an li, before the "Add a tag" link li
     		collectionHolder.append($newForm);
     	}
     	
@@ -114,8 +77,6 @@
     		$('#add-collaborator-btn').click(function(e){
     			// prevent the link from creating a "#" on the URL
     			e.preventDefault();
-    			
-    			// add a new tag form (see next code block)
     			addCollaboratorForm(collectionHolder);
     		});
     		if (collectionHolder.is(':empty')){

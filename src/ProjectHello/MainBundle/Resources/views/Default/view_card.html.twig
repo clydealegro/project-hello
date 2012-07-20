@@ -68,6 +68,18 @@
                 generateNextPrev: true,
                 generatePagination: false
             });
+            
+            $(document).keydown(function(e){
+            	if (e.keyCode == 37) {
+            		$("#slides > .prev").trigger('click');
+            		return false;
+            	}
+            	if (e.keyCode == 39) {
+            		$("#slides > .next").trigger('click');
+            		return false;
+            	}
+            });
+
         });
         
                
